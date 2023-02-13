@@ -10,5 +10,6 @@ public class ReplyReq {
     public static class ReplySaveReqDto{
         private String comment;
         private Integer boardId;
+        private Integer returnId;
     }
 }

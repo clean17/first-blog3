@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Reply {
-    private int id;
+    private Integer id;
     private String comment;
     private int userId;
     private int boardId;

@@ -1,0 +1,16 @@
+str += `<li id="reply-${reply.id}" class="list-group-item d-flex justify-content-between "></li>`;
+str += `<div id="test">`+comment+`</div>`;
+str +=`<div class="d-flex justify-content-left">`;
+  str +=`<div class="font-italic">작성자 : `+username+` &nbsp;</div>`;
+  str +=`<div>`;
+    str += `<c:if test="${reply.userId == principal.id}">`;
+      str +=`<button class="badge bg-secondary" onclick="updateComment(`${reply.id}`)">수정</button>`;
+      str += `<button class="badge bg-secondary" onclick="deleteComment(`${reply.id}`)">삭제</button>`;
+      str +=`</c:if>`;
+    str += `<c:if test="${reply.userId != principal.id}">`;
+      str +=`<button class="badge bg-secondary" style="visibility: hidden;">수정</button>`;
+      str +=`<button class="badge bg-secondary" style="visibility: hidden;">삭제</button>`;
+      str +=`</c:if>`;
+    str +=`</div>`;
+  str +=`</div>`;
+str += `</li>`;

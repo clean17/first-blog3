@@ -7,16 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.reply.ReplyReq.ReplySaveReqDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
 import shop.mtcoding.blog2.model.Reply;
-import shop.mtcoding.blog2.model.ReplyRepository;
 import shop.mtcoding.blog2.model.User;
 import shop.mtcoding.blog2.service.ReplyService;
 
@@ -29,13 +28,14 @@ public class ReplyController {
     @Autowired
     private ReplyService replyService;
 
-    @Autowired
-    private ReplyRepository replyRepository;
+    // @Autowired
+    // private ReplyRepository replyRepository;
 
     // @GetMapping("/")
 
     @PostMapping("/reply")
-    public String save(ReplySaveReqDto rdto){
+    public ResponseEntity<?> save(@RequestBody ReplySaveReqDto rdto){
+        // System.out.println("테스트 : "+rdto.getComment());
         User principal = (User) session.getAttribute("principal");
         if( principal ==null){
             throw new CustomException("인증이 되지 않았습니다.",HttpStatus.UNAUTHORIZED);
@@ -49,24 +49,25 @@ public class ReplyController {
         }
         
         replyService.댓글쓰기(rdto, principal.getId());
-
-        return "redirect:/board/detail/"+rdto.getBoardId();
+        ReplySaveReqDto rrr = new ReplySaveReqDto();
+        System.out.println("테스트 : "+ rrr.getReturnId());
+        // return "redirect:/board/detail/"+rdto.getBoardId();
+        return new ResponseEntity<>(new ResponseDto<>(1, "댓글 쓰기 성공", null), HttpStatus.OK);
     }
 
     @DeleteMapping("/reply/{id}")
     public ResponseEntity<?> deleteReply(@PathVariable int id){
+        System.out.println("테스트 : "+ id);
         User principal = (User) session.getAttribute("principal");
         if( principal == null){
             throw new CustomApiException("인증이 되지 않았습니다.",HttpStatus.UNAUTHORIZED);
         }
-        Reply reply = replyRepository.findById(id);
-        if ( reply == null ){
-            throw new CustomApiException("게시글에 작성된 댓글만 삭제할 수 있습니다.");
-        }
-        if ( reply.getUserId() != principal.getId()){
-            throw new CustomApiException("자신이 작성한 댓글만 삭제할 수 있습니다.", HttpStatus.FORBIDDEN);
-        }
-        replyService.댓글삭제(id);
+        // if ( id == null ){
+        //     throw new CustomApiException("게시글에 작성된 댓글만 삭제할 수 있습니다.");
+        // }
+        // 비교는 서비스에서 해야함 
+        
+        replyService.댓글삭제(id, principal.getId());
 
         return new ResponseEntity<>(new ResponseDto<>(1, "삭제 성공", null), HttpStatus.OK);
     }

@@ -18,13 +18,33 @@
       where r.board_id = #{boardId}
     </select>
 
+    <!-- <select id="findByIdWithUser" resultType="shop.mtcoding.blog2.dto.reply.ReplyResp$ReplySaveRespDto">
+      select id, user_id from reply_tb where 
+  </select>
+    ReplySaveRespDto -->
+
     <select id="findById" resultType="shop.mtcoding.blog2.model.Reply">
       select * from reply_tb where id = #{id}
     </select>
 
-    <insert id="insert">
+    <!-- <insert id="insert" parameterType="shop.mtcoding.blog2.dto.reply.ReplyResp$ReplySaveRespDto">
+
+        /*keyProperty는 결과값을 넣을 model의 변수명*/
+        /*order(BEFORE, AFTER)를 통해 Insert 쿼리를 실행 후 가져올지 그 전에 가져올지 정할 수 있다*/
+      <selectKey resultType="int" keyProperty="id" order="AFTER">
+        SELECT LAST_INSERT_ID()
+      </selectKey>
+
       insert into reply_tb ( comment, board_id, user_id, created_at) 
         values (#{comment}, #{boardId}, #{userId}, now())
+    </insert> -->
+
+    <insert id="insert" parameterType="shop.mtcoding.blog2.dto.reply.ReplyReq$ReplySaveReqDto" useGeneratedKeys="true" keyProperty="id">
+      insert into reply_tb ( comment, board_id, user_id, created_at) 
+        values (#{comment}, #{boardId}, #{userId}, now())
+        <selectKey keyProperty="returnId" resultType="Integer" order="AFTER">
+          SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <delete id="deleteById">

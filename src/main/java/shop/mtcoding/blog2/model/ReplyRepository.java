@@ -18,6 +18,10 @@ public interface ReplyRepository {
         @Param("boardId") int boardId,
         @Param("userId") int userId
     );
+    // public int insert(Reply reply);
+    // @Insert("insert into reply_tb ( comment, board_id, user_id, created_at) values (#{comment}, #{boardId}, #{userId}, now())")
+    // @Options(useGeneratedKeys = true, keyProperty = "id")
+    // void insert(Reply reply);
     public int deleteById(int id);
     public int updateById(
         @Param("comment") String comment

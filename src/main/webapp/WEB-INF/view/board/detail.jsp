@@ -5,7 +5,7 @@
         <c:if test="${principal.id == dto.userId}" >
         <div class="mb-3">
             <a href="/board/${dto.id}/updateForm" class="btn btn-warning">수정</a>
-            <button type="button" class="btn btn-danger" onclick="deleteBoardById(${dto.id})">삭제</button>
+            <button type="button" class="btn btn-danger" onclick="deleteBoardById(`${dto.id}`)">삭제</button>
         </div>
         </c:if>
 
@@ -22,13 +22,13 @@
         </div>
         <hr />
         <div class="card">
-            <form action="/reply" method="post">
+            <form>
                 <input type="hidden" name="boardId" value="${dto.id}">
                 <div class="card-body">
                     <textarea id="reply-content" name="comment" placeholder="댓글을 입력하세요 " class="form-control" rows="1"></textarea>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" id="btn-reply-save" class="btn btn-primary">등록</button>
+                    <button type="button" id="btn-reply-save" class="btn btn-primary" onclick="test(`${dto.id}`,`${principal.username}`,`${principal.id}`)">등록</button>
                 </div>
             </form>
         </div>
@@ -38,19 +38,24 @@
             <ul id="reply-box" class="list-group">
                 <c:forEach items="${replyList}" var="reply">
                 
-                <li id="reply-1" class="list-group-item d-flex justify-content-between ">
-                    <div>${reply.comment}</div>
+                <li id="reply-${reply.id}" class="list-group-item d-flex justify-content-between ">
+                    <div id="test">${reply.comment}</div>
                     
                     <div class="d-flex justify-content-left">
                         <div class="font-italic">작성자 : ${reply.username} &nbsp;</div>
                         <div>
                             <c:if test="${reply.userId == principal.id}">
-                                <button class="badge bg-secondary" onclick="updateComment(${reply.id})">수정</button>
-                                <button class="badge bg-secondary" onclick="deleteComment(${reply.id})">삭제</button>
+                                <button class="badge bg-secondary" onclick="updateComment(`${reply.id}`)">수정</button>
+                                <button class="badge bg-secondary" onclick="deleteComment(`${reply.id}`)">삭제</button>
+                            </c:if>
+                            <c:if test="${reply.userId != principal.id}">
+                                <button class="badge bg-secondary" style="visibility: hidden;">수정</button>
+                                <button class="badge bg-secondary" style="visibility: hidden;">삭제</button>
                             </c:if>
                         </div>
                     </div>
                 </li>
+
                 </c:forEach>
             </ul>
             
@@ -61,6 +66,62 @@
                 tabsize: 2,
                 height: 400
             });
+        // $('#test').click(()=>{
+        // $('#test').focus();
+        // console.log('dlrj')
+        // $('#test').blur();
+        
+        // })
+        // focus();
+        // console.log('dlrj')
+        // $('#test').blur();
+        function test(id, username1, principalId){
+            let comm = $('#reply-content').val();
+            let username = username1;
+            let pId = principalId;
+            console.log(comm+username+pId);
+
+            let data = { 
+                comment: comm,
+                boardId: id
+             }
+
+            let replyId ;
+            $.ajax({
+                type: "post",
+                url: "/reply/",
+                data: JSON.stringify(data),
+                headers:{
+                    "content-type":"application/json; charset=utf-8"
+                },
+                dataType:"json"
+            }).done((res) => {
+                replyId = res.data;
+            }).fail((err) => {
+            
+            });
+
+            $('#reply-content').val("");
+            let str = "";
+            str += `<li id="reply-`+replyId+`" class="list-group-item d-flex justify-content-between ">`;
+            str += `<div id="test">`+comm+`</div>`;
+            str += `<div class="d-flex justify-content-left">`;
+            str += `<div class="font-italic">작성자 : `+username+` &nbsp;</div>`;
+            str += `<div>`;
+            // str += `<c:if test="${reply.userId == pId}">`;
+            str += `<button class="badge bg-secondary" onclick="updateComment(`+replyId+`)">수정</button>`;
+            str += `<button class="badge bg-secondary" onclick="deleteComment(`+replyId+`)">삭제</button>`;
+            // str += `</c:if>`;
+            // str += `<c:if test="${reply.userId != pId}">`;
+            // str += `<button class="badge bg-secondary" style="visibility: hidden;">수정</button>`;
+            // str += `<button class="badge bg-secondary" style="visibility: hidden;">삭제</button>`;
+            // str += `</c:if>`;
+            str += `</div>`;
+            str += `</div>`;
+            str += `</li>`;
+            $('#reply-box').append(str);
+            
+        }
 
         function deleteBoardById(id){
             $.ajax({
@@ -83,7 +144,7 @@
                 dataType:"json"
             }).done((res) => {
                 alert(res.msg);
-                history.go(0);
+                $('#reply-'+id).remove();
             }).fail((err) => {
                 alert(err.responseJSON.msg);
             });
