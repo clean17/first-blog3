@@ -18,4 +18,11 @@ public class ReplyResp {
         private Integer boardId;
         private Timestamp createdAt;
     }
+    
+    @Getter
+    @Setter
+    public static class ReplySaveRespDto{
+        private Integer id;
+        private Integer userId;
+    }
 }

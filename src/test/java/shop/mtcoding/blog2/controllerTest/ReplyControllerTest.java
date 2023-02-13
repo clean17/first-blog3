@@ -20,8 +20,6 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import shop.mtcoding.blog2.dto.reply.ReplyResp.ReplyListRespDto;
 import shop.mtcoding.blog2.model.User;
 
@@ -35,8 +33,8 @@ public class ReplyControllerTest {
 
     private MockHttpSession session;
 
-    @Autowired
-    private ObjectMapper om;
+    // @Autowired
+    // private ObjectMapper om;
 
 
     @BeforeEach
@@ -76,14 +74,14 @@ public class ReplyControllerTest {
         
                     // rs.andExpect(status().is3xxRedirection());
                     Map<String, Object> map = rs.andReturn().getModelAndView().getModel();
-                    List<ReplyListRespDto> rdo = (List<ReplyListRespDto>)map.get("replyList");
-
+                    List<ReplyListRespDto> rdo = (List<ReplyListRespDto>) map.get("replyList");
                     assertThat(rdo.get(0).getUsername()).isEqualTo("love");
     }  
 
     @Test
     public void deleteReply_test() throws Exception{
-        ResultActions rs = mvc.perform(delete("/reply/2").session(session));
+        int id = 1 ;
+        ResultActions rs = mvc.perform(delete("/reply/"+id).session(session));
         rs.andExpect(status().isOk());
         String result = rs.andReturn().getResponse().getContentAsString();
         System.out.println("테스트 : "+ result);
