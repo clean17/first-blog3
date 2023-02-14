@@ -3,17 +3,19 @@ package shop.mtcoding.blog2.controller;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import shop.mtcoding.blog2.Util.PathUtil;
 import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
 import shop.mtcoding.blog2.exception.CustomException;
@@ -62,7 +64,7 @@ public class UserController {
     public String profileUpdateForm(Model model){
         User principal = (User) session.getAttribute("principal");
         if( principal == null ){
-           return "redirect:/loginForm";
+           return "redirect:/login";
         }
         User userPS = userRepository.findById(principal.getId());
         model.addAttribute("user", userPS);
@@ -100,46 +102,24 @@ public class UserController {
 
     @PostMapping("/user/profileUpdate")
     public String profileUpdate(MultipartFile profile) throws Exception{ 
-        System.out.println(profile.getContentType());
-        System.out.println(profile.getSize());
-        System.out.println(profile.getOriginalFilename());
-
+        User principal = (User) session.getAttribute("principal");
+        if( principal == null ){
+            return "redirect:/login";
+        }
+        // System.out.println(profile.getContentType());
+        // System.out.println(profile.getOriginalFilename());
         if( profile.isEmpty()){
             throw new CustomException("사진이 전송 되지 않았습니다.");
         }
-        
-        // 파일은 하드에 저장
-        // Path imageFilePath = Paths.get("/images/"+profile.getOriginalFilename()); 
-        Path ddd = Paths.get("C:\\workspace\\project_lab\\blog2\\src\\main\\resources\\static\\images\\"+profile.getOriginalFilename()); 
-        System.out.println(ddd);  // \images\logo192.png
-        //\images\dora.png
-        try {
-            Files.write(ddd, profile.getBytes());
-        } catch (Exception e) {
-            e.getMessage();// TODO: handle exception
+
+        // 사진이 아닐경우 exception 
+        if (profile.getContentType()!="image.*"){
+            throw new CustomException("사진이 전송 되지 않았습니다.");
         }
 
-// String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\images\\";
-// System.out.println(savePath);
-// Path imageFilePath = Paths.get(savePath+"\\"+profile.getOriginalFilename());
-
-// System.out.println(imageFilePath);
-
-// try {
-//     Files.write(imageFilePath, profile.getBytes());
-// }catch (Exception e){
-//     e.printStackTrace();
-// }
-
-
-        // 파일의 경로를 dB 에 저장
-
+        User userPS = service.프로필사진수정(profile, principal.getId());
+        session.setAttribute("principal", userPS);
+        System.out.println("테스트 : "+userPS.getProfile());
         return "redirect:/";
-    }
-
-    @PostMapping("/join2")
-    public String userJoin2(){
-        
-        return "";
     }
 }

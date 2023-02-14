@@ -43,9 +43,9 @@
 
 <div class="container my-3">
     <h2 class="text-center">프로필 사진 변경 페이지</h2>
-    <form action="/user/profileUpdate" method="post" enctype="multipart/form-data">
+    <form id="profileForm" action="/user/profileUpdate" method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <img src="/images/dora1.png" alt="Current Photo" id="imagePreview" class="img-fluid">
+            <img src="${principal.profile == null ? '/imaeges/default_profile.png' : principal.profile}" alt="Current Photo" id="imagePreview" class="img-fluid">
         </div>
         <div class="form-group">
             <input type="file" class="form-control" id="profile" name="profile" onchange="chooseImage(this)">
@@ -61,6 +61,11 @@
         let f = obj.files[0];
         console.log(f); // 메타데이터만 출력 / 빠르게 읽었음
 
+        if(!f.type.match("image.*")){
+            alert("이미지를 등록해야 합니다.")
+            return;
+        }
+
         let reader = new FileReader(); // 파일읽는 객체
         reader.readAsDataURL(f); // 넌 왜 void 로 되어 있는걸까 비동기 처리가 나오기 전에 나와서 void 로 되어 있는걸까 ?
         // 서버의 하드디스크에서 (지금은 c드라이브) 파일을 읽어오기 때문에 엄청 느리다 !!!! return 타입을 정해놓으면 return을 기다려야 하기 때문에 
@@ -75,6 +80,27 @@
             $('#imagePreview').attr("src",e.target.result);
         }
         
+        function updateImage(){
+            let profileForm = $('#profileForm')[0];  // 배열로 리턴한다더라
+            let formData = new FormData(profileForm);  // 폼의 모든 데이터를 가지고 있다.
+            console.log(formData);
+            $.ajax({
+                type: "put",
+                url: "/user/profileUpdate",
+                data: formData,
+                contentType: false,  // x-www 으로 파싱하지 마라   // 순서도 중요 contentType 부터 순서 바꿔서 테스트 해봐
+                processData: false, // contentType 이 false가 되면 자동으로 쿼리스트링으로 파싱하련느데 이걸 해제 시켜야함
+                headers:{
+                    "enc-type":"multipart/form-data"
+                },
+                
+                dataType:"json"
+            }).done((res) => {
+            
+            }).fail((err) => {
+            
+            });
+        }
           
             
 

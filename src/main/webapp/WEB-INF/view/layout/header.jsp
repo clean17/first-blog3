@@ -49,10 +49,9 @@
                     </li>
                    </c:otherwise>
                 </c:choose>
-                   
                 </ul>
                 <div>
-                    <a href="/user/profileUpdateForm"><img src="${principal.profile}" style="width: 35px;"
+                    <a href="/user/profileUpdateForm"><img src="${principal.profile == null ? '/images/default_profile.png' : principal.profile}" style="width: 35px;"
                             class="rounded-circle" alt="Cinque Terre"></a>
                 </div>
             </div>
