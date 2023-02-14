@@ -1,16 +1,23 @@
-str += `<li id="reply-${reply.id}" class="list-group-item d-flex justify-content-between "></li>`;
-str += `<div id="test">`+comment+`</div>`;
-str +=`<div class="d-flex justify-content-left">`;
-  str +=`<div class="font-italic">작성자 : `+username+` &nbsp;</div>`;
-  str +=`<div>`;
-    str += `<c:if test="${reply.userId == principal.id}">`;
-      str +=`<button class="badge bg-secondary" onclick="updateComment(`${reply.id}`)">수정</button>`;
-      str += `<button class="badge bg-secondary" onclick="deleteComment(`${reply.id}`)">삭제</button>`;
-      str +=`</c:if>`;
-    str += `<c:if test="${reply.userId != principal.id}">`;
-      str +=`<button class="badge bg-secondary" style="visibility: hidden;">수정</button>`;
-      str +=`<button class="badge bg-secondary" style="visibility: hidden;">삭제</button>`;
-      str +=`</c:if>`;
-    str +=`</div>`;
-  str +=`</div>`;
-str += `</li>`;
+<script>
+    function updateImage() {
+      let profileForm = $('#profileForm')[0];  // 배열로 리턴한다더라
+      console.log(profileForm);
+      let formData = new FormData(profileForm);  // 폼의 모든 데이터를 가지고 있다.
+      console.log();
+      $.ajax({
+        type: "put",
+        url: "/user/profileUpdate",
+        contentType: false,  // x-www 으로 파싱하지 마라   // 순서도 중요 contentType 부터 순서 바꿔서 테스트 해봐
+        processData: false, // contentType 이 false가 되면 자동으로 쿼리스트링으로 파싱하련느데 이걸 해제 시켜야함
+        data: formData,
+        enctype: "multipart/form-data",
+
+        dataType: "json"
+      }).done((res) => {
+        alert(res.msg);
+        location.href = "/"
+      }).fail((err) => {
+        alert(err.responseJSON.msg);
+      });
+    }
+</script>

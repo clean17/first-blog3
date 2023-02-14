@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import shop.mtcoding.blog2.Util.PathUtil;
 import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
+import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
 import shop.mtcoding.blog2.model.User;
 import shop.mtcoding.blog2.model.UserRepository;
@@ -45,7 +46,6 @@ public class UserService {
    @Transactional
     public User 프로필사진수정(MultipartFile profile, int pricipalId){
         
-        
         // 1번 사진을 /static/image에 UUID로 변경해서 저장
         String uuidImageName = PathUtil.writeImageFile(profile);
         
@@ -53,7 +53,11 @@ public class UserService {
         User userPS = userRepository.findById(pricipalId);
         userPS.setProfile(uuidImageName);
 
-        userRepository.updateById(userPS.getId(), userPS.getUsername(), userPS.getPassword(), userPS.getEmail(), userPS.getProfile(), userPS.getCreatedAt());
+        try {
+            userRepository.updateById(userPS.getId(), userPS.getUsername(), userPS.getPassword(), userPS.getEmail(), userPS.getProfile(), userPS.getCreatedAt());
+        } catch (Exception e) {
+            throw new CustomApiException("프로필 사진 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return userPS;
     }
 }
