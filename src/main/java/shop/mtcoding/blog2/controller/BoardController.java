@@ -51,6 +51,7 @@ public class BoardController {
         mockUser.setUsername("ssar");
         mockUser.setPassword("1234");
         mockUser.setEmail("ssar@nate.com");
+        mockUser.setProfile("/images/default_profile.png");
         session.setAttribute("principal", mockUser);
     }
 

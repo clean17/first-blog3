@@ -93,6 +93,7 @@ public class UserController {
             throw new CustomException("패스워드를 입력하세요");
         }
         User prinipal = service.로그인(userDto);
+        System.out.println("테스트 : "+ prinipal.getProfile());
         session.setAttribute("principal", prinipal);         
         return "redirect:/";
     }
@@ -109,14 +110,27 @@ public class UserController {
         
         // 파일은 하드에 저장
         // Path imageFilePath = Paths.get("/images/"+profile.getOriginalFilename()); 
-        Path imageFilePath = Paths.get("C:\\workspace\\project_lab\\blog2\\src\\main\\resources\\static\\images\\"); 
-        System.out.println(imageFilePath);  // \images\logo192.png
-//\images\dora.png
+        Path ddd = Paths.get("C:\\workspace\\project_lab\\blog2\\src\\main\\resources\\static\\images\\"+profile.getOriginalFilename()); 
+        System.out.println(ddd);  // \images\logo192.png
+        //\images\dora.png
         try {
-            Files.write(imageFilePath, profile.getBytes());
+            Files.write(ddd, profile.getBytes());
         } catch (Exception e) {
             e.getMessage();// TODO: handle exception
         }
+
+// String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\images\\";
+// System.out.println(savePath);
+// Path imageFilePath = Paths.get(savePath+"\\"+profile.getOriginalFilename());
+
+// System.out.println(imageFilePath);
+
+// try {
+//     Files.write(imageFilePath, profile.getBytes());
+// }catch (Exception e){
+//     e.printStackTrace();
+// }
+
 
         // 파일의 경로를 dB 에 저장
 
