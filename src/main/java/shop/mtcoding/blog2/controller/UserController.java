@@ -1,8 +1,10 @@
 package shop.mtcoding.blog2.controller;
 
-import java.io.BufferedReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
@@ -98,14 +99,24 @@ public class UserController {
 
     @PostMapping("/user/profileUpdate")
     public String profileUpdate(MultipartFile profile) throws Exception{ 
-        // System.out.println(profile.getContentType());
-        // System.out.println(profile.getSize());
-        // System.out.println(profile.getOriginalFilename());
+        System.out.println(profile.getContentType());
+        System.out.println(profile.getSize());
+        System.out.println(profile.getOriginalFilename());
 
         if( profile.isEmpty()){
-            throw new CustomException("사진이 전송 되지 않았습니다.")
+            throw new CustomException("사진이 전송 되지 않았습니다.");
         }
+        
         // 파일은 하드에 저장
+        // Path imageFilePath = Paths.get("/images/"+profile.getOriginalFilename()); 
+        Path imageFilePath = Paths.get("C:\\workspace\\project_lab\\blog2\\src\\main\\resources\\static\\images\\"); 
+        System.out.println(imageFilePath);  // \images\logo192.png
+//\images\dora.png
+        try {
+            Files.write(imageFilePath, profile.getBytes());
+        } catch (Exception e) {
+            e.getMessage();// TODO: handle exception
+        }
 
         // 파일의 경로를 dB 에 저장
 

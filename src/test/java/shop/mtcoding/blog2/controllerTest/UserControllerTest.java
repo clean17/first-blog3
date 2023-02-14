@@ -37,4 +37,25 @@ public class UserControllerTest {
         rs.andExpect(status().is3xxRedirection());
     }
 
+    // @Test
+    // public void profileUpdate_test() throws Exception{
+    
+    
+    //     if( profile.isEmpty()){
+    //         throw new CustomException("사진이 전송 되지 않았습니다.");
+    //     }
+    // }/user/profileUpdate
+
+
+    //     if( profile.isEmpty()){
+    //         throw new CustomException("사진이 전송 되지 않았습니다.");
+    //     }
+    //     // 파일은 하드에 저장
+    //     Path imageFilePath = Paths.get("classpath:/images");
+    //     System.out.println(imageFilePath);
+    //     // 파일의 경로를 dB 에 저장
+
+    //     return "redirect:/";
+    // }
+
 }
