@@ -1,12 +1,21 @@
 package shop.mtcoding.blog2.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import shop.mtcoding.blog2.Util.PathUtil;
 import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
 import shop.mtcoding.blog2.exception.CustomException;
@@ -52,14 +61,14 @@ public class UserController {
 
     /// 오늘 수업
     @GetMapping("/user/profileUpdateForm")
-    public String profileUpdateForm(){
+    public String profileUpdateForm(Model model){
         User principal = (User) session.getAttribute("principal");
         if( principal == null ){
-           return "redirect:/loginForm";
+           return "redirect:/login";
         }
-
-
-        return "user/updateForm";
+        User userPS = userRepository.findById(principal.getId());
+        model.addAttribute("user", userPS);
+        return "user/profileUpdateForm";
     }
 
     @PostMapping("/join")
@@ -86,13 +95,31 @@ public class UserController {
             throw new CustomException("패스워드를 입력하세요");
         }
         User prinipal = service.로그인(userDto);
+        System.out.println("테스트 : "+ prinipal.getProfile());
         session.setAttribute("principal", prinipal);         
         return "redirect:/";
     }
 
-    @PostMapping("/join2")
-    public String userJoin2(){
-        
-        return "";
+    @PostMapping("/user/profileUpdate")
+    public String profileUpdate(MultipartFile profile) throws Exception{ 
+        User principal = (User) session.getAttribute("principal");
+        if( principal == null ){
+            return "redirect:/login";
+        }
+        // System.out.println(profile.getContentType());
+        // System.out.println(profile.getOriginalFilename());
+        if( profile.isEmpty()){
+            throw new CustomException("사진이 전송 되지 않았습니다.");
+        }
+
+        // 사진이 아닐경우 exception 
+        if (profile.getContentType()!="image.*"){
+            throw new CustomException("사진이 전송 되지 않았습니다.");
+        }
+
+        User userPS = service.프로필사진수정(profile, principal.getId());
+        session.setAttribute("principal", userPS);
+        System.out.println("테스트 : "+userPS.getProfile());
+        return "redirect:/";
     }
 }

@@ -51,15 +51,16 @@ public class BoardController {
         mockUser.setUsername("ssar");
         mockUser.setPassword("1234");
         mockUser.setEmail("ssar@nate.com");
+        mockUser.setProfile("/images/default_profile.png");
         session.setAttribute("principal", mockUser);
     }
 
     @GetMapping("/")
     public String  main(Model model){
-        mockSession();
+        // mockSession();
     List<BoardMainListDto> dtos = boardRepository.findAllforList();
     model.addAttribute("dtos", dtos);
-    System.out.println("테스트 : "+ dtos.get(0).getThumbnail());
+    // System.out.println("테스트 : "+ dtos.get(0).getThumbnail());
     return "board/main";
     }
     
