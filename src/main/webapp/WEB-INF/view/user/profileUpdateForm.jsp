@@ -72,7 +72,7 @@
         // `readAsDataURL` 만 이벤트큐에 등록됨.. 이벤트 루프가 돌면서 파일을 다운받을때까지 기다리다가 읽는게 내부적으로 구현되어 있음
         
         reader.onload = function (e){       // 콜백함수를 등록 -onload() => readAsDataURL 끝나면 다음 함수를 실행해라 !
-            console.log(e);
+            // console.log(e);
             // 사진을 바꿔치기해야함
 
             $('#imagePreview').attr("src",e.target.result);
@@ -80,18 +80,16 @@
             
         }
 
-        let profileForm = $('#profileForm')[0];  // 배열로 리턴한다더라
+            let profileForm = $('#profileForm')[0];  // 배열로 리턴한다더라
             // console.log(profileForm);
             let formData = new FormData(profileForm);  // 폼의 모든 데이터를 가지고 있다.
-            FormData.entries();
     }
     
         function updateImage(){
             let profileForm = $('#profileForm')[0];  // 배열로 리턴한다더라
             console.log(profileForm);
             let formData = new FormData(profileForm);  // 폼의 모든 데이터를 가지고 있다.
-            console.log();
-            FormData.entries();
+            // console.log();
             $.ajax({
                 type: "put",
                 url: "/user/profileUpdate",

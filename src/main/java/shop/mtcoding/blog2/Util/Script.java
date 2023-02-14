@@ -1,6 +1,5 @@
 package shop.mtcoding.blog2.Util;
 
-import shop.mtcoding.blog2.controller.T;
 
 public class Script {
     public static String back(String msg){
