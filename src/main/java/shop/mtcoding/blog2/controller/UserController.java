@@ -11,6 +11,7 @@ import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
 import shop.mtcoding.blog2.exception.CustomException;
 import shop.mtcoding.blog2.model.User;
+import shop.mtcoding.blog2.model.UserRepository;
 import shop.mtcoding.blog2.service.UserService;
 
 @Controller
@@ -21,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserService service;
+
+    @Autowired
+    private UserRepository userRepository;
     
     @GetMapping("/update")
     public String updateForm(){
@@ -44,6 +48,18 @@ public class UserController {
     public String logout(){
         session.invalidate();
     return "redirect:/";
+    }
+
+    /// 오늘 수업
+    @GetMapping("/user/profileUpdateForm")
+    public String profileUpdateForm(){
+        User principal = (User) session.getAttribute("principal");
+        if( principal == null ){
+           return "redirect:/loginForm";
+        }
+
+
+        return "user/updateForm";
     }
 
     @PostMapping("/join")
