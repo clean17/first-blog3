@@ -12,5 +12,6 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String profile; // 사진의 경로 - /images/default_profile.png
     private Timestamp createdAt;
 }

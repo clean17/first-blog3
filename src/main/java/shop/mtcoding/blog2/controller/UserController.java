@@ -1,11 +1,17 @@
 package shop.mtcoding.blog2.controller;
 
+import java.io.BufferedReader;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
@@ -52,14 +58,14 @@ public class UserController {
 
     /// 오늘 수업
     @GetMapping("/user/profileUpdateForm")
-    public String profileUpdateForm(){
+    public String profileUpdateForm(Model model){
         User principal = (User) session.getAttribute("principal");
         if( principal == null ){
            return "redirect:/loginForm";
         }
-
-
-        return "user/updateForm";
+        User userPS = userRepository.findById(principal.getId());
+        model.addAttribute("user", userPS);
+        return "user/profileUpdateForm";
     }
 
     @PostMapping("/join")
@@ -87,6 +93,22 @@ public class UserController {
         }
         User prinipal = service.로그인(userDto);
         session.setAttribute("principal", prinipal);         
+        return "redirect:/";
+    }
+
+    @PostMapping("/user/profileUpdate")
+    public String profileUpdate(MultipartFile profile) throws Exception{ 
+        // System.out.println(profile.getContentType());
+        // System.out.println(profile.getSize());
+        // System.out.println(profile.getOriginalFilename());
+
+        if( profile.isEmpty()){
+            throw new CustomException("사진이 전송 되지 않았습니다.")
+        }
+        // 파일은 하드에 저장
+
+        // 파일의 경로를 dB 에 저장
+
         return "redirect:/";
     }
 

@@ -18,4 +18,5 @@ public interface UserRepository {
         @Param("password") String password
     );
     public User findByUsername(String username);
+    public User findById(int id);
 }
