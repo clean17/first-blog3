@@ -1,23 +1,23 @@
 package shop.mtcoding.blog2.controller;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import shop.mtcoding.blog2.Util.PathUtil;
+import shop.mtcoding.blog2.Util.Script;
+import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
+import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
 import shop.mtcoding.blog2.model.User;
 import shop.mtcoding.blog2.model.UserRepository;
@@ -100,26 +100,26 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PostMapping("/user/profileUpdate")
-    public String profileUpdate(MultipartFile profile) throws Exception{ 
+    @PutMapping("/user/profileUpdate")
+    public ResponseEntity<?> profileUpdate(MultipartFile profile) throws Exception{ 
         User principal = (User) session.getAttribute("principal");
         if( principal == null ){
-            return "redirect:/login";
+            throw new CustomApiException("로그인이 필요한 페이지 입니다.", HttpStatus.UNAUTHORIZED);
         }
         // System.out.println(profile.getContentType());
         // System.out.println(profile.getOriginalFilename());
         if( profile.isEmpty()){
-            throw new CustomException("사진이 전송 되지 않았습니다.");
+            throw new CustomApiException("사진이 전송 되지 않았습니다.");
         }
 
         // 사진이 아닐경우 exception 
         if (profile.getContentType()!="image.*"){
-            throw new CustomException("사진이 전송 되지 않았습니다.");
+            throw new CustomApiException("사진이 전송 되지 않았습니다.");
         }
 
         User userPS = service.프로필사진수정(profile, principal.getId());
         session.setAttribute("principal", userPS);
         System.out.println("테스트 : "+userPS.getProfile());
-        return "redirect:/";
+        return new ResponseEntity<>(new ResponseDto<>(1, "수정 성공", null), HttpStatus.OK);
     }
 }
