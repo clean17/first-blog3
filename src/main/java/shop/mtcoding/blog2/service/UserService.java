@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
 import shop.mtcoding.blog2.Util.PathUtil;
 import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
@@ -17,6 +18,8 @@ import shop.mtcoding.blog2.exception.CustomException;
 import shop.mtcoding.blog2.model.User;
 import shop.mtcoding.blog2.model.UserRepository;
 
+
+@Slf4j
 @Service
 public class UserService {
     
@@ -24,12 +27,30 @@ public class UserService {
     private UserRepository userRepository;
 
     @Transactional
+    public void 회원삭제(Integer id, User admin) { 
+        if ( admin.getRole().equals("ADMIN")){
+            try {
+                userRepository.delete(id);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                throw new CustomApiException("서버 오류로 회원삭제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+
+    @Transactional
     public void 회원가입(UserJoinDto userDto){
         User sameUser = userRepository.findByUsername(userDto.getUsername());
         if (sameUser != null) {
             throw new CustomException("동일한 username이 존재합니다");
         }
-        int result = userRepository.insertUser(userDto.getUsername(), userDto.getPassword(), userDto.getEmail());        
+        int result = userRepository.insertUser(
+                userDto.getUsername(), 
+                userDto.getPassword(), 
+                userDto.getEmail(),
+                "/images/default_profile.png",
+                "USER"  
+                );        
         if (result !=1) {
             throw new CustomException("회원가입에 실패 했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);   
         }
@@ -60,4 +81,6 @@ public class UserService {
         }
         return userPS;
     }
+    
+   
 }

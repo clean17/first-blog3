@@ -7,11 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
 import shop.mtcoding.blog2.dto.reply.ReplyReq.ReplySaveReqDto;
-import shop.mtcoding.blog2.dto.reply.ReplyResp.ReplySaveRespDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
 import shop.mtcoding.blog2.model.Reply;
 import shop.mtcoding.blog2.model.ReplyRepository;
+import shop.mtcoding.blog2.model.User;
+import shop.mtcoding.blog2.model.UserRepository;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -20,6 +21,9 @@ public class ReplyService {
     
     @Autowired
     private ReplyRepository replyRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
     public void 댓글쓰기(ReplySaveReqDto rDto, int principalId){
@@ -40,6 +44,16 @@ public class ReplyService {
 
     @Transactional
     public void 댓글삭제(int id, int principalId) {
+        User admin = userRepository.findById(principalId);
+        if ( admin.getRole().equals("ADMIN")){
+            try {
+                replyRepository.deleteById(id);
+                return;
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                throw new CustomApiException("서버 오류로 댓글삭제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
         Reply reply = replyRepository.findById(id);
         if ( reply == null ){
             throw new CustomApiException("댓글이 존재하지 않습니다.", HttpStatus.FORBIDDEN);

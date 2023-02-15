@@ -22,12 +22,17 @@
     </select>
 
     <insert id="insertUser">
-        insert into user_tb (username, password, email, created_at) values (#{username}, #{password}, #{email}, now())
+        insert into user_tb (username, password, email, profile, role, created_at) 
+                values (#{username}, #{password}, #{email}, #{profile}, #{role}, now())
     </insert>
 
     <update id="updateById">
         update user_tb set username =#{username}, password=#{password},
-        email=#{email},    profile = #{profile} where id = #{id}
+        email=#{email}, profile = #{profile} where id = #{id}
     </update>
+
+    <delete id="delete">
+        delete from user_tb where id = #{id}
+    </delete>
 
 </mapper>

@@ -2,8 +2,10 @@
 <%@ include file="../layout/header.jsp" %>
 
     <div class="container my-3">
-        <div class="container"> 
-            <form action="/login" method="post" >
+        <div class="container ">
+            <div class="d-flex"><h1 class="mx-auto">관리자 페이지</h1></div>
+             
+            <form action="/admin/login" method="post" >
                 <div class="form-group mb-2">
                     <input type="text" name="username" class="form-control" placeholder="Enter username" id="username" required>
                 </div>

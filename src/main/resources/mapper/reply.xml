@@ -8,10 +8,15 @@
         select * from reply_tb
     </select>
 
+    <select id="findAllByAdmin" resultType="shop.mtcoding.blog2.dto.admin.AdminResp$AdminReplyRespDto">
+      select r.id, r.comment, 
+      ( select username from user_tb where id = r.user_id ) username,
+      r.board_id, r.created_at from reply_tb r
+    </select>
+
     <select id="findByBoardIdWithUser" resultType="shop.mtcoding.blog2.dto.reply.ReplyResp$ReplyListRespDto">
       select r.id, r.comment,
       ( select username from user_tb where id = r.user_id ) username,
-      r.user_id,
       r.board_id,
       r.created_at
       from reply_tb r 
