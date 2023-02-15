@@ -38,7 +38,7 @@
                             <td class="my-title-ellipsis">${reply.comment}</td>
                             <td>${reply.username}</td>
                             <td>${reply.boardId}</td>
-                            <td>${reply.createdAt}</td>
+                            <td>${reply.createdAtToString}</td>
                             <td><button class="btn btn-danger" onclick="deleteUser(`${reply.id}`)">삭제하기</button></td>
                         </tr>
                 </c:forEach>
@@ -47,19 +47,14 @@
     </div>
     </div>
 <script>
-    function deleteUser(idx){
-        let data = { id: idx }
+    function deleteUser(id){
         $.ajax({
             type: "delete",
-            url: "/admin/reply/delete",
-            data: JSON.stringify(data),
-            headers:{
-                "content-type":"application/json; charset=utf-8"
-            },
+            url: "/admin/reply/"+id+"/delete",
             dataType:"json"
         }).done((res) => {
             alert(res.msg);
-            $('#reply-'+idx).remove();
+            $('#reply-'+id).remove();
         }).fail((err) => {
             alert(err.responseJSON.msg);
         });

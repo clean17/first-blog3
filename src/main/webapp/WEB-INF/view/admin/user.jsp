@@ -40,7 +40,7 @@
                             <td>${user.username}</td>
                             <td>${user.email}</td>
                             <td>${user.role}</td>
-                            <td>${user.createdAt}</td>
+                            <td>${user.createdAtToString}</td>
                             <td><button class="btn btn-danger" onclick="deleteUser(`${user.id}`)">삭제하기</button></td>
                         </tr>
                     </c:if>
@@ -50,19 +50,14 @@
     </div>
 </div>
 <script>
-    function deleteUser(idx) {
-        let data = { id: idx }
+    function deleteUser(id) {
         $.ajax({
             type: "delete",
-            url: "/admin/user/delete",
-            data: JSON.stringify(data),
-            headers: {
-                "content-type": "application/json; charset=utf-8"
-            },
+            url: "/admin/user/"+id+"/delete",
             dataType: "json"
         }).done((res) => {
             alert(res.msg);
-            $('#user-' + idx).remove();
+            $('#user-' + id).remove();
         }).fail((err) => {
             alert(err.responseJSON.msg);
         });

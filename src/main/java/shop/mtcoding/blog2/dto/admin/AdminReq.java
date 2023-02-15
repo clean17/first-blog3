@@ -14,7 +14,17 @@ public class AdminReq {
 
     @Getter
     @Setter
-    public static class AdminReqDeleteDto{
+    public static class AdminReqDeleteUserDto{
+        private Integer id;
+    }
+    @Getter
+    @Setter
+    public static class AdminReqDeleteBoardDto{
+        private Integer id;
+    }
+    @Getter
+    @Setter
+    public static class AdminReqDeleteReplyDto{
         private Integer id;
     }
 }

@@ -1,5 +1,6 @@
 package shop.mtcoding.blog2.controllerTest;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDeleteUserDto;
 import shop.mtcoding.blog2.model.User;
 
 @AutoConfigureMockMvc
@@ -38,6 +40,7 @@ public class AdminController {
         mockUser.setId(1);
         mockUser.setUsername("admin");
         mockUser.setPassword("admin");
+        mockUser.setRole("ADMIN");
         mockUser.setEmail("admin@nate.com");
 
         session = new MockHttpSession();
@@ -48,7 +51,24 @@ public class AdminController {
     public void loginAdmin_test() throws Exception{
         String logindata = "username=admin&password=admin";
 
-        ResultActions rs = mvc.perform(post("/admin/login").content(logindata).contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE));
+        ResultActions rs = mvc.perform(post("/admin/login")
+                    .content(logindata)
+                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE));
         rs.andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    public void delateUser_test() throws Exception{
+        Integer id =null ;
+        
+
+        ResultActions rs = mvc.perform(delete("/admin/user/"+id+"/delete")
+                    .session(session));
+
+        // String d = (String )rs.andReturn().getModelAndView().getModel().get("msg");
+        // System.out.println("테스트 : "+ d);
+        // rs.andExpect(status().isOk());
+        String a = om.writeValueAsString(rs.andReturn());
+        System.out.println(a);
     }
 }

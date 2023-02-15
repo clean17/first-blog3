@@ -38,7 +38,7 @@
                             <td>${board.title}</td>
                             <td class="my-title-ellipsis">${board.content}</td>
                             <td>${board.username}</td>
-                            <td>${board.createdAt}</td>
+                            <td>${board.createdAtToString}</td>
                             <td><button class="btn btn-danger" onclick="deleteBoard(`${board.id}`)">삭제하기</button></td>
                         </tr>
                 </c:forEach>
@@ -47,19 +47,14 @@
     </div>
     </div>
 <script>
-    function deleteBoard(idx){
-        let data = { id: idx }
+    function deleteBoard(id){
         $.ajax({
             type: "delete",
-            url: "/admin/board/delete",
-            data: JSON.stringify(data),
-            headers:{
-                "content-type":"application/json; charset=utf-8"
-            },
+            url: "/admin/board/"+id+"/delete",
             dataType:"json"
         }).done((res) => {
             alert(res.msg);
-            $('#board-'+idx).remove();
+            $('#board-'+id).remove();
         }).fail((err) => {
             alert(err.responseJSON.msg);
         });
