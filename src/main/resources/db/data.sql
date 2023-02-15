@@ -1,6 +1,12 @@
 insert into user_tb (username, password, email, PROFILE, role, created_at) values ('admin','admin','admin@nate.com', '/images/default_profile.png', 'ADMIN', now());
 insert into user_tb (username, password, email, PROFILE, role, created_at) values ('ssar','1234','ssar@nate.com', '/images/default_profile.png', 'USER', now());
-insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
+insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love1','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
+insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love2','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
+insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love3','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
+insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love4','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
+insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love5','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
+insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love6','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
+insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love7','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
 
 insert into board_tb (title, content, user_id, thumbnail, created_at) values ('첫번째 제목 입니다.','첫번째 내용입니다.', 1, '/images/dora1.png', now());
 insert into board_tb (title, content, user_id, thumbnail, created_at) values ('두번째 제목 입니다.','두번째 내용입니다.', 2, '/images/dora1.png', now());

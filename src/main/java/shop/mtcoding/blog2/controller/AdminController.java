@@ -1,9 +1,12 @@
 package shop.mtcoding.blog2.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -34,11 +37,11 @@ public class AdminController {
     }
 
     @PostMapping("/admin/login")
-    public String LoginAdmin(AdminReqDto adminReqDto){
+    public String LoginAdmin(AdminReqDto adminReqDto, Model model){
         if (adminReqDto.getUsername() == null || adminReqDto.getUsername().isEmpty()){
             throw new CustomException("아이디를 입력해주세요");
         }
-        if (adminReqDto.getPassword() == null || adminReqDto.getPassword().isEmpty())}{
+        if (adminReqDto.getPassword() == null || adminReqDto.getPassword().isEmpty()){
             throw new CustomException("패스워드를 입력해주세요");
         }
         User admin = userRepository.findByUsernameAndPassword(adminReqDto.getUsername(), adminReqDto.getPassword());
@@ -46,6 +49,11 @@ public class AdminController {
             throw new CustomException("관리자 계정이 아닙니다.");
         }
         session.setAttribute("principal", admin);
+
+        // 회원정보 가져오기
+        List<User> userList = userRepository.findAll();
+
+        model.addAttribute("userList", userList);
         return "admin/user";
     }
 }
