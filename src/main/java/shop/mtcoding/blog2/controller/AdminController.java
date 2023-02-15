@@ -111,11 +111,11 @@ public class AdminController {
         }
         List<AdminReplyRespDto> replyList = replyRepository.findAllByAdmin();
         model.addAttribute("replyList", replyList);
-    return "admin/reply";
+    return "/admin/reply";
     }
 
     @PostMapping("/admin/login")
-    public String LoginAdmin(AdminReqDto adminReqDto, Model model){
+    public String loginAdmin(AdminReqDto adminReqDto, Model model){
         if (adminReqDto.getUsername() == null || adminReqDto.getUsername().isEmpty()){
             throw new CustomException("아이디를 입력해주세요");
         }
@@ -123,6 +123,9 @@ public class AdminController {
             throw new CustomException("패스워드를 입력해주세요");
         }
         User admin = userRepository.findByUsernameAndPassword(adminReqDto.getUsername(), adminReqDto.getPassword());
+        if ( admin == null ){
+            throw new CustomException("아이디 또는 비밀번호가 다릅니다.");
+        }
         if( !admin.getRole().equals("ADMIN")){
             throw new CustomException("관리자 계정이 아닙니다.");
         }
@@ -130,7 +133,7 @@ public class AdminController {
         // 회원정보 가져오기
         List<User> userList = userRepository.findAll();
         model.addAttribute("userList", userList);
-        return "admin/user";
+        return "redirect:admin/user";
     }
 
     @DeleteMapping("/admin/user/delete")
