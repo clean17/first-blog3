@@ -154,11 +154,11 @@ public class AdminController {
         if ( aDto.getId() == null ){
             throw new CustomApiException("삭제할 게시글 아이디가 비었습니다.");
         }
-        boardService.게시글삭제(aDto.getId(), admin);
+        boardService.글삭제(aDto.getId(), admin.getId());
         return new ResponseEntity<>(new ResponseDto<>(1, "게시글 삭제 성공", null), HttpStatus.OK);
     }
 
-    @DeleteMapping("/admin/user/delete")
+    @DeleteMapping("/admin/reply/delete")
     public ResponseEntity<?> delateReply(@RequestBody AdminReqDeleteDto aDto){
         User admin = (User)session.getAttribute("principal");
         if( !admin.getRole().equals("ADMIN")){
@@ -167,7 +167,7 @@ public class AdminController {
         if ( aDto.getId() == null ){
             throw new CustomApiException("삭제할 댓글 아이디가 비었습니다.");
         }
-        replyService.댓글삭제(aDto.getId(), admin);
+        // replyService.댓글삭제(aDto.getId(), admin);
         return new ResponseEntity<>(new ResponseDto<>(1, "댓글 삭제 성공", null), HttpStatus.OK);
     }
 }
