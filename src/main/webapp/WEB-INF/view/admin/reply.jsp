@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp" %>
 <div class="d-flex mx-auto">
-    <div >
+    <div class="ms-4 mt-4">
         <ul class="nav flex-column nav-pills">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/admin/user">회원관리</a>
+                <a class="nav-link" aria-current="page" href="/admin/user">회원관리</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/admin/board">게시글 관리</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/reply">댓글 관리</a>
+                <a class="nav-link active" href="/admin/reply">댓글 관리</a>
             </li>
             <!-- <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -18,32 +18,29 @@
         </ul>
     </div>
     
-    <div class="container mt-3">
-        <h2>회원 관리</h2>
-        <p>회원의 권한을 변경하거나 계정을 삭제할 수 있습니다.</p>
+    <div class="container mt-3 ">
+        <h2>댓글 관리</h2>
+        <p>댓글을 삭제할 수 있습니다.</p>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>회원 번호</th>
-                    <th>회원 아이디</th>
-                    <th>회원 E-mail</th>
-                    <th>회원 권한</th>
-                    <th>계정 생성일</th>
-                    <th>회원 계정 삭제</th>
+                    <th>댓글 번호</th>
+                    <th>댓글 내용</th>
+                    <th>댓글 작성자</th>
+                    <th>게시글 번호</th>
+                    <th>댓글 생성일</th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${userList}" var="user">
-                    <c:if test="${user.role == 'USER'}" >
-                        <tr id=`user-${user.id}`>
-                            <td>${user.id}</td>
-                            <td>${user.username}</td>
-                            <td>${user.email}</td>
-                            <td>${user.role}</td>
-                            <td>${user.createdAt}</td>
-                            <td><button class="btn btn-danger" onclick="deleteUser(`${user.id}`)">삭제하기</button></td>
+                <c:forEach items="${replyList}" var="reply">
+                        <tr id="reply-${reply.id}">
+                            <td>${reply.id}</td>
+                            <td class="my-title-ellipsis">${reply.comment}</td>
+                            <td>${reply.username}</td>
+                            <td>${reply.boardId}</td>
+                            <td>${reply.createdAt}</td>
+                            <td><button class="btn btn-danger" onclick="deleteUser(`${reply.id}`)">삭제하기</button></td>
                         </tr>
-                    </c:if>
                 </c:forEach>
             </tbody>
         </table>
@@ -62,7 +59,7 @@
             dataType:"json"
         }).done((res) => {
             alert(res.msg);
-            $('#user-'+idx).remove();
+            $('#reply-'+idx).remove();
         }).fail((err) => {
             alert(err.responseJSON.msg);
         });

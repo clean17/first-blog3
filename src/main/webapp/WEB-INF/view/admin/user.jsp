@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp" %>
 <div class="d-flex mx-auto">
-    <div>
+    <div class="ms-4 mt-4">
         <ul class="nav flex-column nav-pills">
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/admin/user">회원관리</a>

@@ -18,6 +18,7 @@ import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDeleteDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardRespDto;
+import shop.mtcoding.blog2.dto.admin.AdminResp.AdminReplyRespDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
 import shop.mtcoding.blog2.model.BoardRepository;
@@ -108,7 +109,7 @@ public class AdminController {
         if ( !admin.getRole().equals("ADMIN")){
             return "redirect:/admin/loginForm";
         }
-        List<Reply> replyList = replyRepository.findAll();
+        List<AdminReplyRespDto> replyList = replyRepository.findAllByAdmin();
         model.addAttribute("replyList", replyList);
     return "admin/reply";
     }
@@ -167,7 +168,7 @@ public class AdminController {
         if ( aDto.getId() == null ){
             throw new CustomApiException("삭제할 댓글 아이디가 비었습니다.");
         }
-        // replyService.댓글삭제(aDto.getId(), admin);
+        replyService.댓글삭제(aDto.getId(), admin.getId());
         return new ResponseEntity<>(new ResponseDto<>(1, "댓글 삭제 성공", null), HttpStatus.OK);
     }
 }

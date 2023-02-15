@@ -19,7 +19,13 @@ insert into board_tb (title, content, user_id, thumbnail, created_at) values ('�
 insert into reply_tb (comment, user_id, board_id, created_at) values ('1등 ㅋㅋ', 2, 1, now());
 insert into reply_tb (comment, user_id, board_id, created_at) values ('댓글 테스트 !!', 1, 2,now());
 insert into reply_tb (comment, user_id, board_id, created_at) values ('좋은 글이네요', 1, 1,now());
-insert into reply_tb (comment, user_id, board_id, created_at) values ('ㅎㅎ', 2, 2,now());
+insert into reply_tb (comment, user_id, board_id, created_at) values ('ㅎ1ㅎ', 2, 2,now());
+insert into reply_tb (comment, user_id, board_id, created_at) values ('ㅎ2ㅎ', 2, 2,now());
+insert into reply_tb (comment, user_id, board_id, created_at) values ('ㅎ3ㅎ', 2, 2,now());
+insert into reply_tb (comment, user_id, board_id, created_at) values ('ㅎ4ㅎ', 2, 2,now());
+insert into reply_tb (comment, user_id, board_id, created_at) values ('ㅎ5ㅎ', 2, 2,now());
+insert into reply_tb (comment, user_id, board_id, created_at) values ('ㅎ6ㅎ', 2, 2,now());
+insert into reply_tb (comment, user_id, board_id, created_at) values ('ㅎ677ㅎ', 2, 2,now());
 
 insert into love_tb (count, user_id) values (1, 1);
 

@@ -43,15 +43,15 @@ public class BoardService {
     @Transactional
     public void 글삭제(int id, int principalId){
         User admin = userRepository.findById(principalId);
-        System.out.println("테스트 : "+admin.getRole());
-        System.out.println("테스트 : "+id);
+        // System.out.println("테스트 : "+admin.getRole());
+        // System.out.println("테스트 : "+id);
         if ( admin.getRole().equals("ADMIN")){
             try {
                 boardRepository.deleteBoard(id);
                 return;
             } catch (Exception e) {
                 log.error(e.getMessage());
-                throw new CustomApiException("서버 오류로 회원삭제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new CustomApiException("서버 오류로 게시글삭제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         Board board = boardRepository.findById(id);
