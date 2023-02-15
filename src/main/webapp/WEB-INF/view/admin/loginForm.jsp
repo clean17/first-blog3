@@ -2,7 +2,9 @@
 <%@ include file="../layout/header.jsp" %>
 
     <div class="container my-3">
-        <div class="container"> 
+        <div class="container">
+            <div class="justfy-content-center"><h1>관리자 페이지</h1></div>
+             
             <form action="/login" method="post" >
                 <div class="form-group mb-2">
                     <input type="text" name="username" class="form-control" placeholder="Enter username" id="username" required>

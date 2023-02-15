@@ -13,7 +13,11 @@ public interface UserRepository {
     public int insertUser(
             @Param("username") String username,
             @Param("password") String password,
-            @Param("email") String email);
+            @Param("email") String email,
+            @Param("profile") String profile,
+            @Param("role") String role
+            );
+            
 
     public User findByUsernameAndPassword(
             @Param("username") String username,

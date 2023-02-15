@@ -29,7 +29,13 @@ public class UserService {
         if (sameUser != null) {
             throw new CustomException("동일한 username이 존재합니다");
         }
-        int result = userRepository.insertUser(userDto.getUsername(), userDto.getPassword(), userDto.getEmail());        
+        int result = userRepository.insertUser(
+                userDto.getUsername(), 
+                userDto.getPassword(), 
+                userDto.getEmail(),
+                "/images/default_profile.png",
+                "USER"  
+                );        
         if (result !=1) {
             throw new CustomException("회원가입에 실패 했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);   
         }

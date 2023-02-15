@@ -95,6 +95,7 @@ public class UserController {
             throw new CustomException("패스워드를 입력하세요");
         }
         User prinipal = service.로그인(userDto);
+        System.out.println("테스트 : "+ prinipal.getProfile());
         session.setAttribute("principal", prinipal);         
         return "redirect:/";
     }
@@ -105,18 +106,17 @@ public class UserController {
         if( principal == null ){
             throw new CustomApiException("로그인이 필요한 페이지 입니다.", HttpStatus.UNAUTHORIZED);
         }
-        System.out.println(profile.getContentType());
+        // System.out.println(profile.getContentType());
         // System.out.println(profile.getOriginalFilename());
         if( profile.isEmpty()){
             throw new CustomApiException("사진이 전송 되지 않았습니다.");
         }
-        // if ( ! profile.getContentType().equals("image*")){
-        //     throw new CustomApiException("사진을 입력하세요 !");
-        // }
+
+      
 
         User userPS = service.프로필사진수정(profile, principal.getId());
         session.setAttribute("principal", userPS);
         System.out.println("테스트 : "+userPS.getProfile());
-        return new ResponseEntity<>(new ResponseDto<>(1, "수정 성공", null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "   성공", null), HttpStatus.OK);
     }
 }
