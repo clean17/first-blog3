@@ -54,7 +54,7 @@
         let data = { id: idx }
         $.ajax({
             type: "delete",
-            url: "/admin/user/delete",
+            url: "/admin/reply/delete",
             data: JSON.stringify(data),
             headers:{
                 "content-type":"application/json; charset=utf-8"
@@ -63,9 +63,8 @@
         }).done((res) => {
             alert(res.msg);
             $('#user-'+idx).remove();
-            console.log("왜 안나옴");
         }).fail((err) => {
-        
+            alert(err.responseJSON.msg);
         });
     }
 </script>

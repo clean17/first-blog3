@@ -63,9 +63,8 @@
         }).done((res) => {
             alert(res.msg);
             $('#user-' + idx).remove();
-            console.log("왜 안나옴");
         }).fail((err) => {
-
+            alert(err.responseJSON.msg);
         });
     }
 </script>

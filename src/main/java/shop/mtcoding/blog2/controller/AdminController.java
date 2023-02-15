@@ -17,14 +17,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDeleteDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDto;
+import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardRespDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
-import shop.mtcoding.blog2.model.Board;
 import shop.mtcoding.blog2.model.BoardRepository;
 import shop.mtcoding.blog2.model.Reply;
 import shop.mtcoding.blog2.model.ReplyRepository;
 import shop.mtcoding.blog2.model.User;
 import shop.mtcoding.blog2.model.UserRepository;
+import shop.mtcoding.blog2.service.BoardService;
+import shop.mtcoding.blog2.service.ReplyService;
 import shop.mtcoding.blog2.service.UserService;
 
 @Controller
@@ -45,7 +47,11 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BoardService boardService;
     
+    @Autowired
+    private ReplyService replyService;
 
     @GetMapping("/admin/loginForm")
     public String loginForm(){
@@ -88,7 +94,7 @@ public class AdminController {
         if ( !admin.getRole().equals("ADMIN")){
             return "redirect:/admin/loginForm";
         }
-        List<Board> boardList = boardRepository.findAll();
+        List<AdminBoardRespDto> boardList = boardRepository.findAllByAdmin();
         model.addAttribute("boardList", boardList);
     return "admin/board";
     }
@@ -137,5 +143,31 @@ public class AdminController {
         }
         userService.회원삭제(aDto.getId(), admin);
         return new ResponseEntity<>(new ResponseDto<>(1, "유저 계정 삭제 성공", null), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/admin/board/delete")
+    public ResponseEntity<?> delateBoard(@RequestBody AdminReqDeleteDto aDto){
+        User admin = (User)session.getAttribute("principal");
+        if( !admin.getRole().equals("ADMIN")){
+            throw new CustomException("관리자 계정이 아닙니다.");
+        }
+        if ( aDto.getId() == null ){
+            throw new CustomApiException("삭제할 게시글 아이디가 비었습니다.");
+        }
+        boardService.게시글삭제(aDto.getId(), admin);
+        return new ResponseEntity<>(new ResponseDto<>(1, "게시글 삭제 성공", null), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/admin/user/delete")
+    public ResponseEntity<?> delateReply(@RequestBody AdminReqDeleteDto aDto){
+        User admin = (User)session.getAttribute("principal");
+        if( !admin.getRole().equals("ADMIN")){
+            throw new CustomException("관리자 계정이 아닙니다.");
+        }
+        if ( aDto.getId() == null ){
+            throw new CustomApiException("삭제할 댓글 아이디가 비었습니다.");
+        }
+        replyService.댓글삭제(aDto.getId(), admin);
+        return new ResponseEntity<>(new ResponseDto<>(1, "댓글 삭제 성공", null), HttpStatus.OK);
     }
 }
