@@ -20,7 +20,25 @@
     
     <div class="container mt-3">
         <h2>게시글 관리</h2>
-        <p>게시글을 삭제할 수 있습니다.</p>
+
+                               <div class="d-flex justify-content-between">
+
+                    <div>
+                        <p>게시글을 삭제할 수 있습니다.</p>
+                    </div>
+           
+                    <div>
+                    <div class="input-group">
+                        <div class="form-outline">
+                            <input id="search-input" type="search" id="form1" class="form-control" placeholder="검색"/>
+                        </div>
+                        <button id="search-button" type="button" class="btn btn-primary" onclick="searchBoard()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    </div>
+                </div>
+        
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -29,6 +47,7 @@
                     <th>게시글 내용</th>
                     <th>게시글 작성자</th>
                     <th>게시글 작성일</th>
+                    <th>게시글 삭제</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,6 +77,25 @@
         }).fail((err) => {
             alert(err.responseJSON.msg);
         });
+    }
+    function searchBoard(){
+        let data = {
+            search: $('#form1').val()
+        }
+        $.ajax({
+            type: "post",
+            url: "/admin/board/search",
+            data: JSON.stringify(data),
+            headers:{
+                "content-type":"application/json; charset=utf-8"
+            },
+            dataType:"json"
+        }).done((res) => {
+        
+        }).fail((err) => {
+        
+        });
+
     }
 </script>
 <%@ include file="../layout/footer.jsp" %>

@@ -20,7 +20,25 @@
     
     <div class="container mt-3 ">
         <h2>댓글 관리</h2>
-        <p>댓글을 삭제할 수 있습니다.</p>
+
+                        <div class="d-flex justify-content-between">
+
+                    <div>
+                        <p>댓글을 삭제할 수 있습니다.</p>
+                    </div>
+           
+                    <div>
+                    <div class="input-group">
+                        <div class="form-outline">
+                            <input id="search-input" type="search" id="form1" class="form-control" placeholder="검색"/>
+                        </div>
+                        <button id="search-button" type="button" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    </div>
+                </div>
+        
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -29,6 +47,7 @@
                     <th>댓글 작성자</th>
                     <th>게시글 번호</th>
                     <th>댓글 생성일</th>
+                    <th>댓글 삭제</th>
                 </tr>
             </thead>
             <tbody>

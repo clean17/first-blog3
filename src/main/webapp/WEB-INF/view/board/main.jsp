@@ -68,5 +68,8 @@
     <h3>Carousel Example</h3>
     <p>The following example shows how to create a basic carousel with indicators and controls.</p>
 </div>
+<script>
+    // $('.carousel').carousel({ interval: 100 });
+</script>
 
 <%@ include file="../layout/footer.jsp" %>  

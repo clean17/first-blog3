@@ -13,12 +13,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import shop.mtcoding.blog2.dto.ResponseDto;
-import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDeleteBoardDto;
-import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDeleteReplyDto;
-import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDeleteUserDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardRespDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminReplyRespDto;
@@ -136,6 +132,15 @@ public class AdminController {
         List<User> userList = userRepository.findAll();
         model.addAttribute("userList", userList);
         return "redirect:/admin/user";
+    }
+
+
+    /////////////// 여기 작업해야함 쿼리스트링으로 보내도 될듯 ?
+    // @PostMapping("/admin/board/search")
+    // public ResponseEntity<?> searchBoard(Model model){
+        
+
+    //     return new ResponseEntity<>(new ResponseDto<>(1, "", null), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/admin/user/{id}/delete")
