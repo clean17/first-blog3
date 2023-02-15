@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp" %>
 <div class="d-flex mx-auto">
-    <div>
+    <div >
         <ul class="nav flex-column nav-pills">
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/admin/user">회원관리</a>
@@ -17,7 +17,7 @@
             </li> -->
         </ul>
     </div>
-
+    
     <div class="container mt-3">
         <h2>회원 관리</h2>
         <p>회원의 권한을 변경하거나 계정을 삭제할 수 있습니다.</p>
@@ -34,8 +34,8 @@
             </thead>
             <tbody>
                 <c:forEach items="${userList}" var="user">
-                    <c:if test="${user.role == 'USER'}">
-                        <tr id="user-${user.id}">
+                    <c:if test="${user.role == 'USER'}" >
+                        <tr id=`user-${user.id}`>
                             <td>${user.id}</td>
                             <td>${user.username}</td>
                             <td>${user.email}</td>
@@ -48,24 +48,24 @@
             </tbody>
         </table>
     </div>
-</div>
+    </div>
 <script>
-    function deleteUser(idx) {
+    function deleteUser(idx){
         let data = { id: idx }
         $.ajax({
             type: "delete",
             url: "/admin/user/delete",
             data: JSON.stringify(data),
-            headers: {
-                "content-type": "application/json; charset=utf-8"
+            headers:{
+                "content-type":"application/json; charset=utf-8"
             },
-            dataType: "json"
+            dataType:"json"
         }).done((res) => {
             alert(res.msg);
-            $('#user-' + idx).remove();
+            $('#user-'+idx).remove();
             console.log("왜 안나옴");
         }).fail((err) => {
-
+        
         });
     }
 </script>

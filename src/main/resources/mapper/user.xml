@@ -31,4 +31,8 @@
         email=#{email}, profile = #{profile} where id = #{id}
     </update>
 
+    <delete id="delete">
+        delete from user_tb where id = #{id}
+    </delete>
+
 </mapper>

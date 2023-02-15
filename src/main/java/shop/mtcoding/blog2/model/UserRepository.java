@@ -27,11 +27,12 @@ public interface UserRepository {
 
     public User findById(int id);
 
-    public void updateById(
+    public int updateById(
             @Param("id") int id,
             @Param("username") String username,
             @Param("password") String password,
             @Param("email") String email,
             @Param("profile") String profile,
             @Param("createdAt") Timestamp createdAt);
+    public int delete(int id);
 }

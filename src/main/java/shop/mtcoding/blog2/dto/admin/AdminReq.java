@@ -11,4 +11,10 @@ public class AdminReq {
         private String username;
         private String password;
     }
+
+    @Getter
+    @Setter
+    public static class AdminReqDeleteDto{
+        private Integer id;
+    }
 }
