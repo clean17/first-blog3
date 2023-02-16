@@ -179,10 +179,11 @@ public class AdminController {
         System.out.println("테스트 내용: "+aDto.getContent());
         System.out.println("테스트 작성자: "+aDto.getUsername());
         System.out.println("테스트-------------------------");
-
+        // boardRepository.findAllByAdminWithSearch("","내용","");
         List<AdminBoardSearchResqDto> boardSeartList = boardRepository.findAllByAdminWithSearch(aDto.getTitle(), aDto.getContent(), aDto.getUsername());
+        System.out.println("테스트 : "+boardSeartList.size());
         model.addAttribute("boardList", boardSeartList);
-        return "redirect:/admin/board";
+        return "admin/board";
     }
 
     @DeleteMapping("/admin/user/{id}/delete")

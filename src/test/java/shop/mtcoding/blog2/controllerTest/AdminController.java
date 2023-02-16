@@ -82,7 +82,7 @@ public class AdminController {
         // a.setContent(null);
         // a.setUsername(null);
 
-        String test = "title=&content=&username=ssar";
+        String test = "title=&content=내용&username=";
 
         ResultActions rs = mvc.perform(post("/admin/board/search")
         .content(test)
