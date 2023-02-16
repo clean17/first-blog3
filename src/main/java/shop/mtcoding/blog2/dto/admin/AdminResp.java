@@ -25,6 +25,34 @@ public class AdminResp {
 
     @Getter
     @Setter
+    public static class AdminBoardSearchResqDto{
+        private Integer id;
+        private String title;
+        private String content;
+        private String username;
+        private Timestamp createdAt;
+
+        public String getCreatedAtToString() {
+            return DateUtil.format(createdAt);
+        }
+    }
+
+    @Getter
+    @Setter
+    public static class AdminReplySearchRespDto{
+        private Integer id;
+        private String comment;
+        private String username;
+        private Integer boardId; 
+        private Timestamp createdAt;
+
+        public String getCreatedAtToString() {
+            return DateUtil.format(createdAt);
+        }
+    }
+
+    @Getter
+    @Setter
     public static class AdminReplyRespDto{
         private Integer id;
         private String comment;
@@ -36,4 +64,7 @@ public class AdminResp {
             return DateUtil.format(createdAt);
         }
     }
+
+
+
 }

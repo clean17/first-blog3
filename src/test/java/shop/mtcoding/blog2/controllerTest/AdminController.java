@@ -4,6 +4,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDeleteUserDto;
+import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardSearchResqDto;
 import shop.mtcoding.blog2.model.User;
 
 @AutoConfigureMockMvc
@@ -71,4 +74,26 @@ public class AdminController {
         String a = om.writeValueAsString(rs.andReturn());
         System.out.println(a);
     }
+
+    @Test
+    public void searchBoard_test() throws Exception{
+        // AdminReqSearchDto a = new AdminReqSearchDto();
+        // a.setTitle("첫번째");
+        // a.setContent(null);
+        // a.setUsername(null);
+
+        String test = "title=&content=내용&username=";
+
+        ResultActions rs = mvc.perform(post("/admin/board/search")
+        .content(test)
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+        .session(session));
+        // System.out.println("테스트 : "+);
+        // Map<String, Object> a = (Map<String, Object>)  rs.andReturn().getModelAndView().getModel();
+        // List<AdminBoardSearchRestDto> b = (List<AdminBoardSearchRestDto>) a.get("boardList");
+        // int te = b.size();
+        List<AdminBoardSearchResqDto> rr = (List<AdminBoardSearchResqDto>) rs.andReturn().getModelAndView().getModel().get("boardList");
+        System.out.println("테스트123 : "+rr);
+    }
+
 }

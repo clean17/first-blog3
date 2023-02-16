@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminReplyRespDto;
+import shop.mtcoding.blog2.dto.admin.AdminResp.AdminReplySearchRespDto;
 import shop.mtcoding.blog2.dto.reply.ReplyResp.ReplyListRespDto;
 
 @Mapper
@@ -28,4 +29,8 @@ public interface ReplyRepository {
     public int updateById(
         @Param("comment") String comment
     );
+    public List<AdminReplySearchRespDto> findReplyByAdminWithSearch(
+        @Param("comment") String comment, 
+        @Param("userId") String userId
+        );
 }

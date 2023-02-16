@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import shop.mtcoding.blog2.dto.admin.AdminResp.AdminReplySearchRespDto;
 import shop.mtcoding.blog2.dto.reply.ReplyResp.ReplyListRespDto;
-import shop.mtcoding.blog2.model.Reply;
 import shop.mtcoding.blog2.model.ReplyRepository;
 
 @MybatisTest
@@ -28,6 +28,19 @@ public class ReplyRepositoryTest {
         String responseBody = om.writeValueAsString(replyList);
         System.out.println("테스트 : "+ responseBody); 
     }
+
+    @Test
+    public void findReplyByAdminWithSearch_test() throws Exception{
+    
+        int board  = 2;
+        ObjectMapper om = new ObjectMapper();
+
+        List<AdminReplySearchRespDto> replyList = replyRepository.findReplyByAdminWithSearch("ㅋㅋ","1");
+        System.out.println("테스트 : "+replyList.size());
+        // String responseBody = om.writeValueAsString(replyList);
+        // System.out.println("테스트 : "+ responseBody); 
+    }
+
 
     // @Test
     // public void 

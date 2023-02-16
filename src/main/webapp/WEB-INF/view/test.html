@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,99 +58,142 @@
         </div>
     </nav>
     <div class="d-flex mx-auto">
-      <div class="ms-4 mt-4">
-          <ul class="nav flex-column nav-pills">
-              <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/admin/user">회원관리</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="/admin/board">게시글 관리</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="/admin/reply">댓글 관리</a>
-              </li>
-              <!-- <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li> -->
-          </ul>
-      </div>
-
-      <div class="container mt-3">
-          <h2>회원 관리</h2>
-
-          <div class="d-flex justify-content-between">
-          
-            <div>
-              <p>회원의 권한을 변경하거나 계정을 삭제할 수 있습니다.</p>
-            </div>
-          
-            <div>
-              <div class="input-group">
-                <div class="form-outline">
-                  <input id="search-input" type="search" id="form1" class="form-control w-400" placeholder="Search">
+        <div class="ms-4 mt-4">
+            <ul class="nav flex-column nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/admin/user">회원관리</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/board">게시글 관리</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/reply">댓글 관리</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li> -->
+            </ul>
+        </div>
+    
+        <div class="container mt-3">
+            <h2>게시글 관리</h2>
+    
+            <div class="d-flex justify-content-between">
+    
+                <div>
+                    <p>게시글을 삭제할 수 있습니다.</p>
                 </div>
-              </div>
-              <div class="h-100">
-                <button id="search-button" type="button" class="btn btn-outline-primary">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
+                <!-- action="/admin/board/search"  method="get" -->
+                    <div class="d-flex" >
+                        <div class="me-2 " style="width:150px">
+                            <select class="form-select" aria-label="Default select example" onchange="changeDropdown(this)">
+                                <option id="title" value="title">글 제목</option>
+                                <option id="content" value="content">글 내용</option>
+                                <option id="writer" value="username">작성자</option>
+                                <!-- onclick="changeDropdown(this) -->
+                            </select>
+                        </div>
+    
+                        <div class="input-group">
+                            <div class="form-outline">
+                                <input hidden="hidden">
+                                <input id="search-input" type="search" name="title" class="form-control"
+                                    placeholder="검색" />
+                            </div>
+                            <button id="search-button" type="submit" class="btn btn-primary" onclick="searchBoard()">
+                                <i class="fas fa-search"></i>
+                            </button>   
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                </div >
+                    <input type="text" name="" id="">
+                    <button type="button">dd</button>
+                </form>
+                
             </div>
-
-          </div>
-
-
-
-
-          <table class="table table-striped">
-              <thead>
-                  <tr>
-                      <th>회원 번호</th>
-                      <th>회원 아이디</th>
-                      <th>회원 E-mail</th>
-                      <th>회원 권한</th>
-                      <th>계정 생성일</th>
-                      <th>회원 계정 삭제</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <c:forEach items="${userList}" var="user">
-                      <c:if test="${user.role == 'USER'}">
-                          <tr id="user-${user.id}">
-                              <td>${user.id}</td>
-                              <td>${user.username}</td>
-                              <td>${user.email}</td>
-                              <td>${user.role}</td>
-                              <td>${user.createdAtToString}</td>
-                              <td><button class="btn btn-danger" onclick="deleteUser(`${user.id}`)">삭제하기</button>
-                              </td>
-                          </tr>
-                      </c:if>
-                  </c:forEach>
-              </tbody>
-          </table>
-      </div>
-  </div>
-  <script>
-      function deleteUser(id) {
-          $.ajax({
-              type: "delete",
-              url: "/admin/user/" + id + "/delete",
-              dataType: "json"
-          }).done((res) => {
-              alert(res.msg);
-              $('#user-' + id).remove();
-          }).fail((err) => {
-              alert(err.responseJSON.msg);
-          });
-      }
-      const searchButton = document.getElementById('search-button');
-      const searchInput = document.getElementById('search-input');
-      searchButton.addEventListener('click', () => {
-          const inputValue = searchInput.value;
-          alert(inputValue);
-      });
-  </script>
+    
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>게시글 번호</th>
+                        <th>게시글 제목</th>
+                        <th>게시글 내용</th>
+                        <th>게시글 작성자</th>
+                        <th>게시글 작성일</th>
+                        <th>게시글 삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${boardList}" var="board">
+                        <tr id="board-${board.id}">
+                            <td>${board.id}</td>
+                            <td>${board.title}</td>
+                            <td class="my-title-ellipsis">${board.content}</td>
+                            <td>${board.username}</td>
+                            <td>${board.createdAtToString}</td>
+                            <td><button class="btn btn-danger" onclick="deleteBoard(`${board.id}`)">삭제하기</button></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        function deleteBoard(id) {
+            $.ajax({
+                type: "delete",
+                url: "/admin/board/" + id + "/delete",
+                dataType: "json"
+            }).done((res) => {
+                alert(res.msg);
+                $('#board-' + id).remove();
+            }).fail((err) => {
+                alert(err.responseJSON.msg);
+            });
+        }
+        function searchBoard() {
+            let data;
+            if ($('#search-input').attr('name') === 'title') {
+                data = {
+                    title: $('#search-input').val()
+                }
+            }
+            if ($('#search-input').attr('name') === 'content') {
+                data = {
+                    content: $('#search-input').val()
+                }
+            }
+            if ($('#search-input').attr('name') === 'username') {
+                data = {
+                    username: $('#search-input').val()
+                }
+            }
+    
+            $.ajax({
+                type: "post",
+                url: "/admin/board/search",
+                data: JSON.stringify(data),
+                headers: {
+                    "content-type": "application/json; charset=utf-8"
+                },
+                dataType: "json"
+            }).done((res) => {
+                // 다시 테이블 그려야 해
+                console.log(res.data);
+            }).fail((err) => {
+    
+            });
+    
+        }
+    
+        function changeDropdown(obj) {
+            let DrondwonValue = $(obj).val();
+            console.log(DrondwonValue);
+            $('#search-input').attr('name', DrondwonValue);
+        }
+    </script>
     <div class="mt-4 p-5 bg-dark text-white rounded text-center" style="margin-bottom: 0">
         <p>Created by MetaCoding</p>
         <p>📞 010-2222-7777</p>

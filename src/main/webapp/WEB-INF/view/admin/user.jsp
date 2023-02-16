@@ -1,22 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ include file="../layout/header.jsp" %>
-        <div class="d-flex mx-auto">
-            <div class="ms-4 mt-4">
-                <ul class="nav flex-column nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/admin/user">회원관리</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/board">게시글 관리</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/reply">댓글 관리</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li> -->
-                </ul>
-            </div>
+<%@ include file="../layout/header.jsp" %>
+<div class="d-flex mx-auto">
+    <div class="ms-4 mt-4">
+        <ul class="nav flex-column nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/admin/user">회원관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="/admin/board">게시글 관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/reply">댓글 관리</a>
+            </li>
+        </ul>
+    </div>
 
             <div class="container mt-3">
                 <h2>회원 관리</h2>
@@ -62,7 +59,7 @@
                                     <td>${user.email}</td>
                                     <td>${user.role}</td>
                                     <td>${user.createdAtToString}</td>
-                                    <td><button class="btn btn-danger" onclick="deleteUser(`${user.id}`)">삭제하기</button>
+                                    <td><button class="btn btn-danger py-0" onclick="deleteUser(`${user.id}`)">삭제하기</button>
                                     </td>
                                 </tr>
                             </c:if>

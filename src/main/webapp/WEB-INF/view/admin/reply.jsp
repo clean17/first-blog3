@@ -7,38 +7,44 @@
                 <a class="nav-link" aria-current="page" href="/admin/user">회원관리</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/board">게시글 관리</a>
+                <a class="nav-link " href="/admin/board">게시글 관리</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="/admin/reply">댓글 관리</a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li> -->
         </ul>
     </div>
     
     <div class="container mt-3 ">
         <h2>댓글 관리</h2>
+    
+        <div class="d-flex justify-content-between">
+    
+            <div>
+                <p>댓글을 삭제할 수 있습니다.</p>
+            </div>
+     <!-- action="/admin/board/search"  method="get" -->
+     <div class="d-flex">
+        <div class="me-2 " style="width:200px">
+            <select class="form-select" aria-label="Default select example" onchange="changeDropdown(this)">
+                <option value="comment">댓글 내용</option>
+                <option value="username">댓글 작성자</option>
+            </select>
+        </div>
 
-                        <div class="d-flex justify-content-between">
-
-                    <div>
-                        <p>댓글을 삭제할 수 있습니다.</p>
-                    </div>
-           
-                    <div>
-                    <div class="input-group">
-                        <div class="form-outline">
-                            <input id="search-input" type="search" id="form1" class="form-control" placeholder="검색"/>
-                        </div>
-                        <button id="search-button" type="button" class="btn btn-primary">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                    </div>
-                </div>
-        
+        <div class="input-group">
+            <div class="form-outline">
+                <input id="search-input" type="search" name="comment" class="form-control" placeholder="검색"
+                    onkeypress="if(event.keyCode=='13'){event.preventDefault(); searchEvt();}" />
+            </div>
+            <button id="search-button" class="btn btn-primary" onclick="searchBoard()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <div>
+        </div>
+    </div>
+</div>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -50,11 +56,11 @@
                     <th>댓글 삭제</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="reply-table">
                 <c:forEach items="${replyList}" var="reply">
-                        <tr id="reply-${reply.id}">
+                        <tr id="reply-${reply.id}" class="remove-table">
                             <td>${reply.id}</td>
-                            <td class="my-title-ellipsis">${reply.comment}</td>
+                            <td class="my-title-ellipsis"><a href="/board/detail/${reply.boardId}">${reply.comment}</a></td>
                             <td>${reply.username}</td>
                             <td>${reply.boardId}</td>
                             <td>${reply.createdAtToString}</td>
@@ -77,6 +83,63 @@
         }).fail((err) => {
             alert(err.responseJSON.msg);
         });
+    }
+
+    function searchEvt() {
+        searchBoard();
+    };
+
+    function searchBoard() {
+        $('.remove-table').remove();
+        let keyword;
+        if ($('#search-input').attr('name') === 'comment') {
+            keyword = `comment`+`=`+$('#search-input').val()
+        }
+        if ($('#search-input').attr('name') === 'username') {
+            keyword = `username`+`=`+$('#search-input').val()
+        }
+        // console.log(keyword);
+        $.ajax({
+            type: "get",
+            url: "/admin/reply/search?"+keyword,
+            dataType: "json"
+        }).done((res) => {
+            render(res.data);
+            console.log(res.data);
+        }).fail((err) => {
+            alert(err.reponseJSON.msg);
+        });
+        $('#search-input').val("");
+    }
+
+    function render(replys) {
+        // console.log('그리는중');
+        // console.log(boards[1].id);
+        replys.forEach(reply => {
+            let id = reply.id;
+            let title = reply.title;
+            let comment = reply.comment;
+            let boardId = reply.boardId;
+            let username = reply.username;
+            let createdAt = reply.createdAtToString;
+            let el = `
+                        <tr id="reply-`+id+`" class="remove-table">
+                            <td>`+id+`</td>
+                            <td class="my-title-ellipsis"><a href="/board/detail/`+boardId+`">`+comment+`</a></td>
+                            <td>`+username+`</td>
+                            <td>`+boardId+`</td>
+                            <td>`+createdAt+`</td>
+                            <td><button class="btn btn-danger" onclick="deleteUser(`+id+`)">삭제하기</button></td>
+                        </tr>
+            `;
+            $("#reply-table").append(el);
+        });
+    }
+
+    function changeDropdown(obj) {
+        let DrondwonValue = $(obj).val();
+        console.log(DrondwonValue);
+        $('#search-input').attr('name', DrondwonValue);
     }
 </script>
 <%@ include file="../layout/footer.jsp" %>
