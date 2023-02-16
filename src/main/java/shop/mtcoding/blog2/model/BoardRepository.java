@@ -15,7 +15,7 @@ import shop.mtcoding.blog2.dto.board.BoardResp.BoardUpdateRespDto;
 public interface BoardRepository {
     public List<Board> findAll();
     public List<AdminBoardRespDto> findAllByAdmin();
-    public List<AdminBoardSearchResqDto> findAllByAdminWithSearch(
+    public List<AdminBoardSearchResqDto> findBoardByAdminWithSearch(
         @Param("title") String title,
         @Param("content") String content,
         @Param("userId") String userId

@@ -43,5 +43,12 @@ public class AdminReq {
         private String content;
         private String username;
     }
+
+    @Getter
+    @Setter
+    public static class AdminReqSearchReplyAjaxDto{
+        private String comment;
+        private String username;
+    }
     
 }

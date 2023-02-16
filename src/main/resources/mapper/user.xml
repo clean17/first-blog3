@@ -20,6 +20,13 @@
         select id from user_tb where username = #{username}
     </select>
 
+    <select id="findReplyByAdminWithSearch" resultType="shop.mtcoding.blog2.dto.admin.AdminResp$AdminReplySearchRespDto">
+        select r.id, r.comment,
+      (select username from user_tb where id = r.user_id ) username,
+      r.board_id, r.created_at
+      from reply_tb r where comment regexp #{comment} and user_id regexp #{userId}
+    </select>
+
 
     <select id="findByUsername" resultType="shop.mtcoding.blog2.model.User">
         select * from user_tb where username = #{username}

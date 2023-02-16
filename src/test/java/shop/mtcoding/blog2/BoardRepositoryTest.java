@@ -23,7 +23,7 @@ public class BoardRepositoryTest {
         ObjectMapper om = new ObjectMapper();
         
 
-        List<AdminBoardSearchResqDto> replyList = boardRepository.findAllByAdminWithSearch("","내용","");
+        List<AdminBoardSearchResqDto> replyList = boardRepository.findBoardByAdminWithSearch("","내용","");
 
         String responseBody = om.writeValueAsString(replyList);
         System.out.println("테스트 : "+ responseBody); 
