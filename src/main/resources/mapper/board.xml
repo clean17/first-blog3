@@ -35,6 +35,10 @@
       where id = #{id}
     </select>
 
+    <select id="findBoardByAdmin">
+      select * from board_tb where title
+    </select>
+
     <insert id="insertBoard">
       insert into board_tb ( title, content, user_id, thumbnail, created_at) 
         values (#{title}, #{content}, #{userId}, #{thumbnail}, now())

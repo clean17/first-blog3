@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDto;
+import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqSearchDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardRespDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminReplyRespDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
@@ -135,12 +136,14 @@ public class AdminController {
     }
 
 
-    /////////////// 여기 작업해야함 쿼리스트링으로 보내도 될듯 ?
-    // @PostMapping("/admin/board/search")
-    // public ResponseEntity<?> searchBoard(Model model){
+    ///////////// 여기 작업해야함 쿼리스트링으로 보내도 될듯 ?
+    @PostMapping("/admin/board/search")
+    public String searchBoard(AdminReqSearchDto aDto, Model model){
+        System.out.println("테스트 제목 : "+ aDto.getTitle());       
+        System.out.println("테스트 내용 : "+ aDto.getContent());       
+        System.out.println("테스트 작성자 : "+ aDto.getUsername());       
         
-
-    //     return new ResponseEntity<>(new ResponseDto<>(1, "", null), HttpStatus.CREATED);
+        return "redirect:/admin/board";
     }
 
     @DeleteMapping("/admin/user/{id}/delete")

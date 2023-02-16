@@ -27,4 +27,12 @@ public class AdminReq {
     public static class AdminReqDeleteReplyDto{
         private Integer id;
     }
+
+    @Getter
+    @Setter
+    public static class AdminReqSearchDto{
+        private String title;
+        private String content;
+        private String username;
+    }
 }
