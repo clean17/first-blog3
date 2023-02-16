@@ -18,7 +18,7 @@ import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqSearchDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardRespDto;
-import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardSearchRestDto;
+import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardSearchResqDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminReplyRespDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
@@ -54,6 +54,16 @@ public class AdminController {
     @Autowired
     private ReplyService replyService;
 
+    public void setUp(){
+        User mockUser = new User();
+        mockUser.setId(1);
+        mockUser.setUsername("admin");
+        mockUser.setPassword("admin");
+        mockUser.setRole("ADMIN");
+        mockUser.setEmail("admin@nate.com");
+        session.setAttribute("principal", mockUser);
+    }
+
     @GetMapping("/admin/loginForm")
     public String loginForm(){
         
@@ -88,6 +98,7 @@ public class AdminController {
 
     @GetMapping("/admin/board")
     public String manageBoard(Model model){
+        setUp();
         User admin = (User)session.getAttribute("principal");
         if ( admin == null ){
             return "redirect:/admin/loginForm";
@@ -144,10 +155,9 @@ public class AdminController {
         if( !admin.getRole().equals("ADMIN")){
             throw new CustomException("관리자 계정이 아닙니다.");
         }
-        System.out.println("테스트 제목 : "+ aDto.getTitle());       
-        System.out.println("테스트 내용 : "+ aDto.getContent());       
-        System.out.println("테스트 작성자 : "+ aDto.getUsername());
-        int searchNum = 0;
+        // System.out.println("테스트 제목 : "+ aDto.getTitle());       
+        // System.out.println("테스트 내용 : "+ aDto.getContent());       
+        // System.out.println("테스트 작성자 : "+ aDto.getUsername());
         if (aDto.getTitle()==null||aDto.getTitle().isEmpty()){
             aDto.setTitle("");
         }
@@ -157,14 +167,21 @@ public class AdminController {
         if (aDto.getUsername()==null||aDto.getUsername().isEmpty()){
             aDto.setUsername("");
         }else{
-            searchNum = userRepository.findByUsernameWithAdmin(aDto.getUsername());
+            Integer num = userRepository.findByUsernameWithAdmin(aDto.getUsername());
+            // System.out.println("테스트 번호: "+num );
+            if ( num == null ){
+                aDto.setUsername("");
+            }else{
+                aDto.setUsername(String.valueOf(num));
+            }
         }
-        System.out.println("테스트 : "+searchNum);
-        System.out.println("테스트 : "+aDto.getTitle());
-        System.out.println("테스트 : "+aDto.getContent());
+        System.out.println("테스트 제목: "+aDto.getTitle());
+        System.out.println("테스트 내용: "+aDto.getContent());
+        System.out.println("테스트 작성자: "+aDto.getUsername());
+        System.out.println("테스트-------------------------");
 
-        // List<AdminBoardSearchRestDto> boardSeartList = boardRepository.findAllByAdminWithSearch(aDto.getTitle(), aDto.getContent(), searchNum);
-        // model.addAttribute("boardList", boardSeartList);
+        List<AdminBoardSearchResqDto> boardSeartList = boardRepository.findAllByAdminWithSearch(aDto.getTitle(), aDto.getContent(), aDto.getUsername());
+        model.addAttribute("boardList", boardSeartList);
         return "redirect:/admin/board";
     }
 

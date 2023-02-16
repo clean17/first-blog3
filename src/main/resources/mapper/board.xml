@@ -13,8 +13,10 @@
       (select username from user_tb where id = b.user_id ) username, b.created_at from board_tb b
     </select>
 
-    <select id="findAllByAdminWithSearch" resultType="shop.mtcoding.blog2.dto.admin.AdminResp$AdminBoardSearchRestDto">
-      select * from board_tb where title regexp #{title} and content regexp #{content} and user_id regexp #{userId} 
+    <select id="findAllByAdminWithSearch" resultType="shop.mtcoding.blog2.dto.admin.AdminResp$AdminBoardSearchResqDto">
+      select b.id, b.title, b.content, 
+      (select username from user_tb where id = b.user_id ) username, b.created_at
+      from board_tb b where title regexp #{title} and content regexp #{content} and user_id regexp #{userId} 
     </select>
 
     <select id="findById" resultType="shop.mtcoding.blog2.model.Board">

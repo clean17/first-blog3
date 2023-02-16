@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardRespDto;
-import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardSearchRestDto;
+import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardSearchResqDto;
 import shop.mtcoding.blog2.dto.board.BoardResp.BoardDetailDto;
 import shop.mtcoding.blog2.dto.board.BoardResp.BoardMainListDto;
 import shop.mtcoding.blog2.dto.board.BoardResp.BoardUpdateRespDto;
@@ -15,7 +15,7 @@ import shop.mtcoding.blog2.dto.board.BoardResp.BoardUpdateRespDto;
 public interface BoardRepository {
     public List<Board> findAll();
     public List<AdminBoardRespDto> findAllByAdmin();
-    public List<AdminBoardSearchRestDto> findAllByAdminWithSearch(
+    public List<AdminBoardSearchResqDto> findAllByAdminWithSearch(
         @Param("title") String title,
         @Param("content") String content,
         @Param("userId") String userId

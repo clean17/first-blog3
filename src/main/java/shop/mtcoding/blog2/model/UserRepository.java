@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserRepository {
     public List<User> findAll();
-    public int findByUsernameWithAdmin(String username);
+    public Integer findByUsernameWithAdmin(String username);
 
     public int insertUser(
             @Param("username") String username,

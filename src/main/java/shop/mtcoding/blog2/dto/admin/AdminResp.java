@@ -25,7 +25,7 @@ public class AdminResp {
 
     @Getter
     @Setter
-    public static class AdminBoardSearchRestDto{
+    public static class AdminBoardSearchResqDto{
         private Integer id;
         private String title;
         private String content;
