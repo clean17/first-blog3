@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDto;
+import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqSearchAjaxDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqSearchDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardRespDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardSearchResqDto;
@@ -32,7 +34,7 @@ import shop.mtcoding.blog2.service.UserService;
 
 @Controller
 public class AdminController {
-    
+
     @Autowired
     private HttpSession session;
 
@@ -50,11 +52,11 @@ public class AdminController {
 
     @Autowired
     private BoardService boardService;
-    
+
     @Autowired
     private ReplyService replyService;
 
-    public void setUp(){
+    public void setUp() {
         User mockUser = new User();
         mockUser.setId(1);
         mockUser.setUsername("admin");
@@ -65,81 +67,81 @@ public class AdminController {
     }
 
     @GetMapping("/admin/loginForm")
-    public String loginForm(){
-        
+    public String loginForm() {
+
         return "admin/loginForm";
     }
-    
+
     @GetMapping("/admin")
-    public String admin(){
-        User principal = (User)session.getAttribute("principal");
-        if ( principal == null ){
+    public String admin() {
+        User principal = (User) session.getAttribute("principal");
+        if (principal == null) {
             return "redirect:/admin/loginForm";
         }
-        if ( !principal.getRole().equals("ADMIN")){
+        if (!principal.getRole().equals("ADMIN")) {
             return "redirect:/admin/loginForm";
         }
         return "admin/user";
     }
 
     @GetMapping("/admin/user")
-    public String manageUser(Model model){
-        User admin = (User)session.getAttribute("principal");
-        if ( admin == null ){
+    public String manageUser(Model model) {
+        User admin = (User) session.getAttribute("principal");
+        if (admin == null) {
             return "redirect:/admin/loginForm";
         }
-        if ( !admin.getRole().equals("ADMIN")){
+        if (!admin.getRole().equals("ADMIN")) {
             return "redirect:/admin/loginForm";
         }
         List<User> userList = userRepository.findAll();
         model.addAttribute("userList", userList);
-    return "admin/user";
+        return "admin/user";
     }
 
     @GetMapping("/admin/board")
-    public String manageBoard(Model model){
+    public String manageBoard(Model model) {
         setUp();
-        User admin = (User)session.getAttribute("principal");
-        if ( admin == null ){
+        User admin = (User) session.getAttribute("principal");
+        if (admin == null) {
             return "redirect:/admin/loginForm";
         }
-        if ( !admin.getRole().equals("ADMIN")){
+        if (!admin.getRole().equals("ADMIN")) {
             return "redirect:/admin/loginForm";
         }
         List<AdminBoardRespDto> boardList = boardRepository.findAllByAdmin();
         model.addAttribute("boardList", boardList);
-    return "admin/board";
+        return "admin/board";
     }
 
     @GetMapping("/admin/reply")
-    public String manageReply(Model model){
-        User admin = (User)session.getAttribute("principal");
-        if ( admin == null ){
+    public String manageReply(Model model) {
+        User admin = (User) session.getAttribute("principal");
+        if (admin == null) {
             return "redirect:/admin/loginForm";
         }
-        if ( !admin.getRole().equals("ADMIN")){
+        if (!admin.getRole().equals("ADMIN")) {
             return "redirect:/admin/loginForm";
         }
         List<AdminReplyRespDto> replyList = replyRepository.findAllByAdmin();
         model.addAttribute("replyList", replyList);
-    return "/admin/reply";
+        return "/admin/reply";
     }
 
     @PostMapping("/admin/login")
-    public String loginAdmin(AdminReqDto adminReqDto, Model model){
-        if (adminReqDto.getUsername() == null || adminReqDto.getUsername().isEmpty()){
+    public String loginAdmin(AdminReqDto adminReqDto, Model model) {
+        if (adminReqDto.getUsername() == null || adminReqDto.getUsername().isEmpty()) {
             throw new CustomException("아이디를 입력해주세요");
         }
-        if (adminReqDto.getPassword() == null || adminReqDto.getPassword().isEmpty()){
+        if (adminReqDto.getPassword() == null || adminReqDto.getPassword().isEmpty()) {
             throw new CustomException("패스워드를 입력해주세요");
         }
         User admin = userRepository.findByUsernameAndPassword(adminReqDto.getUsername(), adminReqDto.getPassword());
-        if ( admin == null ){
+        if (admin == null) {
             throw new CustomException("아이디 또는 비밀번호가 다릅니다.");
         }
-        if( !admin.getRole().equals("ADMIN")){
+        if (!admin.getRole().equals("ADMIN")) {
             throw new CustomException("관리자 계정이 아닙니다.");
-        } 
+        }
         session.setAttribute("principal", admin);
         // 회원정보 가져오기
         List<User> userList = userRepository.findAll();
@@ -147,9 +149,7 @@ public class AdminController {
         return "redirect:/admin/user";
     }
 
-
-    ///////////// 여기 작업해야함 쿼리스트링으로 보내도 될듯 ?
-    @PostMapping("/admin/board/search")
+    @GetMapping("/admin/board/search")
     public String searchBoard(AdminReqSearchDto aDto, Model model){
         User admin = (User)session.getAttribute("principal");
         if( !admin.getRole().equals("ADMIN")){
@@ -174,11 +174,11 @@ public class AdminController {
             }else{
                 aDto.setUsername(String.valueOf(num));
             }
-        }
-        System.out.println("테스트 제목: "+aDto.getTitle());
-        System.out.println("테스트 내용: "+aDto.getContent());
-        System.out.println("테스트 작성자: "+aDto.getUsername());
-        System.out.println("테스트-------------------------");
+        // }
+        // System.out.println("테스트 제목: "+aDto.getTitle());
+        // System.out.println("테스트 내용: "+aDto.getContent());
+        // System.out.println("테스트 작성자: "+aDto.getUsername());
+        // System.out.println("테스트-------------------------");
         // boardRepository.findAllByAdminWithSearch("","내용","");
         List<AdminBoardSearchResqDto> boardSeartList = boardRepository.findAllByAdminWithSearch(aDto.getTitle(), aDto.getContent(), aDto.getUsername());
         System.out.println("테스트 : "+boardSeartList.size());
@@ -186,13 +186,44 @@ public class AdminController {
         return "admin/board";
     }
 
+    @PostMapping("/admin/board/search")
+    public ResponseEntity<?> searchBoard(@RequestBody AdminReqSearchAjaxDto aDto) {
+        User admin = (User) session.getAttribute("principal");
+        if (!admin.getRole().equals("ADMIN")) {
+            throw new CustomApiException("관리자 계정이 아닙니다.");
+        }
+        if (aDto.getTitle() == null || aDto.getTitle().isEmpty()) {
+            aDto.setTitle("");
+        }
+        if (aDto.getContent() == null || aDto.getContent().isEmpty()) {
+            aDto.setContent("");
+        }
+        if (aDto.getUsername() == null || aDto.getUsername().isEmpty()) {
+            aDto.setUsername("");
+        } else {
+            Integer num = userRepository.findByUsernameWithAdmin(aDto.getUsername());
+            System.out.println("테스트 : "+num);
+            if (num == null) {
+                aDto.setUsername("결과없음");
+            } else {
+                aDto.setUsername(String.valueOf(num));
+            }
+        }
+        List<AdminBoardSearchResqDto> boardSeartList = boardRepository.findAllByAdminWithSearch(aDto.getTitle(),
+                aDto.getContent(),
+                aDto.getUsername());
+        // json 에 데이터 넣어줘야함
+        return new ResponseEntity<>(new ResponseDto<>(1, null, boardSeartList),
+                HttpStatus.OK);
+    }
+
     @DeleteMapping("/admin/user/{id}/delete")
-    public ResponseEntity<?> delateUser(@PathVariable Integer id){
-        if ( id == null ){
+    public ResponseEntity<?> delateUser(@PathVariable Integer id) {
+        if (id == null) {
             throw new CustomApiException("삭제할 회원 아이디가 비었습니다.");
         }
-        User admin = (User)session.getAttribute("principal");
-        if( !admin.getRole().equals("ADMIN")){
+        User admin = (User) session.getAttribute("principal");
+        if (!admin.getRole().equals("ADMIN")) {
             throw new CustomApiException("관리자 계정이 아닙니다.");
         }
         // userService.회원삭제(id, admin);
@@ -200,12 +231,12 @@ public class AdminController {
     }
 
     @DeleteMapping("/admin/board/{id}/delete")
-    public ResponseEntity<?> delateBoard(@PathVariable Integer id){
-        User admin = (User)session.getAttribute("principal");
-        if( !admin.getRole().equals("ADMIN")){
+    public ResponseEntity<?> delateBoard(@PathVariable Integer id) {
+        User admin = (User) session.getAttribute("principal");
+        if (!admin.getRole().equals("ADMIN")) {
             throw new CustomApiException("관리자 계정이 아닙니다.");
         }
-        if ( id == null ){
+        if (id == null) {
             throw new CustomApiException("삭제할 게시글 아이디가 비었습니다.");
         }
         boardService.글삭제(id, admin.getId());
@@ -213,12 +244,12 @@ public class AdminController {
     }
 
     @DeleteMapping("/admin/reply/{id}/delete")
-    public ResponseEntity<?> delateReply(@PathVariable Integer id){
-        User admin = (User)session.getAttribute("principal");
-        if( !admin.getRole().equals("ADMIN")){
+    public ResponseEntity<?> delateReply(@PathVariable Integer id) {
+        User admin = (User) session.getAttribute("principal");
+        if (!admin.getRole().equals("ADMIN")) {
             throw new CustomApiException("관리자 계정이 아닙니다.");
         }
-        if ( id == null ){
+        if (id == null) {
             throw new CustomApiException("삭제할 댓글 아이디가 비었습니다.");
         }
         replyService.댓글삭제(id, admin.getId());

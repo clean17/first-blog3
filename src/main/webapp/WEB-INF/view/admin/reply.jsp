@@ -7,14 +7,11 @@
                 <a class="nav-link" aria-current="page" href="/admin/user">회원관리</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/board">게시글 관리</a>
+                <a class="nav-link " href="/admin/board">게시글 관리</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="/admin/reply">댓글 관리</a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li> -->
         </ul>
     </div>
     
