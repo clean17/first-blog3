@@ -31,5 +31,6 @@ public interface ReplyRepository {
     );
     public List<AdminReplySearchRespDto> findReplyByAdminWithSearch(
         @Param("comment") String comment, 
-        @Param("userId") String userId);
+        @Param("userId") String userId
+        );
 }

@@ -59,7 +59,7 @@
                                     <td>${user.email}</td>
                                     <td>${user.role}</td>
                                     <td>${user.createdAtToString}</td>
-                                    <td><button class="btn btn-danger" onclick="deleteUser(`${user.id}`)">삭제하기</button>
+                                    <td><button class="btn btn-danger py-0" onclick="deleteUser(`${user.id}`)">삭제하기</button>
                                     </td>
                                 </tr>
                             </c:if>

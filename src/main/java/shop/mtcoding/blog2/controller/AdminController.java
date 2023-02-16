@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDto;
@@ -246,6 +247,15 @@ public class AdminController {
         // json 에 데이터 넣어줘야함
         return new ResponseEntity<>(new ResponseDto<>(1, "", replySeartList),
                 HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    @ResponseBody
+    public String erew(){
+        List<AdminReplySearchRespDto> replySeartList = replyRepository.findReplyByAdminWithSearch(
+        "",
+        "");
+    return "replySeartList";
     }
 
     
