@@ -35,4 +35,5 @@ public class AdminReq {
         private String content;
         private String username;
     }
+    
 }

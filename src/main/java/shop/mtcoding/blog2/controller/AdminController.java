@@ -18,6 +18,7 @@ import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqSearchDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardRespDto;
+import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardSearchRestDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminReplyRespDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
@@ -139,10 +140,31 @@ public class AdminController {
     ///////////// 여기 작업해야함 쿼리스트링으로 보내도 될듯 ?
     @PostMapping("/admin/board/search")
     public String searchBoard(AdminReqSearchDto aDto, Model model){
+        User admin = (User)session.getAttribute("principal");
+        if( !admin.getRole().equals("ADMIN")){
+            throw new CustomException("관리자 계정이 아닙니다.");
+        }
         System.out.println("테스트 제목 : "+ aDto.getTitle());       
         System.out.println("테스트 내용 : "+ aDto.getContent());       
-        System.out.println("테스트 작성자 : "+ aDto.getUsername());       
-        
+        System.out.println("테스트 작성자 : "+ aDto.getUsername());
+        int searchNum = 0;
+        if (aDto.getTitle()==null||aDto.getTitle().isEmpty()){
+            aDto.setTitle("");
+        }
+        if (aDto.getContent()==null||aDto.getContent().isEmpty()){
+            aDto.setContent("");
+        }
+        if (aDto.getUsername()==null||aDto.getUsername().isEmpty()){
+            aDto.setUsername("");
+        }else{
+            searchNum = userRepository.findByUsernameWithAdmin(aDto.getUsername());
+        }
+        System.out.println("테스트 : "+searchNum);
+        System.out.println("테스트 : "+aDto.getTitle());
+        System.out.println("테스트 : "+aDto.getContent());
+
+        // List<AdminBoardSearchRestDto> boardSeartList = boardRepository.findAllByAdminWithSearch(aDto.getTitle(), aDto.getContent(), searchNum);
+        // model.addAttribute("boardList", boardSeartList);
         return "redirect:/admin/board";
     }
 
