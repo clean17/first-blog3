@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp" %>
+<style>
+    .my-xl {
+        color: 000;
+    }
+    .my-cursor{ cursor: pointer; }
+    .my-cursor:hover{ color: red; }
+    .on-Clicked{ color: red; }
+</style>
 <div class="container my-3">
     <c:if test="${principal.id == dto.userId}">
         <div class="mb-3">
@@ -10,11 +18,12 @@
 
     <div class="mb-2 d-flex justify-content-end">
         글 번호 : &nbsp<span id="id">${dto.id}&nbsp&nbsp<i>&nbsp&nbsp&nbsp&nbsp </i></span> 작성자 : &nbsp<span
-            class="me-3"><i>${dto.username} </i></span>
-        <i id="heart" class="fa-regular fa-heart my-xl my-cursor"></i>
+            class="me-3"><i>${dto.username} </i></span>&nbsp&nbsp&nbsp 좋아요 &nbsp&nbsp 
+            <i id="heart-${dto.id}" class="mt-1 fa-regular fa-heart my-xl my-cursor" onclick="heart(`${dto.id}`)"></i>
+        
     </div>
-    <div>
-        <h1><b>${dto.title}</b></h1>
+    <div class="d-flex">
+        <h1 class="d-inline col-9"><b>${dto.title}</b></h1>
     </div>
     <hr />
     <div>
@@ -70,6 +79,11 @@
         height: 400
     });
 
+    function heart(id){
+        $('#heart-'+id).toggleClass("fa-solid");
+        $('#heart-'+id).toggleClass("on-Clicked");
+    }
+
     function saveReply(id, user, principalId) {
         let comm = $('#reply-content').val();
         let username = user;
@@ -96,7 +110,7 @@
     }
 
     function render(replyId, comm, username){
-            let str = `
+            let str = `     
              <li id="reply-`+ replyId + `" class="list-group-item d-flex justify-content-between ">
              <div id="test">`+ comm + `</div>
              <div class="d-flex justify-content-left">

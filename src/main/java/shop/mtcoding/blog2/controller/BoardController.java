@@ -22,10 +22,12 @@ import shop.mtcoding.blog2.dto.board.BoardReq.BoardWriteDto;
 import shop.mtcoding.blog2.dto.board.BoardResp.BoardDetailDto;
 import shop.mtcoding.blog2.dto.board.BoardResp.BoardMainListDto;
 import shop.mtcoding.blog2.dto.board.BoardResp.BoardUpdateRespDto;
+import shop.mtcoding.blog2.dto.love.LoveRespDto.LoveBoardRespDto;
 import shop.mtcoding.blog2.dto.reply.ReplyResp.ReplyListRespDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
 import shop.mtcoding.blog2.model.BoardRepository;
+import shop.mtcoding.blog2.model.LoveRepository;
 import shop.mtcoding.blog2.model.ReplyRepository;
 import shop.mtcoding.blog2.model.User;
 import shop.mtcoding.blog2.service.BoardService;
@@ -44,6 +46,9 @@ public class BoardController {
 
     @Autowired
     private ReplyRepository replyRepository;
+
+    @Autowired
+    private LoveRepository loveRepository;
 
     private void mockSession(){
         User mockUser = new User();
@@ -76,6 +81,10 @@ public class BoardController {
         model.addAttribute("dto", db);
         List<ReplyListRespDto> replyList = replyRepository.findByBoardIdWithUser(id);
         model.addAttribute("replyList", replyList);
+
+        User principal = (User)session.getAttribute("principal");
+        LoveBoardRespDto ldto = loveRepository.findByBoardIdAndUserId(id, principal.getId());
+        model.addAttribute("love", ldto);
         return "board/detail";
     }
 

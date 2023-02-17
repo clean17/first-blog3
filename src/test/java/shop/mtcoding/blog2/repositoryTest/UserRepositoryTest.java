@@ -1,4 +1,4 @@
-package shop.mtcoding.blog2;
+package shop.mtcoding.blog2.repositoryTest;
 
 import java.util.List;
 

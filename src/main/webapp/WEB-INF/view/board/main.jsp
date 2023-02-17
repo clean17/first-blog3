@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp" %>
+<style>
+    .my-xl {
+        color: 000;
+    }
+    .my-cursor{ cursor: pointer; }
+    .my-cursor:hover{ color: red; }
+    .on-Clicked{ color: red; }
+</style>
     <div class="container-xl my-3">
         <div class="my-grid">
         <c:forEach items="${dtos}" var="dto">
@@ -7,7 +15,10 @@
                 <img class="card-img-top " src="${dto.thumbnail}" alt="Card image">
                 <hr>
                 <div class="card-body my-title-ellipsis">
-                    <div class="my-title-ellipsis">작성자 : ${dto.username}</div>
+                    <div class="d-flex">
+                    <div class="my-title-ellipsis col-10">작성자 : ${dto.username}</div>
+                    <div class="col-2"><i id="heart-${dto.id}" class="fa-regular fa-heart my-xl my-cursor" onclick="heart(`${dto.id}`)"></i></div>
+                </div>
                     <h4 class="card-title my-title-ellipsis">${dto.title}</h4>
                     <a href="/board/detail/${dto.id}" class="btn btn-primary">상세보기</a>
                 </div>
@@ -69,7 +80,10 @@
     <p>The following example shows how to create a basic carousel with indicators and controls.</p>
 </div>
 <script>
-    // $('.carousel').carousel({ interval: 100 });
+    function heart(id){
+        $('#heart-'+id).toggleClass("fa-solid");
+        $('#heart-'+id).toggleClass("on-Clicked");
+    }
 </script>
 
 <%@ include file="../layout/footer.jsp" %>  
