@@ -42,8 +42,6 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
-                <div>
-                </div>
             </div>
         </div>
 
@@ -63,11 +61,11 @@
                 <c:forEach items="${boardList}" var="board">
                     <tr id="board-${board.id}" class="remove-table">
                         <td>${board.id}</td>
-                        <td><a href="/board/detail/${board.id}">${board.title}</a>  </td>
+                        <td><a href="/board/detail/${board.id}">${board.title}</a> </td>
                         <td class="my-title-ellipsis">${board.content}</td>
                         <td>${board.username}</td>
                         <td>${board.createdAtToString}</td>
-                        <td><button class="btn btn-danger py-0 " onclick="deleteBoard(`${board.id}`)">삭제하기</button></td>
+                        <td><button class="btn btn-danger py-0" onclick="deleteBoard(`${board.id}`)">삭제하기</button></td>
                     </tr>
                 </c:forEach>
 
@@ -97,18 +95,18 @@
         $('.remove-table').remove();
         let keyword;
         if ($('#search-input').attr('name') === 'title') {
-            keyword = `title`+`=`+$('#search-input').val()
+            keyword = `title` + `=` + $('#search-input').val()
         }
         if ($('#search-input').attr('name') === 'content') {
-            keyword = `content`+`=`+$('#search-input').val()
+            keyword = `content` + `=` + $('#search-input').val()
         }
         if ($('#search-input').attr('name') === 'username') {
-            keyword = `username`+`=`+$('#search-input').val()
+            keyword = `username` + `=` + $('#search-input').val()
         }
         console.log(keyword);
         $.ajax({
             type: "get",
-            url: "/admin/board/search?"+keyword,
+            url: "/admin/board/search?" + keyword,
             dataType: "json"
         }).done((res) => {
             render(res.data);
@@ -120,7 +118,6 @@
     }
 
     function render(boards) {
-        // console.log('그리는중');
         // console.log(boards[1].id);
         boards.forEach(board => {
             let id = board.id;
@@ -135,7 +132,7 @@
                         <td class="my-title-ellipsis">`+ content + `</td>
                         <td>`+ username + `</td>
                         <td>`+ createdAt + `</td>
-                        <td><button class="btn btn-danger" onclick="deleteBoard(`+ id + `)">삭제하기</button></td>
+                        <td><button class="btn btn-danger py-0" onclick="deleteBoard(`+ id + `)">삭제하기</button></td>
                     </tr>
             `;
             $("#board-table").append(el);
@@ -144,7 +141,7 @@
 
     function changeDropdown(obj) {
         let DrondwonValue = $(obj).val();
-        console.log(DrondwonValue);
+        // console.log(DrondwonValue);
         $('#search-input').attr('name', DrondwonValue);
     }
 </script>

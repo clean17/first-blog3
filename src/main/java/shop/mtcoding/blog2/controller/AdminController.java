@@ -188,7 +188,7 @@ public class AdminController {
     // }
 
     @GetMapping("/admin/board/search")
-    public ResponseEntity<?> searchBoard(AdminReqSearchAjaxDto aDto) {
+    public ResponseEntity<?> searchBoard(AdminReqSearchAjaxDto aDto) {  
         User admin = (User) session.getAttribute("principal");
         if (!admin.getRole().equals("ADMIN")) {
             throw new CustomApiException("관리자 계정이 아닙니다.");
