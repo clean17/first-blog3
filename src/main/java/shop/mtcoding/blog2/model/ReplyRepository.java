@@ -7,30 +7,26 @@ import org.apache.ibatis.annotations.Param;
 
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminReplyRespDto;
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminReplySearchRespDto;
+import shop.mtcoding.blog2.dto.reply.ReplyReq.ReplySaveReqDto;
 import shop.mtcoding.blog2.dto.reply.ReplyResp.ReplyListRespDto;
 
 @Mapper
 public interface ReplyRepository {
     public List<Reply> findAll();
     public List<AdminReplyRespDto> findAllByAdmin();
+    public List<AdminReplySearchRespDto> findReplyByAdminWithSearch(
+        @Param("comment") String comment, 
+        @Param("userId") String userId
+    );
     public List<ReplyListRespDto> findByBoardIdWithUser(int boardId);
-    // public Reply findByBoardWithUser (int boardId);
     public Reply findById(int id);
     public int insert(
-        @Param("comment") String comment,
-        @Param("boardId") int boardId,
+        @Param("rDto") ReplySaveReqDto rDto,
         @Param("userId") int userId
-    );
-    // public int insert(Reply reply);
-    // @Insert("insert into reply_tb ( comment, board_id, user_id, created_at) values (#{comment}, #{boardId}, #{userId}, now())")
-    // @Options(useGeneratedKeys = true, keyProperty = "id")
-    // void insert(Reply reply);
+    ); 
     public int deleteById(int id);
     public int updateById(
         @Param("comment") String comment
     );
-    public List<AdminReplySearchRespDto> findReplyByAdminWithSearch(
-        @Param("comment") String comment, 
-        @Param("userId") String userId
-        );
+
 }

@@ -26,20 +26,22 @@ public class ReplyService {
     private UserRepository userRepository;
 
     @Transactional
-    public void 댓글쓰기(ReplySaveReqDto rDto, int principalId){
-        // 여기서 입력받은 댓글에 /r이 있으면 <br>로 대체해서 넣어야함
-        //  rDto.get
-        try {
-            replyRepository.insert(
-                rDto.getComment(),
-                rDto.getBoardId(),
-                principalId
-                );
-        } catch (Exception e) {
-            throw new CustomException("댓글 쓰기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+    public Integer 댓글쓰기(ReplySaveReqDto rDto, int principalId){
+        System.out.println("테스트 아이디: "+rDto.getUserId());
+        System.out.println("테스트 11: "+1111);
+        if( rDto.getUserId() != principalId ){
+            throw new CustomApiException("댓글을 작성할 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
-        // Reply rr = new Reply();
-        // replyRepository.insert(rr);
+        System.out.println("테스트 11: "+1111);
+        Integer result ;
+        try {
+            replyRepository.insert(rDto, principalId);
+            result = rDto.getId();
+            System.out.println("테스트 22: "+2222);
+        } catch (Exception e) {
+            throw new CustomApiException("댓글 쓰기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return result;
     }
 
     @Transactional

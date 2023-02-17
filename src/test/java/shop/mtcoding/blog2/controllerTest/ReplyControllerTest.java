@@ -20,6 +20,9 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import shop.mtcoding.blog2.dto.reply.ReplyReq.ReplySaveReqDto;
 import shop.mtcoding.blog2.dto.reply.ReplyResp.ReplyListRespDto;
 import shop.mtcoding.blog2.model.User;
 
@@ -40,7 +43,7 @@ public class ReplyControllerTest {
     @BeforeEach
     public void setUp(){
         User mockUser = new User();
-        mockUser.setId(1);
+        mockUser.setId(2);
         mockUser.setUsername("ssar");
         mockUser.setPassword("1234");
         mockUser.setEmail("ssar@nate.com");
@@ -51,15 +54,21 @@ public class ReplyControllerTest {
 
     @Test
     public void save_test() throws Exception{
-        String insert = "comment=235235&boardId=1";
+        ObjectMapper om = new ObjectMapper();
 
-        ResultActions rs = mvc.perform(post("/reply")
-                    .content(insert)
-                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+        ReplySaveReqDto r = new ReplySaveReqDto();
+        r.setBoardId(2);
+        r.setComment("안녕");   
+        r.setUserId(2);
+        String test = om.writeValueAsString(r);
+
+        ResultActions rs = mvc.perform(post("/reply/save")
+                    .content(test)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .session(session)
                     );
 
-        rs.andExpect(status().is3xxRedirection());
+        rs.andExpect(status().isOk());
 }
     @Test
     public void boardDetail_test()throws Exception{

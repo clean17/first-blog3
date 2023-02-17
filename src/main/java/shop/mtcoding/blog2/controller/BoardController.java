@@ -47,7 +47,7 @@ public class BoardController {
 
     private void mockSession(){
         User mockUser = new User();
-        mockUser.setId(1);
+        mockUser.setId(2);
         mockUser.setUsername("ssar");
         mockUser.setPassword("1234");
         mockUser.setEmail("ssar@nate.com");
