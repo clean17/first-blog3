@@ -33,26 +33,30 @@ public class ReplyController {
 
     // @GetMapping("/")
 
-    @PostMapping("/reply")
+    @PostMapping("/reply/save")
     public ResponseEntity<?> save(@RequestBody ReplySaveReqDto rdto){
-        // System.out.println("테스트 : "+rdto.getComment());
+        System.out.println("테스트 아이디: "+rdto.getUserId());
+        System.out.println("테스트aaaaaaa : "+rdto.getUserId());
         User principal = (User) session.getAttribute("principal");
         if( principal ==null){
-            throw new CustomException("인증이 되지 않았습니다.",HttpStatus.UNAUTHORIZED);
+            throw new CustomApiException("인증이 되지 않았습니다.",HttpStatus.UNAUTHORIZED);
         }
+        System.out.println("테스트bbbbbbbb : "+principal.getId());
         if( rdto.getComment()==null||rdto.getComment().isEmpty()){
-            throw new CustomException("댓글을 작성해주세요");
+            throw new CustomApiException("댓글을 작성해주세요");
         }
         
         if( rdto.getBoardId() == null){ // null 을 걸러야 함.. INTEGER 로 선언해
-            throw new CustomException("게시글 번호가 필요합니다.");
+            throw new CustomApiException("게시글 번호가 필요합니다.");
         }
+        System.out.println("테스트cccccccccccz : ");
         
-        replyService.댓글쓰기(rdto, principal.getId());
-        ReplySaveReqDto rrr = new ReplySaveReqDto();
-        System.out.println("테스트 : "+ rrr.getReturnId());
-        // return "redirect:/board/detail/"+rdto.getBoardId();
-        return new ResponseEntity<>(new ResponseDto<>(1, "댓글 쓰기 성공", null), HttpStatus.OK);
+        Integer returnPK = replyService.댓글쓰기(rdto, principal.getId());
+        if ( returnPK == null ){
+            returnPK = -1;
+        }
+        System.out.println("테스트ddddddddd : ");
+        return new ResponseEntity<>(new ResponseDto<>(1, "댓글 쓰기 성공", returnPK), HttpStatus.OK);
     }
 
     @DeleteMapping("/reply/{id}")

@@ -8,8 +8,9 @@ public class ReplyReq {
     @Setter
     @Getter
     public static class ReplySaveReqDto{
+        private Integer id;
         private String comment;
+        private Integer userId;
         private Integer boardId;
-        private Integer returnId;
     }
 }

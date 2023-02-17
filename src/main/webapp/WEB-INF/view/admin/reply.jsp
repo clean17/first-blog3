@@ -64,7 +64,7 @@
                             <td>${reply.username}</td>
                             <td>${reply.boardId}</td>
                             <td>${reply.createdAtToString}</td>
-                            <td><button class="btn btn-danger" onclick="deleteUser(`${reply.id}`)">삭제하기</button></td>
+                            <td><button class="btn btn-danger py-0" onclick="deleteUser(`${reply.id}`)">삭제하기</button></td>
                         </tr>
                 </c:forEach>
             </tbody>
@@ -129,7 +129,7 @@
                             <td>`+username+`</td>
                             <td>`+boardId+`</td>
                             <td>`+createdAt+`</td>
-                            <td><button class="btn btn-danger" onclick="deleteUser(`+id+`)">삭제하기</button></td>
+                            <td><button class="btn btn-danger py-0" onclick="deleteUser(`+id+`)">삭제하기</button></td>
                         </tr>
             `;
             $("#reply-table").append(el);
