@@ -44,7 +44,7 @@ public class BoardControllerTest {
     @BeforeEach
     public void setUp(){
         User mockUser = new User();
-        mockUser.setId(1);
+        mockUser.setId(2);
         mockUser.setUsername("ssar");
         mockUser.setPassword("1234");
         mockUser.setEmail("ssar@nate.com");
@@ -68,7 +68,7 @@ public class BoardControllerTest {
     public void main_test() throws Exception {
         ResultActions rs = mvc.perform(get("/").session(session));
         List<BoardMainListDto> dtos = (List<BoardMainListDto>)rs.andReturn().getModelAndView().getModel().get("dtos");
-        System.out.println("테스트 : "+ dtos);
+        // System.out.println("테스트 : "+ dtos);
     }
 
 

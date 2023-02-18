@@ -13,6 +13,7 @@ import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.love.LoveReqDto.LoveBoardReqDto;
 import shop.mtcoding.blog2.dto.love.LoveRespDto.LoveBoardRespDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
+import shop.mtcoding.blog2.model.Love;
 import shop.mtcoding.blog2.model.LoveRepository;
 import shop.mtcoding.blog2.model.User;
 import shop.mtcoding.blog2.service.LoveService;
@@ -40,7 +41,16 @@ public class LoveController {
         if( lDto.getUserId() == null ){
             throw new CustomApiException("회원 아이디가 필요합니다.");
         }
-        
+        // 좋아요 아이디 찾아서 넣어줌
+        Love lovePS =  loveRepository.findByIdAndBoardId(lDto.getBoardId(), lDto.getUserId());
+        lDto.setId(lovePS.getId());
+        // 여기서 바꾼거면 뷰에서 state를 줄 이유가 없잖아 ?
+        if ( lovePS.getState() == 0 ){
+            lDto.setState(1);
+        }
+        if ( lovePS.getState() == 1 ){
+            lDto.setState(0);
+        }
         loveService.클릭하기(lDto, principal.getId());
         LoveBoardRespDto loveDto =  loveRepository.findByBoardIdAndUserId(lDto.getBoardId(), principal.getId());
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", loveDto), HttpStatus.OK);

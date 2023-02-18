@@ -32,6 +32,8 @@ public class LoveService {
         if ( board == null ){
             throw new CustomApiException("게시글이 존재하지 않습니다.");
         }
+
+        // 입력전 state 값 바꾸기
         try {
             loveRepository.insertOrUpdate(lDto, principalId);
         } catch (Exception e) {

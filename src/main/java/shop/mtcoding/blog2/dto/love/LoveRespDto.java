@@ -2,13 +2,15 @@ package shop.mtcoding.blog2.dto.love;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 public class LoveRespDto {
     
     @Getter
     @Setter
+    @ToString
     public static class LoveBoardRespDto{
-        // private int id;
+        private Integer id;
         private Integer count;
         private Integer state;
     }
@@ -16,7 +18,7 @@ public class LoveRespDto {
     @Getter
     @Setter
     public static class LoveReplyRespDto{
-        // private int id;
+        private Integer id;
         private Integer count;
         private Integer state;
     }

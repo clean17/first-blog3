@@ -9,5 +9,5 @@ public class Love {
     private Integer id;
     private Integer userId;
     private Integer boardId;
-    private Integer status;
+    private Integer state;
 }

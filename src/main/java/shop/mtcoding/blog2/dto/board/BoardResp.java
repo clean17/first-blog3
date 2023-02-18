@@ -2,11 +2,13 @@ package shop.mtcoding.blog2.dto.board;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 public class BoardResp {
     
     @Getter
     @Setter
+    @ToString
     public static class BoardMainListDto{
         private Integer id;
         private String title;

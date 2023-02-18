@@ -65,6 +65,7 @@ public class BoardController {
         mockSession();
     User principal = (User) session.getAttribute("principal");
     List<BoardMainListDto> dtos = boardRepository.findAllforList(principal.getId());
+    System.out.println("테스트 : "+ dtos.toString());
     model.addAttribute("dtos", dtos);
     return "board/main";
     }
@@ -84,7 +85,9 @@ public class BoardController {
 
         User principal = (User)session.getAttribute("principal");
         LoveBoardRespDto ldto = loveRepository.findByBoardIdAndUserId(id, principal.getId());
+        
         model.addAttribute("love", ldto);
+
         return "board/detail";
     }
 

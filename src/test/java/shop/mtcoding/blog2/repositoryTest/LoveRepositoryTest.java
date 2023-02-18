@@ -22,7 +22,7 @@ public class LoveRepositoryTest {
         LoveBoardReqDto love = new LoveBoardReqDto();
         love.setBoardId(1);
         // love.setId(1);
-        love.setState(1);
+        love.setState(0);
         // love.setUserId(3);
         String test = om.writeValueAsString(love);
 
