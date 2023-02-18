@@ -12,6 +12,8 @@ public class BoardResp {
         private String title;
         private String username;
         private String thumbnail;
+        private Integer count;
+        private Integer state;
     }
 
     @Getter

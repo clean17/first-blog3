@@ -8,6 +8,8 @@
         select * from love_tb
     </select>
 
+    
+
     <select id="findByBoardIdAndUserId" resultType="shop.mtcoding.blog2.dto.love.LoveRespDto$LoveBoardRespDto">
         <if test="userId != null">
             SELECT 

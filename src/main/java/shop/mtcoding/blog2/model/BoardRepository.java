@@ -27,7 +27,7 @@ public interface BoardRepository {
         @Param("thumbnail") String thumbnail,
         @Param("userId") int userId
     );
-    public List<BoardMainListDto> findAllforList();
+    public List<BoardMainListDto> findAllforList(Integer userId);
 
     public BoardDetailDto findBoardforDetail(int id);
     public int deleteBoard(int id);

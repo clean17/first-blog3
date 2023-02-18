@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.love.LoveReqDto.LoveBoardReqDto;
+import shop.mtcoding.blog2.dto.love.LoveRespDto.LoveBoardRespDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.model.LoveRepository;
 import shop.mtcoding.blog2.model.User;
@@ -40,12 +41,8 @@ public class LoveController {
             throw new CustomApiException("회원 아이디가 필요합니다.");
         }
         
-        // Integer num = loveRepository.findCountByBoardId(lDto.getBoardId());
-        // if ( num == null || num == 0 ){
-        //     // 이게 왜 필요 ?
-        // }
         loveService.클릭하기(lDto, principal.getId());
-        int count = loveRepository.findCountByBoardId(lDto.getBoardId());
-        return new ResponseEntity<>(new ResponseDto<>(1, "성공", count), HttpStatus.OK);
+        LoveBoardRespDto loveDto =  loveRepository.findByBoardIdAndUserId(lDto.getBoardId(), principal.getId());
+        return new ResponseEntity<>(new ResponseDto<>(1, "성공", loveDto), HttpStatus.OK);
     }
 }

@@ -63,9 +63,9 @@ public class BoardController {
     @GetMapping("/")
     public String  main(Model model){
         mockSession();
-    List<BoardMainListDto> dtos = boardRepository.findAllforList();
+    User principal = (User) session.getAttribute("principal");
+    List<BoardMainListDto> dtos = boardRepository.findAllforList(principal.getId());
     model.addAttribute("dtos", dtos);
-    // System.out.println("테스트 : "+ dtos.get(0).getThumbnail());
     return "board/main";
     }
     
