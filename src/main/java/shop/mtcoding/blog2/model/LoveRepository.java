@@ -11,14 +11,11 @@ import shop.mtcoding.blog2.dto.love.LoveRespDto.LoveBoardRespDto;
 @Mapper
 public interface LoveRepository {
     public List<Love> findAll();
-    public Love findByIdAndBoardId(
-        @Param("boardId") Integer boardId,
-        @Param("userId") Integer userId
-    );
+    public Love findByIdAndBoardId(LoveBoardReqDto lDto);
 
     public LoveBoardRespDto findByBoardIdAndUserId(
-        @Param("boardId") int boardId,
-        @Param("userId") int userId 
+        @Param("boardId") Integer boardId,
+        @Param("userId") Integer userId 
     );
     public int insertOrUpdate(
         @Param("lDto") LoveBoardReqDto lDto,

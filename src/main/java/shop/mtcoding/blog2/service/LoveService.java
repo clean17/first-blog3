@@ -37,8 +37,8 @@ public class LoveService {
         try {
             loveRepository.insertOrUpdate(lDto, principalId);
         } catch (Exception e) {
-            log.info(e.getMessage());
-            throw new CustomApiException("서버에 일시적인 오류가 발생했습니다.");
+            // log.info(e.getMessage());
+            throw new CustomApiException("서버에 일시적인 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

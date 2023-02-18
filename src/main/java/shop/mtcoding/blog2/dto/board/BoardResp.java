@@ -15,6 +15,7 @@ public class BoardResp {
         private String username;
         private String thumbnail;
         private Integer count;
+        private Integer loveId;
         private Integer state;
     }
 

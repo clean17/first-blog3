@@ -31,6 +31,7 @@ public class LoveController {
     
     @PostMapping("/love/click")
     public ResponseEntity<?> loveClick(@RequestBody LoveBoardReqDto lDto){
+        System.out.println("테스트인풋 : "+lDto);
         User principal = (User) session.getAttribute("principal");
         if( principal == null ){
             throw new CustomApiException("로그인이 필요한 기능입니다.", HttpStatus.UNAUTHORIZED);
@@ -41,18 +42,18 @@ public class LoveController {
         if( lDto.getUserId() == null ){
             throw new CustomApiException("회원 아이디가 필요합니다.");
         }
-        // 좋아요 아이디 찾아서 넣어줌
-        Love lovePS =  loveRepository.findByIdAndBoardId(lDto.getBoardId(), lDto.getUserId());
-        lDto.setId(lovePS.getId());
-        // 여기서 바꾼거면 뷰에서 state를 줄 이유가 없잖아 ?
-        if ( lovePS.getState() == 0 ){
+        if ( lDto.getState() == 0 ){
+            System.out.println("테스트 : 0 이기 때문에 1 으로 바꿉니다.");
             lDto.setState(1);
         }
-        if ( lovePS.getState() == 1 ){
+        if ( lDto.getState() == 1 ){
+            System.out.println("테스트 : 1 이기 때문에 0 으로 바꿉니다.");
             lDto.setState(0);
         }
+        System.out.println("테스트 :sdsds "+ lDto.getState());
         loveService.클릭하기(lDto, principal.getId());
         LoveBoardRespDto loveDto =  loveRepository.findByBoardIdAndUserId(lDto.getBoardId(), principal.getId());
+        System.out.println("테스트 zzzz: "+ loveDto.getState());
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", loveDto), HttpStatus.OK);
     }
 }

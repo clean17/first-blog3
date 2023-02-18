@@ -30,9 +30,10 @@ public class BoardRepositoryTest {
     }
     @Test
     public void findAllforList_test() throws Exception {
-        Integer id =2  ;
-        List<BoardMainListDto> btos = boardRepository.findAllforList(id);
+        // Integer id = null ;
+        List<BoardMainListDto> btos = boardRepository.findAllforList(null);
         System.out.println("테스트 : "+btos);
 
     }
+    
 }

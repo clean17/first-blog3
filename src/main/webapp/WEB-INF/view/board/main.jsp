@@ -30,17 +30,13 @@
                             <div class="d-flex" id="heart-${dto.id}-div">
                             <c:choose>
                                 <c:when test="${dto.state == 1}">
-                                    <i id="heart-${dto.id}"
-                                        class="my-auto fa-regular fa-solid fa-heart my-xl my-cursor on-Clicked"
-                                        onclick="heartclick(`${dto.id}`, `${principal.id}`)"></i>
+                                    <i id="heart-${dto.id}" class="my-auto my-heart fa-regular fa-solid fa-heart my-xl my-cursor on-Clicked" onclick="heartclick(`${dto.id}`,`${dto.state}`,`${principal.id}`,`${dto.loveId}`)" ></i> 
                                 </c:when>
-
                                 <c:otherwise>
-                                    <i id="heart-${dto.id}" class="my-auto fa-regular fa-heart my-xl my-cursor"
-                                        onclick="heartclick(`${dto.id}`, `${principal.id}`)"></i>
+                                    <i id="heart-${dto.id}" class="my-auto fa-regular fa-heart my-xl my-cursor" onclick="heartclick(`${dto.id}`,`${dto.state}`,`${principal.id}`,`${dto.loveId}`)" ></i>
                                 </c:otherwise>
                             </c:choose>
-                            &nbsp <div id="heart-${dto.id}-count">${dto.count}</div>
+                             &nbsp <div id="heart-${dto.id}-count">${dto.count}</div>
                         </div>
                     </div>
                 </div>
@@ -104,14 +100,21 @@
     <h3>Carousel Example</h3>
     <p>The following example shows how to create a basic carousel with indicators and controls.</p>
 </div>
-<script>
-    function heartclick(loveId, userId1) {
-        console.log(userId1);
-        if (userId1 !== null) {
+<script>    
+
+
+
+    function heartclick(boardId1, state1, userId1, loveId1) {
+        // console.log(userId1 > 0);
+        // el 표현식 여러개를 파라미터로 넣을 경우 파라미터마다 백틱으로 끊어서 입력해야 정상적인 값이 들어간다
+        if( userId1 > 0 ){
             let data = {
-                boardId: loveId,
-                userId: userId1
+                boardId: boardId1,
+                userId: userId1,
+                state: state1,
+                id: loveId1
             }
+
             $.ajax({
                 type: "post",
                 url: "/love/click",
@@ -121,27 +124,29 @@
                 },
                 dataType: "json"
             }).done((res) => {
+                // console.dir(res);
                 let count1 = res.data.count;
-                heart(loveId, count1);
+                heart(boardId1, count1);
             }).fail((err) => {
-                alert(err.responseJSON.msg);
+                // console.dir(err);
+                // alert(err.responseJSON.msg);
             });
         }
+
     }
 
-    function heart(id, count) {
-        $('#heart-' + id).toggleClass("fa-solid");
-        $('#heart-' + id).toggleClass("on-Clicked");
-        $('#heart-' + id + '-count').remove();
-        render(id, count);
+    function heart(id1, count2) {
+        $('#heart-' + id1).toggleClass("fa-solid");
+        $('#heart-' + id1).toggleClass("on-Clicked");
+        $('#heart-' + id1 + '-count').remove();
+        render(id1, count2);
     }
 
-    function render(id, count1) {
-        console.log(count1);
-        let el = `<div id="heart-` + id + `-count">` + count1 + `</div>`;
-        <div id="heart-${dto.id}-count">${dto.count}</div>
+    function render(id, count) {
+        // console.log(count);
+        let el = `<div id="heart-` + id + `-count">` + count + `</div>`;
         $('#heart-' + id + '-div').append(el);
-        
+        // <div id="heart-${dto.id}-count">${dto.count}</div>
     }
 </script>
 

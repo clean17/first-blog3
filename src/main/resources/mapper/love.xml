@@ -9,24 +9,25 @@
     </select>
 
     <select id="findByIdAndBoardId" resultType="shop.mtcoding.blog2.model.Love">
-        select id, state from love_tb where board_id = #{boardId} and user_id = #{userId}
+        select id, state from love_tb where board_id = #{lDto.boardId} and user_id = #{lDto.userId}
     </select>
 
     <select id="findByBoardIdAndUserId" resultType="shop.mtcoding.blog2.dto.love.LoveRespDto$LoveBoardRespDto">
-        <if test="userId != null">  <!-- 로그인 상태 -->
+        <!-- <if test="userId != null"> -->
             SELECT 
+            (select id from love_tb where board_id = #{boardId} and user_id = #{userId} ) id,
             ( select count(*) from love_tb where board_id = #{boardId} and state = 1 ) count,
             ifnull (( select state from love_tb where user_id = #{userId} and board_id = #{boardId} ),0) state
             FROM LOVE_TB
             group by count
-        </if>
-        <if test="userId == null">
+        <!-- </if> -->
+        <!-- <if test="userId == null">
             SELECT
             ( select count(*) from love_tb where board_id = #{boardId} and state = 1 ) count,
             ifnull (null,0) state
             FROM LOVE_TB
             group by count
-        </if>
+        </if> -->
     </select>
 
     <insert id="insertOrUpdate" useGeneratedKeys="true" keyProperty="lDto.id">
