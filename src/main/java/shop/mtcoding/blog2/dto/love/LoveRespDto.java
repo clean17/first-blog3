@@ -9,15 +9,15 @@ public class LoveRespDto {
     @Setter
     public static class LoveBoardRespDto{
         // private int id;
-        private int count;
-        private int state;
+        private Integer count;
+        private Integer state;
     }
 
     @Getter
     @Setter
     public static class LoveReplyRespDto{
         // private int id;
-        private int count;
-        private int state;
+        private Integer count;
+        private Integer state;
     }
 }

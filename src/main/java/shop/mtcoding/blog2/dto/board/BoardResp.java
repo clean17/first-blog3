@@ -8,7 +8,7 @@ public class BoardResp {
     @Getter
     @Setter
     public static class BoardMainListDto{
-        private int id;
+        private Integer id;
         private String title;
         private String username;
         private String thumbnail;
@@ -19,20 +19,22 @@ public class BoardResp {
     @Getter
     @Setter
     public static class BoardDetailDto{
-        private int id;
+        private Integer id;
         private String title;
         private String content;
         private String username;
-        private int userId;
+        private Integer userId;
+        private Integer count;
+        private Integer state;
     }
 
     @Getter
     @Setter
     public static class BoardUpdateRespDto{
-        private int id;
+        private Integer id;
         private String title;
         private String content;
         private String username;
-        private int userId;
+        private Integer userId;
     }
 }

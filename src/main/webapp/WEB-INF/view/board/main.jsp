@@ -17,7 +17,19 @@
                 <div class="card-body my-title-ellipsis">
                     <div class="d-flex">
                     <div class="my-title-ellipsis col-10">작성자 : ${dto.username}</div>
-                    <div class="col-2"><i id="heart-${dto.id}" class="fa-regular fa-heart my-xl my-cursor" onclick="heart(`${dto.id}`)"></i></div>
+                    <div class="col-2">
+                    <c:choose>
+                       <c:when test="${dto.state == 0}">
+                       <i id="heart-${dto.id}" class="fa-regular fa-heart my-xl my-cursor" onclick="heartclick(`${dto.id},${dto.state}`)">
+                    </i>&nbsp${dto.count}</div>
+                       </c:when>
+                    
+                       <c:otherwise>
+                       <i id="heart-${dto.id}" class="fa-regular fa-solid fa-heart my-xl my-cursor on-Clicked" onclick="heartclick(`${dto.id}`)">
+                    </i>&nbsp${dto.count}</div>
+                       </c:otherwise>
+                    </c:choose>
+                    
                 </div>
                     <h4 class="card-title my-title-ellipsis">${dto.title}</h4>
                     <a href="/board/detail/${dto.id}" class="btn btn-primary">상세보기</a>
@@ -80,6 +92,25 @@
     <p>The following example shows how to create a basic carousel with indicators and controls.</p>
 </div>
 <script>
+    function heartclick(id,state1){
+        let loveId = id;
+        let state = state1;
+        $.ajax({
+            type: "",
+            url: "/",
+            data: JSON.stringify(),
+            headers:{
+                "content-type":"application/json; charset=utf-8"
+            },
+            dataType:"json"
+        }).done((res) => {
+            heart(id);
+        
+        }).fail((err) => {
+        
+        });
+    }
+
     function heart(id){
         $('#heart-'+id).toggleClass("fa-solid");
         $('#heart-'+id).toggleClass("on-Clicked");
