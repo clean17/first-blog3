@@ -1,8 +1,5 @@
 package shop.mtcoding.blog2.service;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
 import shop.mtcoding.blog2.Util.PathUtil;
+import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserUpdateReqDto;
@@ -101,6 +99,18 @@ public class UserService {
         }
     }
         
+    @Transactional
+    public ResponseDto<?> 중복체크(String username) {
+        if (username == null || username.isEmpty()) {
+            throw new CustomApiException("username을 입력해주세요");
+        }
+        User sameUser = userRepository.findByUsername(username);
+        if (sameUser != null) {
+            throw new CustomApiException("동일한 username이 존재합니다");
+        } else {
+            return new ResponseDto<>(1, username + " 사용 가능", true);
+        }
+    }
     
    
 }

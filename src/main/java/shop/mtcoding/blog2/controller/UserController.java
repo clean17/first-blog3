@@ -72,6 +72,18 @@ public class UserController {
         return "user/profileUpdateForm";
     }
 
+    @GetMapping("/user/usernameSameCheck")
+    public @ResponseBody ResponseDto<?> check(String username){     	
+        if( username == null || username.isEmpty()){  
+            throw new CustomApiException("username을 입력해주세요");
+        }
+        if ( username.equals("ssar")){
+            throw new CustomApiException("동일한 username이 존재");
+        }
+        return service.중복체크(username);
+    }    
+
+
     @PostMapping("/join")
     public String userJoin(UserJoinDto userDto){
         if( userDto.getUsername()==null||userDto.getUsername().isEmpty()){
