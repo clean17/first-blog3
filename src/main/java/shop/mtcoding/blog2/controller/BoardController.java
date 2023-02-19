@@ -62,7 +62,7 @@ public class BoardController {
 
     @GetMapping("/")
     public String  main(Model model){
-        mockSession();
+        // mockSession();
     Integer num = null;
     User principal = (User) session.getAttribute("principal"); // 세션에 오브젝트가 null 이라면 에러가 나온다 !!!
     if ( principal != null ){

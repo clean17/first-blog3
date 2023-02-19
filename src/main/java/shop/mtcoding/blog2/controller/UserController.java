@@ -10,11 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import shop.mtcoding.blog2.Util.Script;
 import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
+import shop.mtcoding.blog2.dto.user.UserReq.UserUpdateReqDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
 import shop.mtcoding.blog2.model.User;
@@ -96,6 +99,21 @@ public class UserController {
         // System.out.println("테스트 : "+ prinipal.getProfile());
         session.setAttribute("principal", prinipal);         
         return "redirect:/";
+    }
+
+    @PostMapping("/user/update")
+    @ResponseBody
+    public String update(UserUpdateReqDto updateReqDto){
+        User principal = (User)session.getAttribute("principal");
+        if( principal == null ){
+            throw new CustomException("로그인이 필요합니다.");
+        }
+        service.회원수정(updateReqDto, principal.getId());
+
+        User principalPs = userRepository.findById(principal.getId());
+        session.setAttribute("principal", principalPs);
+        
+        return Script.href("수정완료","/");
     }
 
     @PutMapping("/user/profileUpdate")

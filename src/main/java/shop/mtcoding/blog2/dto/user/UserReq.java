@@ -20,5 +20,13 @@ public class UserReq {
         private String username;
         private String password;
     }
+
+    @Getter
+    @Setter
+    public static class UserUpdateReqDto{
+    	private Integer id;
+        private String password;
+        private String email;
+    }
     
 }

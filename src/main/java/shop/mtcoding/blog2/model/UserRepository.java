@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import shop.mtcoding.blog2.dto.user.UserReq.UserUpdateReqDto;
+
 @Mapper
 public interface UserRepository {
     public List<User> findAll();
@@ -18,7 +20,8 @@ public interface UserRepository {
             @Param("profile") String profile,
             @Param("role") String role
             );
-            
+
+    public int updateUser(@Param("uDto") UserUpdateReqDto uDto);
 
     public User findByUsernameAndPassword(
             @Param("username") String username,

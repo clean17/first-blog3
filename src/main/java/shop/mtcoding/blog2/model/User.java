@@ -4,10 +4,12 @@ import java.sql.Timestamp;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import shop.mtcoding.blog2.Util.DateUtil;
 
 @Getter
 @Setter
+@ToString
 public class User {
     private Integer id;
     private String username;

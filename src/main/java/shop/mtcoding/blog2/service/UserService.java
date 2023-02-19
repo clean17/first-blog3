@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import shop.mtcoding.blog2.Util.PathUtil;
 import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
+import shop.mtcoding.blog2.dto.user.UserReq.UserUpdateReqDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
 import shop.mtcoding.blog2.model.User;
@@ -81,6 +82,25 @@ public class UserService {
         }
         return userPS;
     }
+
+	@Transactional
+    public void 회원수정(UserUpdateReqDto updateReqDto, int principalId){
+        if( updateReqDto.getId() != principalId){
+            throw new CustomException("본인 정보만 수정 가능합니다.");
+        }
+        if (updateReqDto.getPassword() == null || updateReqDto.getPassword().isEmpty()) {
+            throw new CustomException("password를 작성해주세요");
+        }
+        if (updateReqDto.getEmail() == null || updateReqDto.getEmail().isEmpty()) {
+            throw new CustomException("email을 작성해주세요");
+        }
+        try {
+            userRepository.updateUser(updateReqDto);
+        } catch (Exception e) {
+            throw new CustomException("서버의 일시적인 오류로 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+        
     
    
 }

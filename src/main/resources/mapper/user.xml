@@ -36,6 +36,11 @@
         email=#{email}, profile = #{profile} where id = #{id}
     </update>
 
+    <update id="updateUser">
+        update user_tb set password = #{uDto.password}, email = #{uDto.email} where id = #{uDto.id}
+    </update>
+
+
     <delete id="delete">
         delete from user_tb where id = #{id}
     </delete>

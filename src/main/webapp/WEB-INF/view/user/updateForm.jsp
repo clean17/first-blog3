@@ -3,23 +3,22 @@
 
     <div class="container my-3">
         <div class="container">
-            <form action="" method="post">
+            <form action="/user/update" method="post">
                 <div class="form-group mb-2">
                     <input type="text" name="username" class="form-control" placeholder="Enter username" id="username"
-                        value="" readonly>
+                        value="${principal.username}" readonly>
                 </div>
 
                 <div class="form-group mb-2">
                     <input type="password" name="password" class="form-control" placeholder="Enter password"
-                        id="password" value="">
+                        id="password" value="${principal.password}">  
                 </div>
 
                 <div class="form-group mb-2">
                     <input type="email" name="email" class="form-control" placeholder="Enter email" id="email"
-                        value="">
+                        value="${principal.email}">
                 </div>
-                    <input type="hidden" name="id" id="id" value="">
-
+                    <input type="hidden" name="id" value="${principal.id}">
                 <button type="submit" id="update-btn" class="btn btn-primary">회원수정</button>
             </form>
 

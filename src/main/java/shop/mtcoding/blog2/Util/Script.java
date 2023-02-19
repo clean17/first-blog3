@@ -11,10 +11,19 @@ public class Script {
         return  sb.toString();
     }
 
-    public static String herf(String url) {
+    public static String href(String url) {
         StringBuilder sb = new StringBuilder();
         sb.append("<script>");
-        sb.append("location.href="+url+";");
+        sb.append("location.href='"+url+"';");
+        sb.append("</script>");
+        return  sb.toString();
+    }
+
+    public static String href(String msg, String url) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<script>");
+        sb.append("alert('"+msg+"');");
+        sb.append("location.href='"+url+"';");
         sb.append("</script>");
         return  sb.toString();
     }
