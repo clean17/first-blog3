@@ -27,29 +27,36 @@
                     <div class="d-flex">
                         <div class="my-title-ellipsis col-10">작성자 : ${dto.username}</div>
                         <div class="col-2">
-                            <div class="d-flex" id="heart-${dto.id}-div">
-                            <c:choose>
-                                <c:when test="${dto.state == 1}">
-                                    <i id="heart-${dto.id}" class="my-auto my-heart fa-regular fa-solid fa-heart my-xl my-cursor on-Clicked" onclick="heartclick(`${dto.id}`,`${dto.state}`,`${principal.id}`,`${dto.loveId}`)" ></i> 
-                                </c:when>
-                                <c:otherwise>
-                                    <i id="heart-${dto.id}" class="my-auto fa-regular fa-heart my-xl my-cursor" onclick="heartclick(`${dto.id}`,`${dto.state}`,`${principal.id}`,`${dto.loveId}`)" ></i>
-                                </c:otherwise>
-                            </c:choose>
-                             &nbsp <div id="heart-${dto.id}-count">${dto.count}</div>
+                            <div id="heart-${dto.id}-div">
+                                <div id="heart-${dto.id}-count" class="d-flex">
+
+                                    <c:choose>
+                                    <c:when test="${dto.state == 1}">
+                                        <i id="heart-${dto.id}"
+                                            class="my-auto my-heart fa-regular fa-solid fa-heart my-xl my-cursor on-Clicked"
+                                            onclick="heartclick(`${dto.id}`,`${dto.state}`,`${principal.id}`,`${dto.loveId}`)"></i>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <i id="heart-${dto.id}" class="my-auto fa-regular fa-heart my-xl my-cursor"
+                                            onclick="heartclick(`${dto.id}`,`${dto.state}`,`${principal.id}`,`${dto.loveId}`)"></i>
+                                    </c:otherwise>
+                                </c:choose>
+                                &nbsp <div >${dto.count}</div>
+                                </div>
+                                
+                            </div>
                         </div>
                     </div>
+                    <h4 class="card-title my-title-ellipsis">${dto.title}</h4>
+                    <a href="/board/detail/${dto.id}" class="btn btn-primary">상세보기</a>
                 </div>
-                <h4 class="card-title my-title-ellipsis">${dto.title}</h4>
-                <a href="/board/detail/${dto.id}" class="btn btn-primary">상세보기</a>
             </div>
+        </c:forEach>
     </div>
-    </c:forEach>
-</div>
-<ul class="pagination mt-3 d-flex justify-content-center">
-    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-</ul>
+    <ul class="pagination mt-3 d-flex justify-content-center">
+        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
 </div>
 
 <!-- Carousel -->
@@ -100,21 +107,25 @@
     <h3>Carousel Example</h3>
     <p>The following example shows how to create a basic carousel with indicators and controls.</p>
 </div>
-<script>    
-
-
+<script>
+    let boardId;
+    let count;
+    let state;
+    let loveId;
+    let userId;
 
     function heartclick(boardId1, state1, userId1, loveId1) {
+        boardId = boardId1;
+        userId = userId1;
         // console.log(userId1 > 0);
         // el 표현식 여러개를 파라미터로 넣을 경우 파라미터마다 백틱으로 끊어서 입력해야 정상적인 값이 들어간다
-        if( userId1 > 0 ){
+        if (userId1 > 0) {
             let data = {
                 boardId: boardId1,
                 userId: userId1,
                 state: state1,
                 id: loveId1
             }
-
             $.ajax({
                 type: "post",
                 url: "/love/click",
@@ -125,28 +136,44 @@
                 dataType: "json"
             }).done((res) => {
                 // console.dir(res);
-                let count1 = res.data.count;
-                heart(boardId1, count1);
+                count = res.data.count;
+                state = res.data.state;
+                loveId = res.data.id;
+                // console.log(count + ' 카운트 '+ state + '상태');
+                heart();
             }).fail((err) => {
                 // console.dir(err);
-                // alert(err.responseJSON.msg);
+                alert(err.responseJSON.msg);
             });
         }
-
     }
 
-    function heart(id1, count2) {
-        $('#heart-' + id1).toggleClass("fa-solid");
-        $('#heart-' + id1).toggleClass("on-Clicked");
-        $('#heart-' + id1 + '-count').remove();
-        render(id1, count2);
+    function heart() {
+        $('#heart-' + boardId).toggleClass("fa-solid");
+        $('#heart-' + boardId).toggleClass("on-Clicked");
+        $('#heart-' + boardId + '-count').remove();
+        render();
     }
 
-    function render(id, count) {
-        // console.log(count);
-        let el = `<div id="heart-` + id + `-count">` + count + `</div>`;
-        $('#heart-' + id + '-div').append(el);
-        // <div id="heart-${dto.id}-count">${dto.count}</div>
+    function render() {
+        let el ;
+        if ( state === 1 ){
+            el = `
+            <div id="heart-`+boardId+`-count" class="d-flex">
+            <i id="heart- `+boardId+` " class="my-auto my-heart fa-regular fa-solid fa-heart my-xl my-cursor on-Clicked" onclick="heartclick(`+boardId+`,`+state+`,`+userId+`,`+loveId+`)" ></i> 
+            &nbsp <div>`+count+`</div></div>
+            </div>
+            `;
+        }
+        if ( state === 0 ){
+            el = `
+            <div id="heart-`+boardId+`-count" class="d-flex">
+            <i id="heart- `+boardId+` " class="my-auto fa-regular fa-heart my-xl my-cursor" onclick="heartclick(`+boardId+`,`+state+`,`+userId+`,`+loveId+`)" ></i>
+            &nbsp <div>`+count+`</div></div>
+            </div>
+            `;
+        }
+        $('#heart-'+boardId+'-div').append(el);
     }
 </script>
 

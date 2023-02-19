@@ -45,11 +45,11 @@ public class LoveController {
         if ( lDto.getState() == 0 ){
             System.out.println("테스트 : 0 이기 때문에 1 으로 바꿉니다.");
             lDto.setState(1);
-        }
-        if ( lDto.getState() == 1 ){
+        }else{
             System.out.println("테스트 : 1 이기 때문에 0 으로 바꿉니다.");
             lDto.setState(0);
         }
+
         System.out.println("테스트 :sdsds "+ lDto.getState());
         loveService.클릭하기(lDto, principal.getId());
         LoveBoardRespDto loveDto =  loveRepository.findByBoardIdAndUserId(lDto.getBoardId(), principal.getId());
