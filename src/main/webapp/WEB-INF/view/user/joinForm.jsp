@@ -32,7 +32,6 @@
 <script>
     let p1;
     let p2;
-    let submitCheck = false;
     let joinOk = false;
     $('#pw-check1').hide();
     $('#password').on('input', () => {

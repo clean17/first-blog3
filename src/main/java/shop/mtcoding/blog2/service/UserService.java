@@ -59,7 +59,7 @@ public class UserService {
     public User 로그인(UserLoginDto userDto){
         User principal = userRepository.findByUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
         if ( principal == null ){
-            throw new CustomException("존재 하지 않는 계정입니다.");  
+            throw new CustomException("아이디 또는 비밀번호가 틀렸습니다.");  
         }
         return principal;
     }

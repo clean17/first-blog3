@@ -28,6 +28,17 @@ spring:
   output:
     ansi:
       enabled: always
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: piw940317@gmail.com
+    password: hPdnjs0705.hyem
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 mybatis:
   mapper-locations:
   - classpath:mapper/**.xml

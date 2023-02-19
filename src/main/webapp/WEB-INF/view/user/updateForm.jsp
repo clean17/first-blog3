@@ -2,7 +2,7 @@
 <%@ include file="../layout/header.jsp" %>
 
     <div class="container my-3">
-        <div class="container">
+        <div class="container w-50">
             <form action="/user/update" method="post">
                 <div class="form-group mb-2">
                     <input type="text" name="username" class="form-control" placeholder="Enter username" id="username"

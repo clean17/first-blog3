@@ -86,11 +86,9 @@ public class BoardController {
         List<ReplyListRespDto> replyList = replyRepository.findByBoardIdWithUser(id);
         model.addAttribute("replyList", replyList);
 
-        User principal = (User)session.getAttribute("principal");
-        LoveBoardRespDto ldto = loveRepository.findByBoardIdAndUserId(id, principal.getId());
-        
-        model.addAttribute("love", ldto);
-
+        // User principal = (User)session.getAttribute("principal");
+        // LoveBoardRespDto ldto = loveRepository.findByBoardIdAndUserId(id, principal.getId());
+        // model.addAttribute("love", ldto);
         return "board/detail";
     }
 
