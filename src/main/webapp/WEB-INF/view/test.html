@@ -16,25 +16,9 @@
 </head>
 
 <body>
-    <div class="d-flex">
-        <div class="me-2 " style="width:150px">
-            <select class="form-select" aria-label="Default select example" onchange="changeDropdown(this)">
-                <option id="title" value="title">글 제목</option>
-                <option id="content" value="content">글 내용</option>
-                <option id="writer" value="username">작성자</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <div class="form-outline">
-                <input id="search-input" type="search" name="title" class="form-control" placeholder="검색"
-                    onkeypress="if(event.keyCode=='13'){event.preventDefault(); searchEvt();}" />
-            </div>
-            <button id="search-button" class="btn btn-primary" onclick="searchBoard()">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-    </div>
+    <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+    <div class="valid-feedback">Valid.</div>
+    <div class="invalid-feedback">Please fill out this field.</div>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 package shop.mtcoding.blog2.controllerTest;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,6 +38,15 @@ public class UserControllerTest {
         rs.andExpect(status().is3xxRedirection());
     }
 
+    @Test
+    public void profileUpdateForm_test() throws Exception {
+        String username = "tset";
+        ResultActions rs = mvc.perform(get("/user/usernameSameCheck?username="+username));
+
+        String a = rs.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+ a);
+
+    }
     // @Test
     // public void profileUpdate_test() throws Exception{
     
