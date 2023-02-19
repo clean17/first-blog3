@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -23,6 +25,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shop.mtcoding.blog2.dto.board.BoardReq.BoardUpdateDto;
+import shop.mtcoding.blog2.dto.board.BoardResp.BoardMainListDto;
 import shop.mtcoding.blog2.model.User;
 
 @AutoConfigureMockMvc
@@ -41,7 +44,7 @@ public class BoardControllerTest {
     @BeforeEach
     public void setUp(){
         User mockUser = new User();
-        mockUser.setId(1);
+        mockUser.setId(2);
         mockUser.setUsername("ssar");
         mockUser.setPassword("1234");
         mockUser.setEmail("ssar@nate.com");
@@ -61,6 +64,12 @@ public class BoardControllerTest {
         rs.andExpect(status().is3xxRedirection());
     }
 
+    @Test
+    public void main_test() throws Exception {
+        ResultActions rs = mvc.perform(get("/").session(session));
+        List<BoardMainListDto> dtos = (List<BoardMainListDto>)rs.andReturn().getModelAndView().getModel().get("dtos");
+        // System.out.println("테스트 : "+ dtos);
+    }
 
 
     @Test

@@ -93,7 +93,7 @@ public class UserController {
             throw new CustomException("패스워드를 입력하세요");
         }
         User prinipal = service.로그인(userDto);
-        System.out.println("테스트 : "+ prinipal.getProfile());
+        // System.out.println("테스트 : "+ prinipal.getProfile());
         session.setAttribute("principal", prinipal);         
         return "redirect:/";
     }

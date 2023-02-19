@@ -1,4 +1,4 @@
-package shop.mtcoding.blog2.controllerTest;
+package shop.mtcoding.blog2.repositoryTest;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shop.mtcoding.blog2.dto.admin.AdminResp.AdminBoardSearchResqDto;
+import shop.mtcoding.blog2.dto.board.BoardResp.BoardMainListDto;
 import shop.mtcoding.blog2.model.BoardRepository;
 
 
@@ -27,4 +28,12 @@ public class BoardRepositoryTest {
         String tes = om.writeValueAsString(boardList);
         System.out.println("테스트 : "+ tes);
     }
+    @Test
+    public void findAllforList_test() throws Exception {
+        // Integer id = null ;
+        List<BoardMainListDto> btos = boardRepository.findAllforList(null);
+        System.out.println("테스트 : "+btos);
+
+    }
+    
 }

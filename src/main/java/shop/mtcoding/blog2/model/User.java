@@ -9,7 +9,7 @@ import shop.mtcoding.blog2.Util.DateUtil;
 @Getter
 @Setter
 public class User {
-    private int id;
+    private Integer id;
     private String username;
     private String password;
     private String email;
