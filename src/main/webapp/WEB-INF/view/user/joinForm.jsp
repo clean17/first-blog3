@@ -66,15 +66,12 @@
         }
     }
     $('#usernameCheck').click(() => {
-        let username = { username: $('#username').val() }
+        let username = $('#username').val();
         $.ajax({
             type: "get",
             url: "/user/usernameSameCheck?username=" + username
             // dataType: "json"
         }).done((res) => {
-            if (res.code !== 1) {
-                alert(res.msg);
-            }
             if (res.data === true) {
                 alert(res.msg);
                 joinOk = true;
