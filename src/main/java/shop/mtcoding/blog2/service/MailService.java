@@ -1,10 +1,10 @@
 package shop.mtcoding.blog2.service;
 
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
+import shop.mtcoding.blog2.Util.MailHandler;
 import shop.mtcoding.blog2.dto.MailDto;
 
 @Service
@@ -14,12 +14,27 @@ public class MailService {
     private static final String FROM_ADDRESS = "piw940317@gmail.com";  // 보낼 이메일을 설정한다
 
     public void mailSend(MailDto mailDto) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(mailDto.getAddress());
-        message.setFrom(MailService.FROM_ADDRESS); // 얘를 호출하지 않으면 application.yml에 작성한 username으로 셋팅
-        message.setSubject(mailDto.getTitle());
-        message.setText(mailDto.getMessage());
+        try {
+            MailHandler mailHandler = new MailHandler(mailSender);
+            
+            // 받는 사람
+           mailHandler.setTo(mailDto.getAddress());
+            // 보내는 사람
+           mailHandler.setFrom(MailService.FROM_ADDRESS);
+            // 제목
+           mailHandler.setSubject(mailDto.getTitle());
+            // HTML Layout
+            String htmlContent = "<p>" + mailDto.getMessage() +"<p> <img src='cid:sample-img'>";
+            mailHandler.setText(htmlContent, true);
+            // 첨부 파일
+           mailHandler.setAttach("newTest.txt", "static/originTest.txt");
+            // 이미지 삽입
+           mailHandler.setInline("sample-img", "static/sample1.jpg");
 
-        mailSender.send(message);
+            mailHandler.send();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

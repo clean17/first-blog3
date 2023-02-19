@@ -11,10 +11,11 @@ import shop.mtcoding.blog2.service.MailService;
 @AllArgsConstructor
 public class MailController {
     private final MailService mailService;
-
+    
     @PostMapping("/admin/mail")
-    public void execMail(MailDto mailDto) {
+    public String execMail(MailDto mailDto) {
         mailService.mailSend(mailDto);
+        return "redirect:/admin/user";
     }
 }
 

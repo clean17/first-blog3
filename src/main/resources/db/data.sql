@@ -1,6 +1,6 @@
 insert into user_tb (username, password, email, PROFILE, role, created_at) values ('admin','admin','admin@nate.com', '/images/default_profile.png', 'ADMIN', now());
 insert into user_tb (username, password, email, PROFILE, role, created_at) values ('ssar','1234','ssar@nate.com', '/images/default_profile.png', 'USER', now());
-insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love1','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
+insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love1','1234','ssar@nate.com', '/images/default_profile.png', 'USER', now());
 insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love2','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
 insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love3','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
 insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love4','1234','love@nate.com', '/images/default_profile.png', 'USER', now());
