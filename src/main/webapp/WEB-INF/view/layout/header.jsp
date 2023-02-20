@@ -89,20 +89,17 @@
             </nav>
             <script>
                 function searchBox() {
+                    $('#search-header').css('display')
                     const searchHeader = document.getElementById("search-header");
                     if (searchHeader.style.display === "none") {
                         searchHeader.style.display = "block";
+                        searchHeader.focus();
                         }
-                        // console.log('dfadf');
-                        // searchHeader.style.display = "none";
                     }
-
                 function searchEvt(){
-                    keyword = searchHeader.val()
+                    const keyword = $('#search-header').val();
+                    console.log(keyword);
                     location.href="/search?keyword="+keyword;
                 }
-                // document.addEventListener("click", function () {
-                //     searchHeader.style.display.style.display = "none";
-                // });
 
             </script>
