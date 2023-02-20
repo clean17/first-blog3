@@ -8,6 +8,9 @@
     .my-cursor {
         cursor: pointer;
     }
+    .blue{
+        color: blue;
+    }
 
     .my-cursor:hover {
         color: red;
@@ -26,6 +29,7 @@
     </c:if>
 
     <div class="mb-2 d-flex justify-content-end">
+        
         글 번호 : &nbsp<span id="id">${dto.id}&nbsp&nbsp<i>&nbsp&nbsp&nbsp&nbsp </i></span> 작성자 : &nbsp<span
             class="me-3"><i>${dto.username} </i></span>&nbsp&nbsp&nbsp 좋아요 &nbsp&nbsp
             <div id="heart-${dto.id}-div">

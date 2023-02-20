@@ -10,6 +10,7 @@ import shop.mtcoding.blog2.dto.love.LoveReqDto.LoveBoardReqDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.model.Board;
 import shop.mtcoding.blog2.model.BoardRepository;
+import shop.mtcoding.blog2.model.Love;
 import shop.mtcoding.blog2.model.LoveRepository;
 
 @Slf4j
@@ -39,6 +40,22 @@ public class LoveService {
         } catch (Exception e) {
             // log.info(e.getMessage());
             throw new CustomApiException("서버에 일시적인 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Transactional
+    public void 좋아요취소(LoveBoardReqDto lDto, int principalId){
+        Love lovePS = loveRepository.findById(principalId);
+        if( lovePS == null ){
+            throw new CustomApiException("좋아요 내역이 존재하지 않습니다.")    ;
+        }
+        if(lovePS.getId() != principalId){
+            throw new CustomApiException("취소 권한이 없습니다.",HttpStatus.FORBIDDEN);
+        }
+        try {
+            loveRepository.deleteById(principalId);
+        } catch (Exception e) {
+            throw new CustomApiException("서버 에러 발생", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -18,6 +18,21 @@ public class BoardResp {
         private Integer loveId;
         private Integer state;
     }
+    
+    @Getter
+    @Setter
+    @ToString
+    public static class BoardSearchRespDto{
+        private Integer id;
+        private String title;
+        private String username;
+        private String thumbnail;
+        private Integer count;
+        private Integer loveId;
+        private Integer state;
+    }
+
+    
 
     @Getter
     @Setter

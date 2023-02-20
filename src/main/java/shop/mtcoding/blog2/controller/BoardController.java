@@ -91,9 +91,6 @@ public class BoardController {
 
         List<ReplyListRespDto> replyList = replyRepository.findByBoardIdWithUser(id);
         model.addAttribute("replyList", replyList);
-
-        // LoveBoardRespDto ldto = loveRepository.findByBoardIdAndUserId(id, principal.getId());
-        // model.addAttribute("love", ldto);
         return "board/detail";
     }
 
