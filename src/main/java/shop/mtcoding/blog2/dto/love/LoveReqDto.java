@@ -1,5 +1,7 @@
 package shop.mtcoding.blog2.dto.love;
 
+import java.security.Timestamp;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

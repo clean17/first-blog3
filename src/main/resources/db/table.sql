@@ -31,5 +31,6 @@ create table love_tb (
     id int auto_increment primary key,
     user_id int not null,
     board_id int not null,
-    state number(1)
+    state number(1),
+    created_at timestamp not null
 );
