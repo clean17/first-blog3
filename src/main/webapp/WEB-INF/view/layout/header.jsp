@@ -101,5 +101,4 @@
                     console.log(keyword);
                     location.href="/search?keyword="+keyword;
                 }
-
             </script>

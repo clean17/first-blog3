@@ -17,6 +17,102 @@
         color: red;
     }
 </style>
+<div class="col-8 mx-auto">
+<%-- <!-- Carousel -->
+<div id="demo" class="carousel slide w-25 mx-auto mt-3" data-bs-ride="carousel">
+
+    <!-- Indicators/dots -->
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+    </div>
+
+    <!-- The slideshow/carousel -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/images/다운로드 (1).jpg" alt="Los Angeles" class="d-block" style="width:100%">
+            <div class="carousel-caption">
+    
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/다운로드 (2).jpg" alt="Chicago" class="d-block" style="width:100%">
+            <div class="carousel-caption">
+
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/다운로드 (3).jpg" alt="New York" class="d-block" style="width:100%">
+            <div class="carousel-caption">
+         
+            </div>
+        </div>
+    </div>
+
+    <!-- Left and right controls/icons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div> --%>
+
+
+<div class="row  mx-auto mt-3">
+  <div class="col-md-4">
+    <div id="carouselExampleSlidesOnly1" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/images/다운로드 (1).jpg" class="d-block w-100" alt="Image 1">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/다운로드 (2).jpg" class="d-block w-100" alt="Image 2">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/다운로드 (3).jpg" class="d-block w-100" alt="Image 3">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+    <div id="carouselExampleSlidesOnly2" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/images/다운로드 (2).jpg" class="d-block w-100" alt="Image 4">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/다운로드 (3).jpg" class="d-block w-100" alt="Image 5">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/다운로드 (1).jpg" class="d-block w-100" alt="Image 6">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+    <div id="carouselExampleSlidesOnly3" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/images/다운로드 (3).jpg" class="d-block w-100" alt="Image 7">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/다운로드 (1).jpg" class="d-block w-100" alt="Image 8">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/다운로드 (2).jpg" class="d-block w-100" alt="Image 9">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <div class="container-xl my-3">
     <div class="my-grid">
         <c:forEach items="${dtos}" var="dto">
@@ -59,53 +155,7 @@
     </ul>
 </div>
 
-<!-- Carousel -->
-<div id="demo" class="carousel slide" data-bs-ride="carousel">
 
-    <!-- Indicators/dots -->
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-    </div>
-
-    <!-- The slideshow/carousel -->
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="/images/다운로드 (1).jpg" alt="Los Angeles" class="d-block" style="width:100%">
-            <div class="carousel-caption">
-                <h3>Los Angeles</h3>
-                <p>We had such a great time in LA!</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="/images/다운로드 (2).jpg" alt="Chicago" class="d-block" style="width:100%">
-            <div class="carousel-caption">
-                <h3>Chicago</h3>
-                <p>Thank you, Chicago!</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="/images/다운로드 (3).jpg" alt="New York" class="d-block" style="width:100%">
-            <div class="carousel-caption">
-                <h3>New York</h3>
-                <p>We love the Big Apple!</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Left and right controls/icons -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </button>
-</div>
-
-<div class="container-fluid mt-3">
-    <h3>Carousel Example</h3>
-    <p>The following example shows how to create a basic carousel with indicators and controls.</p>
 </div>
 <script>
     let boardId;
