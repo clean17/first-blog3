@@ -16,9 +16,39 @@
 </head>
 
 <body>
-    <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
-    <div class="valid-feedback">Valid.</div>
-    <div class="invalid-feedback">Please fill out this field.</div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+        Open modal
+    </button>
+    <!-- 버튼 클릭시 모달 생김 -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <!-- modal-sm modal-lg modal-xl 모달 사이즈 -->
+            <!-- modal-dialog-centered 화면 가운데 -->
+            <!-- modal-dialog-scrollable 스크롤 기능 -->
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h1>메일 발송</h1>
+
+                    <form th:action="@{/admin/mail}" method="post">
+                        <input name="address" placeholder="이메일 주소" class="form-control"> <br>
+                        <input name="title" placeholder="제목" class="form-control"> <br>
+                        <textarea name="message" placeholder="메일 내용을 입력해주세요." cols="60" rows="20" class="form-control"></textarea>
+                        <button type="button" class="btn btn-primary mt-2">발송</button>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
