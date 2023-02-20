@@ -25,8 +25,9 @@ public class BoardResp {
         private Integer id;
         private String title;
         private String content;
-        private String username;
         private Integer userId;
+        private String username;
+        private Integer loveId;
         private Integer count;
         private Integer state;
     }

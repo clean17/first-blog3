@@ -47,10 +47,23 @@
     </select>
 
     <select id="findBoardforDetail" resultType="shop.mtcoding.blog2.dto.board.BoardResp$BoardDetailDto">
-      select b.id, b.title, b.content, b.user_id,
-      ( select username from user_tb where id = b.user_id ) username 
-      from board_tb b 
-      where id = #{id}
+      <if test="userId == null">
+        select b.id, b.title, b.content, b.user_id,
+        ( select username from user_tb where id = b.user_id ) username,
+        ( select count(*) from love_tb where board_id = b.id and state = 1 ) count,
+        ifnull(null,0) state,
+        from board_tb b
+        where id = #{id}
+      </if>
+      <if test="userId != null">
+        select b.id, b.title, b.content, b.user_id,
+        ( select username from user_tb where id = b.user_id ) username,
+        ( select count(*) from love_tb where board_id = b.id and state = 1 ) count,
+        ifnull( (select id from love_tb where board_id = b.id and user_id = #{userId} ), null) love_id,
+        ( select ifnull( ( select state from love_tb where board_id = b.id and user_id = #{userId} ), 0 ) )state ,
+        from board_tb b 
+        where id = #{id}
+      </if>
     </select>
 
 

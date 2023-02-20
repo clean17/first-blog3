@@ -29,7 +29,10 @@ public interface BoardRepository {
     );
     public List<BoardMainListDto> findAllforList(Integer userId);
 
-    public BoardDetailDto findBoardforDetail(int id);
+    public BoardDetailDto findBoardforDetail(
+        @Param("id") Integer id,
+        @Param("userId") Integer userId
+        );
     public int deleteBoard(int id);
     public int updateBoard(
         @Param("title") String title,

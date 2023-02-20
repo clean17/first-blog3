@@ -27,11 +27,11 @@ insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅎ
 insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅎ6ㅎ', 2, 2,0, now());
 insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅎ677ㅎ', 2, 2,0, now());
 
-insert into love_tb (user_id, board_id, state) values (2, 2, 1);
-insert into love_tb (user_id, board_id, state) values (2, 1, 1);
-insert into love_tb (user_id, board_id, state) values (2, 3, 1);
-insert into love_tb (user_id, board_id, state) values (3, 4, 1);
-insert into love_tb (user_id, board_id, state) values (4, 2, 1);
-insert into love_tb (user_id, board_id, state) values (5, 2, 1);
+insert into love_tb (user_id, board_id, state, created_at) values (2, 2, 1, now());
+insert into love_tb (user_id, board_id, state, created_at) values (2, 1, 1, now());
+insert into love_tb (user_id, board_id, state, created_at) values (2, 3, 1, now());
+insert into love_tb (user_id, board_id, state, created_at) values (3, 4, 1, now());
+insert into love_tb (user_id, board_id, state, created_at) values (4, 2, 1, now());
+insert into love_tb (user_id, board_id, state, created_at) values (5, 2, 1, now());
 
 commit;

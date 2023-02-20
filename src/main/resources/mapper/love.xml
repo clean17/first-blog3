@@ -32,10 +32,10 @@
 
     <insert id="insertOrUpdate" useGeneratedKeys="true" keyProperty="lDto.id">
         <if test="lDto.id == null">
-            INSERT INTO love_tb (user_id, board_id, state) VALUES (#{userId}, #{lDto.boardId}, 1)
+            INSERT INTO love_tb (user_id, board_id, state, created_at) VALUES (#{userId}, #{lDto.boardId}, 1, now())
         </if>
         <if test="lDto.id != null">
-            UPDATE love_tb SET state = #{lDto.state} WHERE id = #{lDto.id}
+            UPDATE love_tb SET state = #{lDto.state}, created_at=now() WHERE id = #{lDto.id}
         </if>
     </insert>
 </mapper>

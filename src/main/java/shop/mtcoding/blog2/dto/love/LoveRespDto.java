@@ -13,6 +13,7 @@ public class LoveRespDto {
         private Integer id;
         private Integer count;
         private Integer state;
+        private Integer loveId;
     }
 
     @Getter

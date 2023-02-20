@@ -40,7 +40,7 @@ public class BoardController {
 
     @Autowired
     private BoardService service;
-    
+
     @Autowired
     private BoardRepository boardRepository;
 
@@ -50,7 +50,7 @@ public class BoardController {
     @Autowired
     private LoveRepository loveRepository;
 
-    private void mockSession(){
+    private void mockSession() {
         User mockUser = new User();
         mockUser.setId(2);
         mockUser.setUsername("ssar");
@@ -61,48 +61,53 @@ public class BoardController {
     }
 
     @GetMapping("/")
-    public String  main(Model model){
+    public String main(Model model) {
         // mockSession();
-    Integer num = null;
-    User principal = (User) session.getAttribute("principal"); // 세션에 오브젝트가 null 이라면 에러가 나온다 !!!
-    if ( principal != null ){
-        num = principal.getId();
+        Integer num = null;
+        User principal = (User) session.getAttribute("principal"); // 세션에 오브젝트가 null 이라면 에러가 나온다 !!!
+        if (principal != null) {
+            num = principal.getId();
+        }
+        List<BoardMainListDto> dtos = boardRepository.findAllforList(num);
+        model.addAttribute("dtos", dtos);
+        return "board/main";
     }
-    List<BoardMainListDto> dtos = boardRepository.findAllforList(num);
-    model.addAttribute("dtos", dtos);
-    return "board/main";
-    }
-    
+
     @GetMapping("/board/write")
-    public String writeForm(){
-        
-    return "board/writeForm";
+    public String writeForm() {
+
+        return "board/writeForm";
     }
 
     @GetMapping("/board/detail/{id}")
     public String boardDetail(@PathVariable int id, Model model){
-        BoardDetailDto db =  boardRepository.findBoardforDetail(id);
+        Integer num = null;
+        User principal = (User) session.getAttribute("principal"); // 세션에 오브젝트가 null 이라면 에러가 나온다 !!!
+        if ( principal != null ){
+            num = principal.getId();
+        }
+        BoardDetailDto db =  boardRepository.findBoardforDetail(id, num);
         model.addAttribute("dto", db);
+
         List<ReplyListRespDto> replyList = replyRepository.findByBoardIdWithUser(id);
         model.addAttribute("replyList", replyList);
 
-        // User principal = (User)session.getAttribute("principal");
         // LoveBoardRespDto ldto = loveRepository.findByBoardIdAndUserId(id, principal.getId());
         // model.addAttribute("love", ldto);
         return "board/detail";
     }
 
     @GetMapping("/board/{id}/updateForm")
-    public String updateForm(@PathVariable int id, Model model){
+    public String updateForm(@PathVariable int id, Model model) {
         User principal = (User) session.getAttribute("principal");
-        if( principal == null ){
+        if (principal == null) {
             throw new CustomException("로그인이 필요한 기능입니다.", HttpStatus.UNAUTHORIZED);
         }
         BoardUpdateRespDto dto = boardRepository.findByIdforUpdate(id);
-        if ( dto == null ){
+        if (dto == null) {
             throw new CustomException("존재하지 않는 게시글 입니다.");
         }
-        if ( dto.getUserId() != principal.getId()){
+        if (dto.getUserId() != principal.getId()) {
             throw new CustomException("해당 게시글을 수정할 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
         model.addAttribute("dto", dto);
@@ -110,18 +115,18 @@ public class BoardController {
     }
 
     @PostMapping("/board/write")
-    public String boardWrite(BoardWriteDto boardDto){
+    public String boardWrite(BoardWriteDto boardDto) {
         User principal = (User) session.getAttribute("principal");
-        if( principal == null ){
+        if (principal == null) {
             throw new CustomException("로그인이 필요한 기능입니다.", HttpStatus.UNAUTHORIZED);
         }
-        if( boardDto.getTitle()==null||boardDto.getTitle().isEmpty()){
+        if (boardDto.getTitle() == null || boardDto.getTitle().isEmpty()) {
             throw new CustomException("글 제목이 없습니다.");
         }
-        if( boardDto.getTitle().length()>100){
+        if (boardDto.getTitle().length() > 100) {
             throw new CustomException("제목을 100자 이내로 작성하세요.");
-        }        
-        if( boardDto.getContent()==null||boardDto.getContent().isEmpty()){
+        }
+        if (boardDto.getContent() == null || boardDto.getContent().isEmpty()) {
             throw new CustomException("글 내용이 없습니다.");
         }
         service.글쓰기(boardDto, principal.getId());
@@ -129,9 +134,9 @@ public class BoardController {
     }
 
     @DeleteMapping("/board/{id}/delete")
-    public ResponseEntity<?> boardDelete(@PathVariable int id){
+    public ResponseEntity<?> boardDelete(@PathVariable int id) {
         User principal = (User) session.getAttribute("principal");
-        if( principal == null ){
+        if (principal == null) {
             throw new CustomApiException("로그인이 필요한 기능입니다.", HttpStatus.UNAUTHORIZED);
         }
         service.글삭제(id, principal.getId());
@@ -140,25 +145,23 @@ public class BoardController {
     }
 
     @PutMapping("/board/{id}")
-    public ResponseEntity<?> boardUpdate(@PathVariable int id ,@RequestBody BoardUpdateDto bDto){
+    public ResponseEntity<?> boardUpdate(@PathVariable int id, @RequestBody BoardUpdateDto bDto) {
         User principal = (User) session.getAttribute("principal");
-        if( principal == null ){
+        if (principal == null) {
             throw new CustomApiException("로그인이 필요한 기능입니다.", HttpStatus.UNAUTHORIZED);
         }
-        if( bDto.getTitle()==null||bDto.getTitle().isEmpty()){
+        if (bDto.getTitle() == null || bDto.getTitle().isEmpty()) {
             throw new CustomException("글 제목이 없습니다.");
         }
-        if( bDto.getTitle().length()>100){
+        if (bDto.getTitle().length() > 100) {
             throw new CustomException("제목을 100자 이내로 작성하세요.");
-        }        
-        if( bDto.getContent()==null||bDto.getContent().isEmpty()){
+        }
+        if (bDto.getContent() == null || bDto.getContent().isEmpty()) {
             throw new CustomException("글 내용이 없습니다.");
         }
         service.글수정(bDto, id, principal.getId());
 
         return new ResponseEntity<>(new ResponseDto<>(1, "수정 성공", true), HttpStatus.OK);
     }
-
-
 
 }
