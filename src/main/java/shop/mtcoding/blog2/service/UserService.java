@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
 import shop.mtcoding.blog2.Util.PathUtil;
+import shop.mtcoding.blog2.Util.Sha256;
 import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
@@ -43,6 +44,7 @@ public class UserService {
         if (sameUser != null) {
             throw new CustomException("동일한 username이 존재합니다");
         }
+        userDto.setPassword(Sha256.encode(userDto.getPassword()));
         int result = userRepository.insertUser(
                 userDto.getUsername(), 
                 userDto.getPassword(), 
@@ -57,6 +59,7 @@ public class UserService {
 
     @Transactional
     public User 로그인(UserLoginDto userDto){
+        userDto.setPassword(Sha256.encode(userDto.getPassword()));
         User principal = userRepository.findByUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
         if ( principal == null ){
             throw new CustomException("아이디 또는 비밀번호가 틀렸습니다.");  
@@ -92,6 +95,7 @@ public class UserService {
         if (updateReqDto.getEmail() == null || updateReqDto.getEmail().isEmpty()) {
             throw new CustomException("email을 작성해주세요");
         }
+        updateReqDto.setPassword(Sha256.encode(updateReqDto.getPassword()));
         try {
             userRepository.updateUser(updateReqDto);
         } catch (Exception e) {
