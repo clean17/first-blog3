@@ -1,4 +1,4 @@
-package com.example.loginexample.interceptor;
+package shop.mtcoding.blog2.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,7 +7,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.loginexample.model.User;
+import shop.mtcoding.blog2.model.User;
+
 
 public class CustomInterceptor implements HandlerInterceptor {
 
@@ -18,8 +19,9 @@ public class CustomInterceptor implements HandlerInterceptor {
         if (request.getRequestURL().toString().equals("http://localhost:8080/")) {
             User principal = (User) request.getSession(false).getAttribute("principal");
             if (principal == null) {
-                response.sendRedirect("/login");
-                return false;
+                // response.sendRedirect("/login");
+                // return false;
+                return true;
             }
         }
         return true;
