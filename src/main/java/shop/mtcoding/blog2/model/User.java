@@ -2,24 +2,28 @@ package shop.mtcoding.blog2.model;
 
 import java.sql.Timestamp;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import lombok.Value;
 import shop.mtcoding.blog2.Util.DateUtil;
 
+@Builder
 @Getter
 @Setter
-@ToString
+// @RequiredArgsConstructor
 public class User {
-    private Integer id;
-    private String username;
-    private String password;
-    private String email;
+    private final Integer id;
+    private final String username;
+    private final String password;
+    private final String email;
     private String profile; // 사진의 경로 - /images/default_profile.png
-    private String role;
-    private Timestamp createdAt;
+    private final String role;
+    private final Timestamp createdAt;
 
     public String getCreatedAtToString() {
         return DateUtil.format(createdAt);
     }
+
 }

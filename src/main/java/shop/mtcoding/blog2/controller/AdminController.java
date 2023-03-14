@@ -58,13 +58,13 @@ public class AdminController {
     private ReplyService replyService;
 
     public void setUp() {
-        User mockUser = new User();
-        mockUser.setId(1);
-        mockUser.setUsername("admin");
-        mockUser.setPassword("admin");
-        mockUser.setRole("ADMIN");
-        mockUser.setEmail("admin@nate.com");
-        session.setAttribute("principal", mockUser);
+        User mockUser = User.builder()
+                        .id(1)
+                        .username("admin")
+                        .password("admin")
+                        .role("ADMIN")
+                        .email("admin@nate.com")
+                        .build();
     }
 
     @GetMapping("/admin/loginForm")

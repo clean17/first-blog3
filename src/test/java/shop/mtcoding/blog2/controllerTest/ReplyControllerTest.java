@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import shop.mtcoding.blog2.dto.reply.ReplyReq.ReplySaveReqDto;
 import shop.mtcoding.blog2.dto.reply.ReplyResp.ReplyListRespDto;
 import shop.mtcoding.blog2.model.User;
+import shop.mtcoding.blog2.model.User.UserBuilder;
 
 
 @AutoConfigureMockMvc
@@ -42,11 +43,20 @@ public class ReplyControllerTest {
 
     @BeforeEach
     public void setUp(){
-        User mockUser = new User();
-        mockUser.setId(2);
-        mockUser.setUsername("ssar");
-        mockUser.setPassword("1234");
-        mockUser.setEmail("ssar@nate.com");
+        // User mockUser = new User();
+        // mockUser.setId(2);
+        // mockUser.setUsername("ssar");
+        // mockUser.setPassword("1234");
+        // mockUser.setEmail("ssar@nate.com");
+
+        // session = new MockHttpSession();
+        // session.setAttribute("principal", mockUser);
+        User mockUser = User.builder()
+                        .id(2)
+                        .username("ㅅㄷㄴㅅ")
+                        .password("1234")
+                        .email("EF@SEF")
+                        .build();
 
         session = new MockHttpSession();
         session.setAttribute("principal", mockUser);

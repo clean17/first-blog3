@@ -43,12 +43,12 @@ public class BoardControllerTest {
 
     @BeforeEach
     public void setUp(){
-        User mockUser = new User();
-        mockUser.setId(2);
-        mockUser.setUsername("ssar");
-        mockUser.setPassword("1234");
-        mockUser.setEmail("ssar@nate.com");
-
+        User mockUser = User.builder()
+                        .id(1)
+                        .username("ssar")
+                        .password("1234")
+                        .email("ssar@nate.com")
+                        .build();
         session = new MockHttpSession();
         session.setAttribute("principal", mockUser);
     }

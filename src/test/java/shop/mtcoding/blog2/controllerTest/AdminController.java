@@ -39,13 +39,12 @@ public class AdminController {
 
     @BeforeEach
     public void setUp(){
-        User mockUser = new User();
-        mockUser.setId(1);
-        mockUser.setUsername("admin");
-        mockUser.setPassword("admin");
-        mockUser.setRole("ADMIN");
-        mockUser.setEmail("admin@nate.com");
-
+        User mockUser = User.builder()
+                        .id(1)
+                        .username("ssar")
+                        .password("1234")
+                        .email("ssar@nate.com")
+                        .build();
         session = new MockHttpSession();
         session.setAttribute("principal", mockUser);
     }

@@ -51,12 +51,13 @@ public class BoardController {
     private LoveRepository loveRepository;
 
     private void mockSession() {
-        User mockUser = new User();
-        mockUser.setId(2);
-        mockUser.setUsername("ssar");
-        mockUser.setPassword("1234");
-        mockUser.setEmail("ssar@nate.com");
-        mockUser.setProfile("/images/default_profile.png");
+        User mockUser = User.builder()
+                        .id(1)
+                        .username("ssar")
+                        .password("1234")
+                        .email("ssar@nate.com")
+                        .profile("/images/default_profile.png")
+                        .build();
         session.setAttribute("principal", mockUser);
     }
 
