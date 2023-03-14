@@ -6,10 +6,6 @@ build/
 !**/src/test/**/build/
 
 
-### my ignore ###
-src/main/resources/application.yml
-*.yml
-
 ### STS ###
 .apt_generatedg
 .classpath

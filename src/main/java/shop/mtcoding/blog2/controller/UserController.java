@@ -1,15 +1,19 @@
 package shop.mtcoding.blog2.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +24,7 @@ import shop.mtcoding.blog2.dto.user.UserReq.UserLoginDto;
 import shop.mtcoding.blog2.dto.user.UserReq.UserUpdateReqDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
 import shop.mtcoding.blog2.exception.CustomException;
+import shop.mtcoding.blog2.handler.aop.LoginUser;
 import shop.mtcoding.blog2.model.User;
 import shop.mtcoding.blog2.model.UserRepository;
 import shop.mtcoding.blog2.service.UserService;
@@ -62,11 +67,7 @@ public class UserController {
 
     /// 오늘 수업
     @GetMapping("/user/profileUpdateForm")
-    public String profileUpdateForm(Model model){
-        User principal = (User) session.getAttribute("principal");
-        if( principal == null ){
-           return "redirect:/login";
-        }
+    public String profileUpdateForm(@LoginUser User principal, Model model){
         User userPS = userRepository.findById(principal.getId());
         model.addAttribute("user", userPS);
         return "user/profileUpdateForm";
@@ -74,7 +75,7 @@ public class UserController {
 
     @GetMapping("/user/usernameSameCheck")
     public @ResponseBody ResponseDto<?> check(String username){     	
-        if( username == null || username.isEmpty()){  
+        if( ObjectUtils.isEmpty(username)){  
             throw new CustomApiException("username을 입력해주세요");
         }
         if ( username.equals("ssar")){
@@ -85,22 +86,22 @@ public class UserController {
 
 
     @PostMapping("/join")
-    public String userJoin(UserJoinDto userDto){
-        if( userDto.getUsername()==null||userDto.getUsername().isEmpty()){
-            throw new CustomException("아이디를 입력하세요");
-        }
-        if( userDto.getPassword()==null||userDto.getPassword().isEmpty()){
-            throw new CustomException("패스워드를 입력하세요");
-        }
-        if( userDto.getEmail()==null||userDto.getEmail().isEmpty()){
-            throw new CustomException("이메일을 입력하세요");
-        }
-        service.회원가입(userDto);        
+    public String userJoin(@Validated UserJoinDto userDto){
+        // if( userDto.getUsername()==null||userDto.getUsername().isEmpty()){
+        //     throw new CustomException("아이디를 입력하세요");
+        // }
+        // if( userDto.getPassword()==null||userDto.getPassword().isEmpty()){
+        //     throw new CustomException("패스워드를 입력하세요");
+        // }
+        // if( userDto.getEmail()==null||userDto.getEmail().isEmpty()){
+        //     throw new CustomException("이메일을 입력하세요");
+        // }
+        // service.회원가입(userDto);        
         return "redirect:/login";
     }
 
     @PostMapping("/login")
-    public String userLogin(UserLoginDto userDto){
+    public String userLogin( UserLoginDto userDto){
         if( userDto.getUsername()==null||userDto.getUsername().isEmpty()){
             throw new CustomException("아이디를 입력하세요");
         }

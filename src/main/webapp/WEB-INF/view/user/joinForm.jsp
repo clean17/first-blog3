@@ -6,23 +6,23 @@
             <form action="/join" method="post" onsubmit="return valid()" class="was-validated">
                 <div class="h-10">
                 <div class="d-flex form-floating mb-2 h-10">
-                    <input type="text" name="username" class="form-control" placeholder="Enter username" id="username" required>
+                    <input type="text" name="username" class="form-control" placeholder="Enter username" id="username" >
                     <label for="username">Username</label>
                     <button type="button" class="badge bg-secondary ms-2" id="usernameCheck" onclick="sameCheck()">중복확인</button>
                 </div>
             </div>
                 <div class="form-group mb-2">
-                    <input type="password" name="password" class="form-control" placeholder="Enter password" id="password" required>
+                    <input type="password" name="password" class="form-control" placeholder="Enter password" id="password" >
                     <div id="pw-check1">4자리 이상을 입력해야합니다.</div>
                 </div>
 
                 <div class="form-group mb-2">
-                    <input type="password" class="form-control" placeholder="Enter passwordCheck" id="passwordCheck" required>
+                    <input type="password" class="form-control" placeholder="Enter passwordCheck" id="passwordCheck" >
                     <div id="pw-check2">패스워드가 다릅니다</div>
                 </div>
 
                 <div class="form-group mb-2">
-                    <input type="email" name="email" class="form-control" placeholder="Enter email" id="email" required>
+                    <input type="email" name="email" class="form-control" placeholder="Enter email" id="email" >
                 </div>
 
                 <button type="submit" id="join-btn" class="btn btn-primary">회원가입</button>

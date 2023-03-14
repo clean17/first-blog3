@@ -1,9 +1,12 @@
 package shop.mtcoding.blog2.dto.user;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +15,7 @@ public class UserReq {
 
     @Getter
     @Setter
+    @Builder
     public static class UserJoinDto{
         @NotBlank(message = "아이디는 필수 입력 값입니다.")
         private String username;

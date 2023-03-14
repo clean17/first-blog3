@@ -13,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import shop.mtcoding.blog2.dto.user.UserReq.UserJoinDto;
+
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 public class UserControllerTest {
@@ -40,7 +42,10 @@ public class UserControllerTest {
 
     @Test
     public void profileUpdateForm_test() throws Exception {
-        String username = "tset";
+        // UserJoinDto user = UserJoinDto.builder()
+        //                     .username("ssar")
+        //                     .build();
+        String username = "ssar" ; 
         ResultActions rs = mvc.perform(get("/user/usernameSameCheck?username="+username));
 
         String a = rs.andReturn().getResponse().getContentAsString();

@@ -60,6 +60,7 @@ public class UserService {
     @Transactional
     public User 로그인(UserLoginDto userDto){
         userDto.setPassword(Sha256.encode(userDto.getPassword()));
+        System.out.println("테스트 : "+ userDto.getPassword());
         User principal = userRepository.findByUsernameAndPassword(userDto.getUsername(), userDto.getPassword());
         if ( principal == null ){
             throw new CustomException("아이디 또는 비밀번호가 틀렸습니다.");  
