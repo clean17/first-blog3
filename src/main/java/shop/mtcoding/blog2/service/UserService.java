@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import shop.mtcoding.blog2.Util.PathUtil;
 import shop.mtcoding.blog2.Util.Sha256;
@@ -21,10 +22,10 @@ import shop.mtcoding.blog2.model.UserRepository;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserService {
     
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void 회원삭제(Integer id, User admin) { 
@@ -86,7 +87,7 @@ public class UserService {
     }
 
 	@Transactional
-    public void 회원수정(UserUpdateReqDto updateReqDto, int principalId){
+    public User 회원수정(UserUpdateReqDto updateReqDto, int principalId){
         if( updateReqDto.getId() != principalId){
             throw new CustomException("본인 정보만 수정 가능합니다.");
         }
@@ -102,6 +103,7 @@ public class UserService {
         } catch (Exception e) {
             throw new CustomException("서버의 일시적인 오류로 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return userRepository.findById(principalId);
     }
         
     @Transactional

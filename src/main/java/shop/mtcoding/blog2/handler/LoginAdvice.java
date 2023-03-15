@@ -24,8 +24,7 @@ public class LoginAdvice {
         for (Object arg : args) {
             if (arg instanceof User) {
                 System.out.println("테스트 : 유저 있음");
-                HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-                        .getRequest();
+                HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
                 HttpSession session = req.getSession();
                 User principal = (User) session.getAttribute("principal");
                 param[0] = principal;
