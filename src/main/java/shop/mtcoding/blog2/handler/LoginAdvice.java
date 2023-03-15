@@ -16,7 +16,7 @@ import shop.mtcoding.blog2.model.User;
 @Component
 public class LoginAdvice {
     
-    @Around("execution(* shop.mtcoding.aopstudy.controller..*.*(..))") // 강사님이 알려주신
+    @Around("execution(* shop.mtcoding.aopstudy.controller..*.*(..))") 
     public Object loginUserAdvice(ProceedingJoinPoint jp) throws Throwable {
         Object result = jp.proceed();
         Object[] args = jp.getArgs();
