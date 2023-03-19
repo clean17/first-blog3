@@ -8,13 +8,13 @@ insert into user_tb (username, password, email, PROFILE, role, created_at) value
 insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love6','7523447361c8063bc30020ee4bbb3e77b025c2044b7212e4c0fd68fa7b18b1f5','love@nate.com', '/images/default_profile.png', 'USER', now());
 insert into user_tb (username, password, email, PROFILE, role, created_at) values ('love7','7523447361c8063bc30020ee4bbb3e77b025c2044b7212e4c0fd68fa7b18b1f5','love@nate.com', '/images/default_profile.png', 'USER', now());
 
-insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('첫번째 제목 입니다.','첫번째 내용입니다.', 3, '/images/dora1.png', 0, now());
-insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('두번째 제목 입니다.','두번째 내용입니다.', 2, '/images/dora1.png', 0, now());
-insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('세번째 제목 입니다.','세번째 내용입니다.', 3, '/images/dora1.png', 0, now());
-insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('네번째 제목 입니다.','네번째 내용입니다.', 3, '/images/dora1.png', 0, now());
-insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('다섯번째 제목 입니다.','다섯번째 내용입니다.', 2, '/images/dora1.png', 0, now());
-insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('여섯번째 제목 입니다.','여섯번째 내용입니다.', 2, '/images/dora1.png', 0, now());
-insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('일곱번째 제목 입니다.','일곱번째 내용입니다.', 2, '/images/dora1.png', 0, now());
+insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('첫번째 제목 입니다.','첫번째 내용입니다.', 3, '/images/다운로드 (1).jpg', 0, now());
+insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('두번째 제목 입니다.','두번째 내용입니다.', 2, '/images/다운로드 (2).jpg', 0, now());
+insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('세번째 제목 입니다.','세번째 내용입니다.', 3, '/images/다운로드 (3).jpg', 0, now());
+insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('네번째 제목 입니다.','네번째 내용입니다.', 3, '/images/다운로드 (4).jpg', 0, now());
+insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('다섯번째 제목 입니다.','다섯번째 내용입니다.', 2, '/images/다운로드 (5).jpg', 0, now());
+insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('여섯번째 제목 입니다.','여섯번째 내용입니다.', 2, '/images/다운로드 (6).jpg', 0, now());
+insert into board_tb (title, content, user_id, thumbnail, love, created_at) values ('일곱번째 제목 입니다.','일곱번째 내용입니다.', 2, '/images/다운로드 (7).jpg', 0, now());
 
 insert into reply_tb (comment, user_id, board_id, love, created_at) values ('1등 ㅋㅋ', 2, 3, 0, now());
 insert into reply_tb (comment, user_id, board_id, love, created_at) values ('댓글 테스트 !!', 1, 2,0, now());

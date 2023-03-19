@@ -27,9 +27,11 @@
         </style>
 
         <body>
+        
 
+        
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-                <div class="container-fluid">
+                <div class="container-fluid width-53">
                     <a class="navbar-brand" href="/">Blog</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapsibleNavbar">
@@ -78,15 +80,19 @@
                                 <i class="fa-sharp fa-solid fa-bell btn btn-dark"></i>
                             </div>
                             <div class="ms-5 my-auto">
+                                <c:if test="${principal != null}" >
                                 <a href="/user/profileUpdateForm"><img
                                         src="${principal.profile == null ? '/images/default_profile.png' : principal.profile}"
-                                        style="width: 35px;" class="rounded-circle" alt="Cinque Terre"></a>
+                                        style="width: 35px; object-fit: cover;" class="rounded-circle" alt="Cinque Terre"></a>
+                                </c:if>
+                                
                             </div>
                         </div>
                     </div>
 
                 </div>
             </nav>
+        
             <script>
                 function searchBox() {
                     $('#search-header').css('display')

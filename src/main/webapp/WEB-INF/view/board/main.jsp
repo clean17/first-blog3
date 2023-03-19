@@ -60,7 +60,7 @@
 </div> --%>
 
 
-<div class="row  mx-auto mt-3">
+<%-- <div class="row  mx-auto mt-3">
   <div class="col-md-4">
     <div id="carouselExampleSlidesOnly1" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
@@ -108,7 +108,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> --%>
 
 
 

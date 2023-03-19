@@ -3,7 +3,7 @@
 
     <div class="container my-3">
         <div class="container w-50"> 
-            <form action="/login" method="post" >
+            <form action="/login" method="post" class="was-validated">
                 <div class="form-group mb-2">
                     <input type="text" name="username" class="form-control" placeholder="Enter username" id="username" required>
                 </div>
