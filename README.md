@@ -20,7 +20,7 @@
 ### 4단계
 - 아이디 중복체크, 회원수정하기
 ### 5단계
-- 검색
+- 관리자 추가, 검색, 이메일
 
 <br>
 
@@ -45,44 +45,7 @@
 
 > ## 테이블 모델링
 
-```
-create table user_tb (
-    id int auto_increment primary key,
-    username varchar not null unique,
-    password varchar not null,
-    email varchar not null,
-    profile varchar,
-    role varchar,
-    created_at timestamp not null
-);
-
-create table board_tb (
-    id int auto_increment primary key,
-    title varchar(100) not null,
-    content longtext not null,
-    user_id int not null,
-    thumbnail longtext not null,
-    love int ,
-    created_at timestamp not null
-);
-
-create table reply_tb (
-    id int auto_increment primary key,
-    comment varchar(100) not null,
-    user_id int not null,
-    board_id int not null,
-    love int ,
-    created_at timestamp not null
-);
-
-create table love_tb (
-    id int auto_increment primary key,
-    user_id int not null,
-    board_id int not null,
-    state number(1),
-    created_at timestamp not null
-);
-```
+<img src="src\main\resources\static\images\블로그 DB 설계.jpg" >
 
 <br>
 
@@ -95,6 +58,8 @@ create table love_tb (
 - ajax 비동기 통신으로 댓글 작성 삭제 기능
 - 글과 댓글에 좋아요 기능 및 좋아요수 확인기능
 - 프로필사진 수정 기능
+- 관리자 계정 및 관리자 페이지 추가 후 작성된 글, 댓글 검색기능 및 삭제기능
+- 이메일 api를 이용해서 관리자가 메일을 보내는 기능
 
 <br>
 
