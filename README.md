@@ -1,5 +1,5 @@
 # 블로그 프로젝트 
-<img src="src\main\resources\static\images\blog-main.jpg" >
+<img src="src\main\resources\static\images\blog-main2.jpg" >
 
 > ## 개발 목표
 - DB를 설계하고 연관관계를 파악해서 기본적인 CRUD 쿼리를 작성해본다
