@@ -1,5 +1,5 @@
 # 블로그 프로젝트 
-<img src="src\main\resources\static\images\blog-main2.jpg" >
+<img src="src\main\resources\static\images\blogmain.jpg" >
 
 > ## 개발 목표
 - DB를 설계하고 연관관계를 파악해서 기본적인 CRUD 쿼리를 작성해본다
@@ -79,6 +79,7 @@
 - 이메일 api를 이용해서 관리자가 메일을 보내는 기능
 - Sha256을 이용한 비밀번호 암호화
 - Junit을 이용한 단위 테스트
+- 인터셉터를 추가해 인증처리
 
 <br>
 
