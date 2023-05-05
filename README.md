@@ -3,6 +3,7 @@
 
 
 > ## 개발 목표
+
 - DB를 설계하고 연관관계를 파악해서 기본적인 CRUD 쿼리를 작성해본다
 - 블로그의 로직을 이해하고 필요한 기능 및 추가되면 좋을 기능을 생각해서 추가해본다.
 - 단위 테스트를 하는것에 익숙해진다.
@@ -10,6 +11,7 @@
 <br>
 
 > ## 개발 환경
+
 - Visual Studio Code
 - Java 11
 
@@ -17,6 +19,7 @@
 <br>
 
 > ## 기술 스택
+
 - JDK 11
 - Spring Boot 2.7.8
 - MyBatis
@@ -29,6 +32,7 @@
 <br>
 
 > ## 기능정리
+
 ### 1단계
 - 회원 가입, 로그인, 글 쓰기, 글 목록보기 (썸네일 제외), 글 상세보기, 글 삭제 , 글 수정, 썸네일
 ### 2단계
@@ -43,6 +47,7 @@
 <br>
 
 > ## 의존성 주입
+
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.jsoup:jsoup:1.15.3'
 	implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.9'
@@ -68,6 +73,7 @@
 <br>
 
 > ## 적용된 기능
+
 - 아이디 중복체크기능
 - 비밀번호 중복확인 기능
 - 글 쓰기 수정 삭제 기능
@@ -85,9 +91,12 @@
 <br>
 
 > ## 이슈
+
 - 좋아요 기능을 구현하려고 할때 테이블에서 삭제하지 않고 상태값만 변하게 만들고 싶었는데 여러 환경마다 방법이 달라서 시행착오 끝에 지금 환경에서는 useGenerateKey를 사용해서 id를 리턴하면 손쉽게 좋아요상태를 update할 수 있었다.
 
 <br>
 
 > ## 기술 블로그
-- https://velog.io/@merci/series/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%A0%9C%EC%9E%91-V1
+
+
+- <a href="https://velog.io/@merci/series/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%A0%9C%EC%9E%91-V1"> 블로그 링크 </a>
