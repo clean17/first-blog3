@@ -1,5 +1,6 @@
 # 블로그 프로젝트 
-<img src="src\main\resources\static\images\blogmain.jpg" >
+![blogmain](https://user-images.githubusercontent.com/118657689/236416188-deddb0b0-081a-4ec8-b76d-d6a07ff99793.jpg)
+
 
 > ## 개발 목표
 - DB를 설계하고 연관관계를 파악해서 기본적인 CRUD 쿼리를 작성해본다
@@ -62,7 +63,7 @@
 
 > ## 테이블 모델링
 
-<img src="src\main\resources\static\images\블로그 DB 설계.jpg" >
+![블로그 DB 설계](https://user-images.githubusercontent.com/118657689/236416233-ac5417f1-c25e-4f35-82be-c18e9c9719b8.jpg)
 
 <br>
 
