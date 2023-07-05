@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -21,6 +22,8 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,6 +33,7 @@ import shop.mtcoding.blog2.model.User;
 
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+@Transactional(readOnly = true)
 public class BoardControllerTest {
     
     @Autowired
@@ -44,7 +48,7 @@ public class BoardControllerTest {
     @BeforeEach
     public void setUp(){
         User mockUser = User.builder()
-                        .id(1)
+                        .id(2)
                         .username("ssar")
                         .password("1234")
                         .email("ssar@nate.com")
@@ -54,6 +58,7 @@ public class BoardControllerTest {
     }
 
     @Test
+    @Transactional
     public void boardWrite_test() throws Exception{
         String req = "title=235235&content=235235";
 
@@ -65,39 +70,43 @@ public class BoardControllerTest {
     }
 
     @Test
+    @Transactional
     public void main_test() throws Exception {
         ResultActions rs = mvc.perform(get("/").session(session));
-        List<BoardMainListDto> dtos = (List<BoardMainListDto>)rs.andReturn().getModelAndView().getModel().get("dtos");
-        // System.out.println("테스트 : "+ dtos);
+        ModelAndView mv = rs.andReturn().getModelAndView();
+        List<BoardMainListDto> dtos = (mv != null) ? (List<BoardMainListDto>) mv.getModel().get("dtos") : new ArrayList<>();
+        System.out.println("테스트 : "+ dtos);
     }
 
 
     @Test
+    @Transactional
     public void boardDelete_test() throws Exception{
-        int id =3;
+        int id =2;
 
         ResultActions rs = mvc.perform(delete("/board/"+id+"/delete").session(session));
         rs.andExpect(status().isOk());
     }
 
     @Test
+    @Transactional
     public void updateForm_test() throws Exception{
-        int id = 1;
+        int id = 2;
 
         ResultActions rs = mvc.perform(get("/board/"+id+"/updateForm").session(session));
         rs.andExpect(status().isOk());
     }
 
     @Test
+    @Transactional
     public void boardUpdate_test() throws Exception{
-
 
         BoardUpdateDto dto = new BoardUpdateDto();
         dto.setTitle("안녕");
         dto.setContent("안녕ㅎ");
         String result = om.writeValueAsString(dto);
         System.out.println(result);
-        int id =1;
+        int id =2;
 
         ResultActions rs = mvc.perform(put("/board/"+id)
         .content(result)
@@ -108,6 +117,7 @@ public class BoardControllerTest {
     }
 
     @Test
+    @Transactional
     public void ddd_test() throws Exception{
     
         String html = "<p>3<img src=\"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEB\">";

@@ -37,9 +37,10 @@ public class AdminController {
     public void setUp(){
         User mockUser = User.builder()
                         .id(1)
-                        .username("ssar")
-                        .password("1234")
-                        .email("ssar@nate.com")
+                        .username("admin")
+                        .password("admin")
+                        .email("admin@nate.com")
+                        .role("ADMIN")
                         .build();
         session = new MockHttpSession();
         session.setAttribute("principal", mockUser);
@@ -56,17 +57,16 @@ public class AdminController {
     }
 
     @Test
-    public void delateUser_test() throws Exception{
-        Integer id =null ;
+    public void deleteUser_test() throws Exception{
+        Integer id = 1 ;
         
-
-        ResultActions rs = mvc.perform(delete("/admin/user/"+id+"/delete")
+        ResultActions rs = mvc.perform(delete("/admin/user/"+id)
                     .session(session));
 
-        // String d = (String )rs.andReturn().getModelAndView().getModel().get("msg");
-        // System.out.println("테스트 : "+ d);
-        // rs.andExpect(status().isOk());
-        String a = om.writeValueAsString(rs.andReturn());
+        rs.andExpect(status().isOk());
+        
+        // ResponseEntity 결과 json 추출, Object Mapper 필요없음
+        String a = rs.andReturn().getResponse().getContentAsString();
         System.out.println(a);
     }
 

@@ -22,7 +22,7 @@ public class UserControllerTest {
 
     @Test
     public void userJoin_test() throws Exception{
-        String resp = "username=df&password=43&email=23@13";
+        String resp = "username=testuser&password=!Abc12345&email=23@13";
 
         ResultActions rs = mvc.perform(post("/join").content(resp).contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE));
 

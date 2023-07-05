@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,19 +20,18 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shop.mtcoding.blog2.dto.reply.ReplyReq.ReplySaveReqDto;
 import shop.mtcoding.blog2.dto.reply.ReplyResp.ReplyListRespDto;
 import shop.mtcoding.blog2.model.User;
-import shop.mtcoding.blog2.model.User.UserBuilder;
-
 
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 public class ReplyControllerTest {
-    
+
     @Autowired
     private MockMvc mvc;
 
@@ -40,9 +40,8 @@ public class ReplyControllerTest {
     // @Autowired
     // private ObjectMapper om;
 
-
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         // User mockUser = new User();
         // mockUser.setId(2);
         // mockUser.setUsername("ssar");
@@ -52,57 +51,63 @@ public class ReplyControllerTest {
         // session = new MockHttpSession();
         // session.setAttribute("principal", mockUser);
         User mockUser = User.builder()
-                        .id(2)
-                        .username("ㅅㄷㄴㅅ")
-                        .password("1234")
-                        .email("EF@SEF")
-                        .build();
+                .id(2)
+                .username("asbd")
+                .password("1234")
+                .email("EF@SEF")
+                .build();
 
         session = new MockHttpSession();
         session.setAttribute("principal", mockUser);
     }
 
     @Test
-    public void save_test() throws Exception{
+    public void save_test() throws Exception {
         ObjectMapper om = new ObjectMapper();
 
         ReplySaveReqDto r = new ReplySaveReqDto();
         r.setBoardId(2);
-        r.setComment("안녕");   
+        r.setComment("안녕");
         r.setUserId(2);
         String test = om.writeValueAsString(r);
 
         ResultActions rs = mvc.perform(post("/reply/save")
-                    .content(test)
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .session(session)
-                    );
+                .content(test)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .session(session));
 
         rs.andExpect(status().isOk());
-}
+    }
+
     @Test
-    public void boardDetail_test()throws Exception{
+    public void boardDetail_test() throws Exception {
         // String insert = "comment=안녕&board=1";
         // int id=1;
-        
-        ResultActions rs = mvc.perform(get("/board/detail/1")
-                    // .content(insert)
-                    // .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                    // .session(session)
-                    );
-        
-                    // rs.andExpect(status().is3xxRedirection());
-                    Map<String, Object> map = rs.andReturn().getModelAndView().getModel();
-                    List<ReplyListRespDto> rdo = (List<ReplyListRespDto>) map.get("replyList");
-                    assertThat(rdo.get(0).getUsername()).isEqualTo("love");
-    }  
+
+        ResultActions rs = mvc.perform(get("/board/detail/1"));
+                // .session(session));
+        rs.andExpect(status().is2xxSuccessful());
+
+        // Optional 처리 방법
+        // Optional<ModelAndView> omv = Optional.ofNullable(rs.andReturn().getModelAndView());
+        // omv.ifPresent(modelAndView -> {
+        //     Map<String, Object> map = modelAndView.getModel();
+        //     List<ReplyListRespDto> rdo = (List<ReplyListRespDto>) map.get("replyList");
+        //     assertThat(rdo.get(0).getUsername()).isEqualTo("ssar");
+        // });
+
+        ModelAndView mv = rs.andReturn().getModelAndView();
+        Map<String, Object> map = (mv != null) ? mv.getModel() : new HashMap<>();
+        List<ReplyListRespDto> rdo = (List<ReplyListRespDto>) map.get("replyList");
+        assertThat(rdo.get(0).getUsername()).isEqualTo("ssar");
+    }
 
     @Test
-    public void deleteReply_test() throws Exception{
-        int id = 1 ;
-        ResultActions rs = mvc.perform(delete("/reply/"+id).session(session));
+    public void deleteReply_test() throws Exception {
+        int id = 1;
+        ResultActions rs = mvc.perform(delete("/reply/" + id).session(session));
         rs.andExpect(status().isOk());
         String result = rs.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+ result);
+        System.out.println("테스트 : " + result);
     }
 }

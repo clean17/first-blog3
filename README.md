@@ -129,6 +129,25 @@
 
 > ## 기타 메모
 
-단위테스트에서 세션이 필요한 경우는 `MockHttpSession` 을 직접 생성합니다. <br>
+- 단위테스트에서 세션이 필요한 경우는 `MockHttpSession` 을 직접 생성합니다. <br>
 `@Autowired`를 해봤자 컨텍스트에 없기 때문에 가져오지 못합니다. <br>
 ![image](https://github.com/clean17/first-blog3/assets/118657689/b7df0079-d82c-4f40-a05a-2408cefb0e2c) <br>
+ <br>
+ 
+- 테스트 시 리턴된 모델 null 처리 방법 <br>
+
+```java
+	ResultActions rs = mvc.perform(get("/board/detail/1"));
+	ModelAndView mv = rs.andReturn().getModelAndView();
+	Map<String, Object> map = (mv != null) ? mv.getModel() : new HashMap<>();
+	List<ReplyListRespDto> rdo = (List<ReplyListRespDto>) map.get("replyList");
+	assertThat(rdo.get(0).getUsername()).isEqualTo("ssar");
+```
+- 추가적인 리턴 결과 확인 <br>
+
+```java
+	MockHttpServletResponse response = rs.andReturn().getResponse();
+	int status = response.getStatus(); // 상태 코드
+	String contentType = response.getContentType(); // 컨텐츠 타입
+	String content = response.getContentAsString(); // 본문 데이터
+```

@@ -5,8 +5,6 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import shop.mtcoding.blog2.model.UserRepository;
 
 @MybatisTest
@@ -20,8 +18,8 @@ public class UserRepositoryTest {
     @Transactional
     public void findByUsernameWithAdmin_test() throws Exception {
 
-        int board = 2;
-        ObjectMapper om = new ObjectMapper();
+        // int board = 2;
+        // ObjectMapper om = new ObjectMapper();
 
         Integer te = userRepository.findByUsernameWithAdmin("ss");
 
@@ -33,8 +31,8 @@ public class UserRepositoryTest {
     @Transactional
     public void findByUsernameWithAdmi2n_test() throws Exception {
 
-        int board = 2;
-        ObjectMapper om = new ObjectMapper();
+        // int board = 2;
+        // ObjectMapper om = new ObjectMapper();
 
         Integer te = userRepository.findByUsernameWithAdmin("ss");
 

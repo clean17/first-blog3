@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDto;
@@ -48,14 +49,15 @@ public class AdminController {
     @Autowired
     private ReplyRepository replyRepository;
 
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private BoardService boardService;
 
     @Autowired
     private ReplyService replyService;
+
+    @Autowired
+    private UserService userService;
 
     public void setUp() {
         User mockUser = User.builder()
@@ -258,9 +260,7 @@ public class AdminController {
     return "replySeartList";
     }
 
-    
-
-    @DeleteMapping("/admin/user/{id}/delete")
+    @DeleteMapping("/admin/user/{id}")
     public ResponseEntity<?> delateUser(@PathVariable Integer id) {
         if (id == null) {
             throw new CustomApiException("삭제할 회원 아이디가 비었습니다.");
@@ -269,11 +269,11 @@ public class AdminController {
         if (!admin.getRole().equals("ADMIN")) {
             throw new CustomApiException("관리자 계정이 아닙니다.");
         }
-        // userService.회원삭제(id, admin);
+        userService.회원삭제(id, admin);
         return new ResponseEntity<>(new ResponseDto<>(1, "유저 계정 삭제 성공", null), HttpStatus.OK);
     }
 
-    @DeleteMapping("/admin/board/{id}/delete")
+    @DeleteMapping("/admin/board/{id}")
     public ResponseEntity<?> delateBoard(@PathVariable Integer id) {
         User admin = (User) session.getAttribute("principal");
         if (!admin.getRole().equals("ADMIN")) {
@@ -286,7 +286,7 @@ public class AdminController {
         return new ResponseEntity<>(new ResponseDto<>(1, "게시글 삭제 성공", null), HttpStatus.OK);
     }
 
-    @DeleteMapping("/admin/reply/{id}/delete")
+    @DeleteMapping("/admin/reply/{id}")
     public ResponseEntity<?> delateReply(@PathVariable Integer id) {
         User admin = (User) session.getAttribute("principal");
         if (!admin.getRole().equals("ADMIN")) {
