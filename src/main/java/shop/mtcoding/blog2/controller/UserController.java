@@ -1,12 +1,12 @@
 package shop.mtcoding.blog2.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -59,33 +59,29 @@ public class UserController {
     }
 
     @GetMapping("/user/usernameSameCheck")
-    public @ResponseBody ResponseDto<?> inNull(String username) {
-        CheckValid.inNull(username, "username을 입력해주세요");
-        CheckValid.inNull(username, "동일한 username이 존재");
+    public @ResponseBody ResponseDto<?> isNull(String username) {
         return service.중복체크(username);
     }
 
     @PostMapping("/join")
-    public String userJoin(@Validated UserJoinDto userDto) {
-        CheckValid.inNull(userDto.getUsername(), "아이디를 입력하세요");
-        CheckValid.inNull(userDto.getPassword(), "패스워드를 입력하세요");
-        CheckValid.inNull(userDto.getEmail(), "이메일을 입력하세요");
+    public String userJoin(@Valid UserJoinDto userDto, Error error) {
+        // CheckValid.isNull(userDto.getUsername(), "아이디를 입력하세요"); // customException 핸들링 -> Valid 로 중복 코드 제거
+        // CheckValid.isNull(userDto.getPassword(), "패스워드를 입력하세요");
+        // CheckValid.isNull(userDto.getEmail(), "이메일을 입력하세요");
         service.회원가입(userDto);
         return "redirect:/login";
     }
 
     @PostMapping("/login")
-    public String userLogin(UserLoginDto userDto) {
-        CheckValid.inNull(userDto.getUsername(), "아이디를 입력하세요");
-        CheckValid.inNull(userDto.getPassword(), "패스워드를 입력하세요");
+    public String userLogin(@Valid UserLoginDto userDto, Error error) {
         User userPS = service.로그인(userDto);
         session.setAttribute("principal", userPS);
         return "redirect:/";
     }
 
     @PostMapping("/user/update")
-    public @ResponseBody String update(UserUpdateReqDto updateReqDto) {
-        CheckValid.inNullApi(principal(), "로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
+    public @ResponseBody String update(@Valid UserUpdateReqDto updateReqDto, Error error) {
+        CheckValid.isNullApi(principal(), "로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
         User principalPs = service.회원수정(updateReqDto, principal().getId());
         session.setAttribute("principal", principalPs);
         return Script.href("수정완료", "/");
@@ -93,8 +89,8 @@ public class UserController {
 
     @PutMapping("/user/profileUpdate")
     public ResponseEntity<?> profileUpdate(MultipartFile profile) throws Exception {
-        CheckValid.inNullApi(principal(), "로그인이 필요한 페이지 입니다.", HttpStatus.UNAUTHORIZED);
-        CheckValid.inNullApi(profile, "사진이 전송 되지 않았습니다.");
+        CheckValid.isNullApi(principal(), "로그인이 필요한 페이지 입니다.", HttpStatus.UNAUTHORIZED);
+        CheckValid.isNullApi(profile, "사진이 전송 되지 않았습니다.");
         User userPS = service.프로필사진수정(profile, principal().getId());
         session.setAttribute("principal", userPS);
         return new ResponseEntity<>(new ResponseDto<>(1, "성공", null), HttpStatus.OK);

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import shop.mtcoding.blog2.dto.reply.ReplyReq.ReplySaveReqDto;
 import shop.mtcoding.blog2.exception.CustomApiException;
-import shop.mtcoding.blog2.exception.CustomException;
 import shop.mtcoding.blog2.model.Reply;
 import shop.mtcoding.blog2.model.ReplyRepository;
 import shop.mtcoding.blog2.model.User;
@@ -49,7 +48,7 @@ public class ReplyService {
         User admin = userRepository.findById(principalId);
         if ( admin.getRole().equals("ADMIN")){
             try {
-                replyRepository.deleteById(id);
+                replyRepository.delete(id);
                 return;
             } catch (Exception e) {
                 log.error(e.getMessage());
@@ -64,7 +63,7 @@ public class ReplyService {
             throw new CustomApiException("자신이 작성한 댓글만 삭제할 수 있습니다.", HttpStatus.FORBIDDEN);
         }
         try {
-            replyRepository.deleteById(id);
+            replyRepository.delete(id);
         } catch (Exception e) {
             // INTERNAL_SERVER_ERROR 는 무조건 로그를 남겨야한다 !!!!!!!!!!!!!!!!
             //System.out.println("서버에러 : "+ e.getMessage());// 로그의 기능을 한다는거야, 일단 간단하게 남길게 더 정확하세는 아랫줄

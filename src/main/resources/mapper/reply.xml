@@ -44,11 +44,11 @@
         </selectKey> -->
     </insert>
 
-    <delete id="deleteById">
+    <delete id="delete">
       delete from reply_tb where id = #{id}
     </delete>
 
-    <update id="updateById">
+    <update id="update">
       update reply_tb set comment=#{comment} where id = #{id}
     </update>
 </mapper>

@@ -9,6 +9,6 @@ public interface CrudRepository<T> {
     public List<T> findAll();
     public T findById(int id);
     public int insert(T entity);
-    public int deleteById(int id);
-    public int updateById(T entity);
+    public int delete(int id);
+    public int update(T entity);
 }

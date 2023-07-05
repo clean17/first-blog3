@@ -22,28 +22,29 @@ public interface BoardRepository {
         @Param("userId") String userId
     );
     public Board findById(int id);
-    public int insertBoard(
-        @Param("title") String title,
-        @Param("content") String content,
-        @Param("thumbnail") String thumbnail,
-        @Param("userId") int userId
-    );
+
     public List<BoardMainListDto> findAllforList(Integer userId);
     public List<BoardSearchRespDto> findAllforSearch(
         @Param("userId") Integer userId,
         @Param("keyword") String keyword
-        );
-
+    );
+    public BoardUpdateRespDto findByIdforUpdate(int id);
     public BoardDetailDto findBoardforDetail(
         @Param("id") Integer id,
         @Param("userId") Integer userId
-        );
-    public int deleteBoard(int id);
-    public int updateBoard(
+    );
+    public int insert(
         @Param("title") String title,
         @Param("content") String content,
         @Param("thumbnail") String thumbnail,
-        @Param("id") int id
+        @Param("userId") Integer userId
     );
-    public BoardUpdateRespDto findByIdforUpdate(int id);
+    public int update(
+        @Param("title") String title,
+        @Param("content") String content,
+        @Param("thumbnail") String thumbnail,
+        @Param("id") Integer id
+        );
+    public int delete(int id);
+    
 }

@@ -19,13 +19,13 @@ insert into board_tb (title, content, user_id, thumbnail, love, created_at) valu
 insert into reply_tb (comment, user_id, board_id, love, created_at) values ('1등 ㅋㅋ', 2, 3, 0, now());
 insert into reply_tb (comment, user_id, board_id, love, created_at) values ('댓글 테스트 !!', 1, 2, 0, now());
 insert into reply_tb (comment, user_id, board_id, love, created_at) values ('좋은 글이네요', 1, 3, 0, now());
-insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅎ1ㅎ', 2, 1, 0, now());
-insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅎ2ㅎ', 2, 2, 0, now());
-insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅎ3ㅎ', 2, 1, 0, now());
-insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅎ4ㅎ', 2, 2, 0, now());
-insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅎ5ㅎ', 2, 4, 0, now());
-insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅎ6ㅎ', 2, 4, 0, now());
-insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅎ677ㅎ', 2, 2, 0, now());
+insert into reply_tb (comment, user_id, board_id, love, created_at) values ('선 댓글 답니다.', 2, 1, 0, now());
+insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅋㅋㅋㅋㅋㅋ', 2, 2, 0, now());
+insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅇㄷ', 2, 1, 0, now());
+insert into reply_tb (comment, user_id, board_id, love, created_at) values ('추천', 2, 2, 0, now());
+insert into reply_tb (comment, user_id, board_id, love, created_at) values ('글쓴이 바보인듯', 2, 4, 0, now());
+insert into reply_tb (comment, user_id, board_id, love, created_at) values ('퍼갑니다.', 2, 4, 0, now());
+insert into reply_tb (comment, user_id, board_id, love, created_at) values ('ㅋㅋ 진짜 ?', 2, 2, 0, now());
 
 insert into love_tb (user_id, board_id, state, created_at) values (2, 2, 1, now());
 insert into love_tb (user_id, board_id, state, created_at) values (2, 1, 1, now());

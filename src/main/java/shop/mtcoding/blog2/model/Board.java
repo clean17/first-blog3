@@ -8,10 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Board {
-    private int id;
+    private Integer id;
     private String title;
     private String content;
-    private int userId;
+    private Integer userId;
     private String thumbnail;
     private Timestamp createdAt;
 }

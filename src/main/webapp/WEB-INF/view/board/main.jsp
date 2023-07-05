@@ -16,108 +16,27 @@
     .on-Clicked {
         color: red;
     }
+    #card-frame {
+      height: 23em;
+    }
+    #card-image {
+      height: 50%;
+      margin: 5px;
+    }
+    #card-image img {
+      width: 100%; /* 이미지가 박스에 가득 차도록 설정 */
+      height: 100%; /* 이미지가 박스에 가득 차도록 설정 */
+      object-fit: cover; /* 이미지 비율을 유지하면서 가득 채우기 */
+    }
 </style>
 <div class="col-8 mx-auto">
-<%-- <!-- Carousel -->
-<div id="demo" class="carousel slide w-25 mx-auto mt-3" data-bs-ride="carousel">
-
-    <!-- Indicators/dots -->
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-    </div>
-
-    <!-- The slideshow/carousel -->
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="/images/다운로드 (1).jpg" alt="Los Angeles" class="d-block" style="width:100%">
-            <div class="carousel-caption">
-    
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="/images/다운로드 (2).jpg" alt="Chicago" class="d-block" style="width:100%">
-            <div class="carousel-caption">
-
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="/images/다운로드 (3).jpg" alt="New York" class="d-block" style="width:100%">
-            <div class="carousel-caption">
-         
-            </div>
-        </div>
-    </div>
-
-    <!-- Left and right controls/icons -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </button>
-</div> --%>
-
-
-<%-- <div class="row  mx-auto mt-3">
-  <div class="col-md-4">
-    <div id="carouselExampleSlidesOnly1" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="/images/다운로드 (1).jpg" class="d-block w-100" alt="Image 1">
-        </div>
-        <div class="carousel-item">
-          <img src="/images/다운로드 (2).jpg" class="d-block w-100" alt="Image 2">
-        </div>
-        <div class="carousel-item">
-          <img src="/images/다운로드 (3).jpg" class="d-block w-100" alt="Image 3">
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="col-md-4">
-    <div id="carouselExampleSlidesOnly2" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="/images/다운로드 (2).jpg" class="d-block w-100" alt="Image 4">
-        </div>
-        <div class="carousel-item">
-          <img src="/images/다운로드 (3).jpg" class="d-block w-100" alt="Image 5">
-        </div>
-        <div class="carousel-item">
-          <img src="/images/다운로드 (1).jpg" class="d-block w-100" alt="Image 6">
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="col-md-4">
-    <div id="carouselExampleSlidesOnly3" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="/images/다운로드 (3).jpg" class="d-block w-100" alt="Image 7">
-        </div>
-        <div class="carousel-item">
-          <img src="/images/다운로드 (1).jpg" class="d-block w-100" alt="Image 8">
-        </div>
-        <div class="carousel-item">
-          <img src="/images/다운로드 (2).jpg" class="d-block w-100" alt="Image 9">
-        </div>
-      </div>
-    </div>
-  </div>
-</div> --%>
-
-
-
-
 <div class="container-xl my-3">
     <div class="my-grid">
         <c:forEach items="${dtos}" var="dto">
-            <div class="card pt-3">
+            <div class="card pt-3" id="card-frame">
+              <div id="card-image">
                 <img class="card-img-top " src="${dto.thumbnail}" alt="Card image">
+              </div>
                 <hr>
                 <div class="card-body my-title-ellipsis">
                     <div class="d-flex">
@@ -139,11 +58,10 @@
                                 </c:choose>
                                 &nbsp <div >${dto.count}</div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
-                    <h4 class="card-title my-title-ellipsis">${dto.title}</h4>
+                    <h5 class="card-title my-title-ellipsis">${dto.title}</h5>
                     <a href="/board/detail/${dto.id}" class="btn btn-primary">상세보기</a>
                 </div>
             </div>

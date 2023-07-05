@@ -53,7 +53,7 @@ public class LoveService {
             throw new CustomApiException("취소 권한이 없습니다.",HttpStatus.FORBIDDEN);
         }
         try {
-            loveRepository.deleteById(principalId);
+            loveRepository.delete(principalId);
         } catch (Exception e) {
             throw new CustomApiException("서버 에러 발생", HttpStatus.INTERNAL_SERVER_ERROR);
         }

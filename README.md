@@ -1,6 +1,22 @@
 # 블로그 프로젝트 
+
 ![blogmain](https://user-images.githubusercontent.com/118657689/236416188-deddb0b0-081a-4ec8-b76d-d6a07ff99793.jpg)
 
+- 관리자 페이지
+
+![image](https://github.com/clean17/first-blog3/assets/118657689/ce967994-d993-43f2-9892-3b5c2ce6a269)
+
+![image](https://github.com/clean17/first-blog3/assets/118657689/e842a895-3eb0-4fc0-a6fc-6c1da5c09a43)
+
+![image](https://github.com/clean17/first-blog3/assets/118657689/cf5b6ad0-4fd5-4a58-b0f3-52134dd0dd76)
+
+![image](https://github.com/clean17/first-blog3/assets/118657689/6bfdc5fc-9ceb-4bd9-86b3-de63d0c69eeb)
+
+```
+일반 계정 : ssar / 1234
+관리자 엔트리포인트 : /admin
+관리자 계정 : admin / admin
+```
 
 > ## 개발 목표
 
@@ -151,3 +167,16 @@
 	String contentType = response.getContentType(); // 컨텐츠 타입
 	String content = response.getContentAsString(); // 본문 데이터
 ```
+- 유효값 검증 `@NotBlank`<br> 
+
+```java
+    @ExceptionHandler(BindException.class) 
+    public ResponseEntity<?> customException(BindException e){
+        BindingResult bindingResult = e.getBindingResult();
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();		
+        String errorMessage = fieldErrors.get(0).getDefaultMessage();
+        return new ResponseEntity<>(Script.back(errorMessage), HttpStatus.BAD_REQUEST);
+    }
+```
+- `@Controller` + `ResponseEntity` 는 json을 응답한다.
+ // `ResponseEntity` 는 `ResponseBody`를 포함

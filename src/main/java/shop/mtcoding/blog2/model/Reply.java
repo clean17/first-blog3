@@ -10,7 +10,7 @@ import lombok.Setter;
 public class Reply {
     private Integer id;
     private String comment;
-    private int userId;
-    private int boardId;
+    private Integer userId;
+    private Integer boardId;
     private Timestamp createdAt;
 }

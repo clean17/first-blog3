@@ -27,9 +27,6 @@
         </style>
 
         <body>
-        
-
-        
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
                 <div class="container-fluid width-53">
                     <a class="navbar-brand" href="/">Blog</a>
@@ -65,13 +62,13 @@
 
                         <div class="d-flex">
                             <div class="me-5">
-                                <div class="input-group me-4">
-                                    <div class="form-outline me-4">
+                                <div class="input-group me-4  ">
+                                    <div class="form-outline me-4 ">
                                         <input id="search-header" type="search" name="title" class="form-control"
                                             placeholder="검색" style="display: none;"
                                             onkeypress="if(event.keyCode=='13'){event.preventDefault(); searchEvt();}" />
                                     </div>
-                                    <div class="my-auto">
+                                    <div class="mt-1">
                                         <i class="fa-solid fa-magnifying-glass btn btn-dark" onclick="searchBox()"></i>
                                     </div>
                                 </div>
@@ -80,19 +77,20 @@
                                 <i class="fa-sharp fa-solid fa-bell btn btn-dark"></i>
                             </div>
                             <div class="ms-5 my-auto">
-                                <c:if test="${principal != null}" >
-                                <a href="/user/profileUpdateForm"><img
-                                        src="${principal.profile == null ? '/images/default_profile.png' : principal.profile}"
-                                        style="width: 35px; object-fit: cover;" class="rounded-circle" alt="Cinque Terre"></a>
+                                <c:if test="${principal != null}">
+                                    <a href="/user/profileUpdateForm"><img
+                                            src="${principal.profile == null ? '/images/default_profile.png' : principal.profile}"
+                                            style="width: 37px; object-fit: cover;" class="rounded-3"
+                                            alt="Cinque Terre"></a>
                                 </c:if>
-                                
+
                             </div>
                         </div>
                     </div>
 
                 </div>
             </nav>
-        
+
             <script>
                 function searchBox() {
                     $('#search-header').css('display')
@@ -100,11 +98,11 @@
                     if (searchHeader.style.display === "none") {
                         searchHeader.style.display = "block";
                         searchHeader.focus();
-                        }
                     }
-                function searchEvt(){
+                }
+                function searchEvt() {
                     const keyword = $('#search-header').val();
                     console.log(keyword);
-                    location.href="/search?keyword="+keyword;
+                    location.href = "/search?keyword=" + keyword;
                 }
             </script>

@@ -59,7 +59,7 @@
     </ul>
 </div>
 
-<!-- Carousel -->
+<%-- <!-- Carousel -->
 <div id="demo" class="carousel slide" data-bs-ride="carousel">
 
     <!-- Indicators/dots -->
@@ -106,7 +106,7 @@
 <div class="container-fluid mt-3">
     <h3>Carousel Example</h3>
     <p>The following example shows how to create a basic carousel with indicators and controls.</p>
-</div>
+</div> --%>
 <script>
     let boardId;
     let count;

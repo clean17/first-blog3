@@ -18,15 +18,13 @@ public interface ReplyRepository {
         @Param("comment") String comment, 
         @Param("userId") String userId
     );
-    public List<ReplyListRespDto> findByBoardIdWithUser(int boardId);
-    public Reply findById(int id);
+    public List<ReplyListRespDto> findByBoardIdWithUser(Integer boardId);
+    public Reply findById(Integer id);
     public int insert(
         @Param("rDto") ReplySaveReqDto rDto,
-        @Param("userId") int userId
+        @Param("userId") Integer userId
     ); 
-    public int deleteById(int id);
-    public int updateById(
-        @Param("comment") String comment
-    );
+    public int delete(Integer id);
+    public int update(String comment);
 
 }

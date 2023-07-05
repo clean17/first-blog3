@@ -1,8 +1,12 @@
 package shop.mtcoding.blog2.exception;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -22,9 +26,14 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(new ResponseDto<>(-1,e.getMessage(),null), e.getStatus());
     }
 
-    @ExceptionHandler(BindException.class)
+    @ExceptionHandler(BindException.class) // @NotBlack가 발생시킨 익셉션 핸들링
     public ResponseEntity<?> customException(BindException e){
-        return new ResponseEntity<>(Script.back("필수값을 입력하세요"), HttpStatus.BAD_REQUEST);
+        BindingResult bindingResult = e.getBindingResult();
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+
+        // 첫 번째 필드 에러의 메시지 가져오기
+        String errorMessage = fieldErrors.get(0).getDefaultMessage();
+        return new ResponseEntity<>(Script.back(errorMessage), HttpStatus.BAD_REQUEST);
     }
 
 }

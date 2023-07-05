@@ -88,16 +88,16 @@
 
 
 
-    <insert id="insertBoard">
+    <insert id="insert">
       insert into board_tb ( title, content, user_id, thumbnail, created_at) 
         values (#{title}, #{content}, #{userId}, #{thumbnail}, now())
     </insert>
 
-    <delete id="deleteBoard">
+    <delete id="delete">
       delete from board_tb where id = #{id}
     </delete>
 
-    <update id="updateBoard">
+    <update id="update">
       update board_tb set title=#{title}, content=#{content}, thumbnail=#{thumbnail} where id = #{id}
     </update>
 </mapper>

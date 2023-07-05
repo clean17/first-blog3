@@ -16,30 +16,27 @@
         select * from user_tb where username = #{username} and password = #{password}
     </select>
 
-    <select id="findByUsernameWithAdmin" resultType="int">
+    <select id="findIdByUsernameWithAdmin" resultType="int">
         select id from user_tb where username = #{username}
     </select>
-
-
 
     <select id="findByUsername" resultType="shop.mtcoding.blog2.model.User">
         select * from user_tb where username = #{username}
     </select>
 
-    <insert id="insertUser">
+    <insert id="insert">
         insert into user_tb (username, password, email, profile, role, created_at) 
                 values (#{username}, #{password}, #{email}, #{profile}, #{role}, now())
     </insert>
 
-    <update id="updateById">
+    <update id="updateProfileById">
         update user_tb set username =#{username}, password=#{password},
         email=#{email}, profile = #{profile} where id = #{id}
     </update>
 
-    <update id="updateUser">
+    <update id="update">
         update user_tb set password = #{uDto.password}, email = #{uDto.email} where id = #{uDto.id}
     </update>
-
 
     <delete id="delete">
         delete from user_tb where id = #{id}

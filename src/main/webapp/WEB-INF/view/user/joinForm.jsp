@@ -13,7 +13,7 @@
             </div>
             <div class="form-group mb-2">
                 <input type="password" name="password" class="form-control" placeholder="Enter password" id="password">
-                <div id="pw-check1">4자리 이상을 입력해야합니다.</div>
+                <div id="pw-check1">숫자 + 알파벳 + 특수문자의 조합으로 8자리 이상 입력해야합니다.</div>
             </div>
 
             <div class="form-group mb-2">
@@ -36,10 +36,13 @@
     $('#pw-check1').hide();
     $('#password').on('input', () => {
         p1 = $('#password').val();
-        if ($('#password').val() != '' && $('#password').val().length < 4) {
+        if ($('#password').val() != $('#passwordCheck').val()) {
+            $('#pw-check2').show();
+        }
+        if ($('#password').val() != '' && $('#password').val().length < 8)  {
             // console.log( $('#password').val().length);
             $('#pw-check1').show();
-        } else {
+        }else {
             $('#pw-check1').hide();
         }
     })
@@ -71,7 +74,7 @@
             url: "/user/usernameSameCheck?username=" + username
             // dataType: "json"
         }).done((res) => {
-            if (res.data === true) {
+            if (res.data) {
                 alert(res.msg);
                 joinOk = true;
             } else {
@@ -79,7 +82,7 @@
                 joinOk = false;
             }
         }).fail((err) => {
-            alert('실패');
+            alert(err.responseJSON.msg);
         });
     });
 </script>

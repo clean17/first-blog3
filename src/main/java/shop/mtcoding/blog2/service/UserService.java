@@ -28,13 +28,11 @@ public class UserService {
 
     @Transactional
     public void 회원삭제(Integer id, User admin) { 
-        if ( admin.getRole().equals("ADMIN")){
-            try {
-                userRepository.delete(id);
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                throw new CustomApiException("서버 오류로 회원삭제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+        try {
+            userRepository.delete(id);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new CustomApiException("서버 오류로 회원삭제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -45,7 +43,7 @@ public class UserService {
             throw new CustomException("동일한 username이 존재합니다");
         }
         userDto.setPassword(Sha256.encode(userDto.getPassword()));
-        int result = userRepository.insertUser(
+        int result = userRepository.insert(
                 userDto.getUsername(), 
                 userDto.getPassword(), 
                 userDto.getEmail(),
@@ -78,7 +76,7 @@ public class UserService {
         userPS.setProfile(uuidImageName);
 
         try {
-            userRepository.updateById(userPS.getId(), userPS.getUsername(), userPS.getPassword(), userPS.getEmail(), userPS.getProfile(), userPS.getCreatedAt());
+            userRepository.updateProfileById(userPS.getId(), userPS.getUsername(), userPS.getPassword(), userPS.getEmail(), userPS.getProfile(), userPS.getCreatedAt());
         } catch (Exception e) {
             throw new CustomApiException("프로필 사진 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -98,7 +96,7 @@ public class UserService {
         }
         updateReqDto.setPassword(Sha256.encode(updateReqDto.getPassword()));
         try {
-            userRepository.updateUser(updateReqDto);
+            userRepository.update(updateReqDto);
         } catch (Exception e) {
             throw new CustomException("서버의 일시적인 오류로 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -117,6 +115,5 @@ public class UserService {
             return new ResponseDto<>(1, username + " 사용 가능", true);
         }
     }
-    
    
 }

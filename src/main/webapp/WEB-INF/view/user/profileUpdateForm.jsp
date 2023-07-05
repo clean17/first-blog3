@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
 <%@ include file="../layout/header.jsp" %>
 
 <style>
@@ -21,36 +20,18 @@
         padding: 1rem;
         border-radius: 10px;
     }
-    .form-group {
-        margin-bottom: 1rem;
-        text-align: center;
-        
-    }
-    .form-group img {
-        /* width: 50%; */
-        /* background-size: contain; */
-        width: 320px;
-        height: 270px;
-        border-radius: 50%;
-        margin-bottom: 1rem;
-        border: 1px solid gray; 
-    }
-    .btn {
-        margin-top: 1rem;
-        width: 20%;
-    }
 </style>
 
 <div class="container my-3">
     <h2 class="text-center">프로필 사진 변경 페이지</h2>
     <form id="profileForm" >
-        <div class="form-group">
-            <img src="${principal.profile == null ? '/imaeges/default_profile.png' : principal.profile}" alt="Current Photo" id="imagePreview" class="img-fluid">
+        <div class="form-group" id="img-frame">
+            <img src="${principal.profile == null ? '/imaeges/default_profile.png' : principal.profile}" id="imagePreview">
         </div>
         <div class="form-group">
             <input type="file" class="form-control" id="profile" name="profile" onchange="chooseImage(this)">
         </div>
-        <button type="button" class="btn btn-primary" onclick="updateImage()">사진 변경</button>
+        <button type="button" class="btn btn-primary" onclick="updateImage()" id="photo-btn">사진 변경</button>
     </form>
 </div>
 
@@ -76,15 +57,11 @@
             // 사진을 바꿔치기해야함
 
             $('#imagePreview').attr("src",e.target.result);
-
-            
         }
-
             let profileForm = $('#profileForm')[0];  // 배열로 리턴한다더라
             // console.log(profileForm);
             let formData = new FormData(profileForm);  // 폼의 모든 데이터를 가지고 있다.
     }
-    
         function updateImage(){
             let profileForm = $('#profileForm')[0];  // 배열로 리턴한다더라
             console.log(profileForm);

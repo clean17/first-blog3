@@ -3,6 +3,7 @@ package shop.mtcoding.blog2.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import shop.mtcoding.blog2.dto.ResponseDto;
 import shop.mtcoding.blog2.dto.admin.AdminReq.AdminReqDto;
@@ -71,7 +70,6 @@ public class AdminController {
 
     @GetMapping("/admin/loginForm")
     public String loginForm() {
-
         return "admin/loginForm";
     }
 
@@ -131,13 +129,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/login")
-    public String loginAdmin(AdminReqDto adminReqDto, Model model) {
-        if (adminReqDto.getUsername() == null || adminReqDto.getUsername().isEmpty()) {
-            throw new CustomException("아이디를 입력해주세요");
-        }
-        if (adminReqDto.getPassword() == null || adminReqDto.getPassword().isEmpty()) {
-            throw new CustomException("패스워드를 입력해주세요");
-        }
+    public String loginAdmin(@Valid AdminReqDto adminReqDto, Error error, Model model) {
         User admin = userRepository.findByUsernameAndPassword(adminReqDto.getUsername(), adminReqDto.getPassword());
         if (admin == null) {
             throw new CustomException("아이디 또는 비밀번호가 다릅니다.");
@@ -151,43 +143,6 @@ public class AdminController {
         model.addAttribute("userList", userList);
         return "redirect:/admin/user";
     }
-
-    // @GetMapping("/admin/board/search")
-    // public String searchBoard(AdminReqSearchDto aDto, Model model){
-    //     User admin = (User)session.getAttribute("principal");
-    //     if( !admin.getRole().equals("ADMIN")){
-    //         throw new CustomException("관리자 계정이 아닙니다.");
-    //     }
-    //     // System.out.println("테스트 제목 : "+ aDto.getTitle());       
-    //     // System.out.println("테스트 내용 : "+ aDto.getContent());       
-    //     // System.out.println("테스트 작성자 : "+ aDto.getUsername());
-    //     if (aDto.getTitle()==null||aDto.getTitle().isEmpty()){
-    //         aDto.setTitle("");
-    //     }
-    //     if (aDto.getContent()==null||aDto.getContent().isEmpty()){
-    //         aDto.setContent("");
-    //     }
-    //     if (aDto.getUsername()==null||aDto.getUsername().isEmpty()){
-    //         aDto.setUsername("");
-    //     }else{
-    //         Integer num = userRepository.findByUsernameWithAdmin(aDto.getUsername());
-    //         // System.out.println("테스트 번호: "+num );
-    //         if ( num == null ){
-    //             aDto.setUsername("결과없음");
-    //         }else{
-    //             aDto.setUsername(String.valueOf(num));
-    //         }
-    //     // }
-    //     // System.out.println("테스트 제목: "+aDto.getTitle());
-    //     // System.out.println("테스트 내용: "+aDto.getContent());
-    //     // System.out.println("테스트 작성자: "+aDto.getUsername());
-    //     // System.out.println("테스트-------------------------");
-    //     // boardRepository.findAllByAdminWithSearch("","내용","");
-    //     List<AdminBoardSearchResqDto> boardSeartList = boardRepository.findAllByAdminWithSearch(aDto.getTitle(), aDto.getContent(), aDto.getUsername());
-    //     System.out.println("테스트 : "+boardSeartList.size());
-    //     model.addAttribute("boardList", boardSeartList);
-    //     return "admin/board";
-    // }
 
     @GetMapping("/admin/board/search")
     public ResponseEntity<?> searchBoard(AdminReqSearchAjaxDto aDto) {  
@@ -204,7 +159,7 @@ public class AdminController {
         if (aDto.getUsername() == null || aDto.getUsername().isEmpty()) {
             aDto.setUsername("");
         } else {
-            Integer num = userRepository.findByUsernameWithAdmin(aDto.getUsername());
+            Integer num = userRepository.findIdByUsernameWithAdmin(aDto.getUsername());
             System.out.println("테스트 : "+num);
             if (num == null) {
                 aDto.setUsername("결과없음");
@@ -235,7 +190,7 @@ public class AdminController {
         if (aDto.getUsername() == null || aDto.getUsername().isEmpty()) {
             aDto.setUsername("");
         } else {
-            Integer num = userRepository.findByUsernameWithAdmin(aDto.getUsername());
+            Integer num = userRepository.findIdByUsernameWithAdmin(aDto.getUsername());
             System.out.println("테스트 : "+num);
             if (num == null) {
                 aDto.setUsername("결과없음");
@@ -249,15 +204,6 @@ public class AdminController {
         // json 에 데이터 넣어줘야함
         return new ResponseEntity<>(new ResponseDto<>(1, "", replySeartList),
                 HttpStatus.OK);
-    }
-
-    @GetMapping("/test")
-    @ResponseBody
-    public String erew(){
-        List<AdminReplySearchRespDto> replySeartList = replyRepository.findReplyByAdminWithSearch(
-        "",
-        "");
-    return "replySeartList";
     }
 
     @DeleteMapping("/admin/user/{id}")

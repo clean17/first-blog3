@@ -16,12 +16,12 @@ public class UserRepositoryTest {
 
     @Test
     @Transactional
-    public void findByUsernameWithAdmin_test() throws Exception {
+    public void findIdByUsernameWithAdmin_test() throws Exception {
 
         // int board = 2;
         // ObjectMapper om = new ObjectMapper();
 
-        Integer te = userRepository.findByUsernameWithAdmin("ss");
+        Integer te = userRepository.findIdByUsernameWithAdmin("ss");
 
         // String responseBody = om.writeValueAsString(replyList);
         System.out.println("테스트 : " + te);
@@ -34,7 +34,7 @@ public class UserRepositoryTest {
         // int board = 2;
         // ObjectMapper om = new ObjectMapper();
 
-        Integer te = userRepository.findByUsernameWithAdmin("ss");
+        Integer te = userRepository.findIdByUsernameWithAdmin("ss");
 
         // String responseBody = om.writeValueAsString(replyList);
         System.out.println("테스트 : " + te);

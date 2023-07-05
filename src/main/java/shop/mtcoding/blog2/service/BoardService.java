@@ -30,7 +30,7 @@ public class BoardService {
     public void 글쓰기(BoardWriteDto bDto, int principalId){
         
         String thumbnail = HtmlParser.thumbnailString(bDto.getContent());
-        int result = boardRepository.insertBoard(
+        int result = boardRepository.insert(
                         bDto.getTitle(), 
                         bDto.getContent(),
                         thumbnail,
@@ -47,7 +47,7 @@ public class BoardService {
         // System.out.println("테스트 : "+id);
         if ( admin.getRole().equals("ADMIN")){
             try {
-                boardRepository.deleteBoard(id);
+                boardRepository.delete(id);
                 return;
             } catch (Exception e) {
                 log.error(e.getMessage());
@@ -62,7 +62,7 @@ public class BoardService {
         if ( board2.getUserId() != principalId){
             throw new CustomApiException("삭제할 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
-        int result1 = boardRepository.deleteBoard(id);
+        int result1 = boardRepository.delete(id);
         if ( result1 != 1 ){
             throw new CustomApiException("서버에 일시적인 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -81,7 +81,7 @@ public class BoardService {
         if ( board2.getUserId() != principalId){
             throw new CustomApiException("수정할 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
-        int result1 = boardRepository.updateBoard(
+        int result1 = boardRepository.update(
                             bDto.getTitle(),
                             bDto.getContent(),
                             thumbnail,

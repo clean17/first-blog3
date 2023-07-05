@@ -19,13 +19,12 @@ public interface LoveRepository {
     );
     public int insertOrUpdate(
         @Param("lDto") LoveBoardReqDto lDto,
-        @Param("userId") int userId
+        @Param("userId") Integer userId
     );
-    public Love findById(int id);
+    public Love findById(Integer id);
 
-    public int insert(Love love);
+    // public int insert(Love love);
+    // public int update(Love love);
 
-    public int updateById(Love love);
-
-    public int deleteById(int id);
+    public int delete(Integer id);
 }

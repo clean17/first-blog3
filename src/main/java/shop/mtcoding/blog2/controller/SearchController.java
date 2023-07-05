@@ -25,13 +25,12 @@ public class SearchController {
 
     @GetMapping("/search")
     public String search(Model model, SearchReqDto sDto) {
-        // System.out.println("테스트 : ddfasdfsafsfasdf");
         Integer num = null;
         User principal = (User) session.getAttribute("principal"); // 세션에 오브젝트가 null 이라면 에러가 나온다 !!!
         if (principal != null) {
             num = principal.getId();
         }
-        List<BoardSearchRespDto> dtos = boardRepository.findAllforSearch(num, sDto.getKeyword());
+        List<BoardSearchRespDto> dtos = boardRepository.findAllforSearch(num, sDto.getKeyword()); // num 동적쿼리
         model.addAttribute("dtos", dtos);
         return "board/search";
     }
