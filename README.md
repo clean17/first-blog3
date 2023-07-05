@@ -100,3 +100,35 @@
 
 
 - <a href="https://velog.io/@merci/series/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%A0%9C%EC%9E%91-V1"> 블로그 링크 </a>
+
+<br>
+
+> ## Object Mapper 의존성 주입 방법
+<br>
+
+일반적으로 스프링부트가 실행되면 스프링 컨텍스트에 Object Mapper가 자동으로 빈으로 등록됩니다. <br>
+하지만 테스트할 때는 테스트 범위에 따라 컨텍스트에 생성되는 빈들의 범위가 달라져 필요한 빈이 없을수도 있습니다. <br>
+예를 들면 통합테스트를 하는 `@SpringBootTest` 는 테스트에 필요한 모든 빈들을 컨텍스트에 등록해 테스트를 진행하므로 <br>
+`@Autowired`를 통해서 의존성을 가져올 수 있습니다. <br>
+![image](https://github.com/clean17/first-blog3/assets/118657689/c0a03161-52be-4b13-840a-25d7ac9e2791) <br>
+<br>
+하지만 단위 테스트인 `@MybatisTest`일 경우 컨텍스트에 Mybatis와 관련된 빈들만 등록되어 Object Mapper 빈이 없기 때문에<br>
+`@Autowired` 통해서 빈을 주입한다면 테스트 시 `UnsatisfiedDependencyException` 익셉션이 발생합니다. <br>
+![image](https://github.com/clean17/first-blog3/assets/118657689/57681f9d-3167-43cf-aff0-0a290f6f2ec3) <br>
+![image](https://github.com/clean17/first-blog3/assets/118657689/c0a03161-52be-4b13-840a-25d7ac9e2791) <br>
+![image](https://github.com/clean17/first-blog3/assets/118657689/4a55398c-ed22-4ffd-b307-4a4daa6b143f) <br>
+ <br>
+따라서 `@MybatisTest` 같은 단위 테스트 시에는 다른 방법으로 의존성을 주입해야 합니다.<br>
+- 첫번째 방법으로는 `@MockBean` + Mockito라이브러리의 조합으로 메소드의 동작을 정의해서 테스트를 하는 방법이 있습니다.<br>
+- 두번째 방법으로는 `@TestConfiguration`를 이용해서 테스트 환경에서만 등록될 빈을 직접 등록하는 방법입니다. <br>
+![image](https://github.com/clean17/first-blog3/assets/118657689/1c68cb24-cd15-4001-9c79-f8c9ec4a7538) <br>
+- 세번째 방법으로는 수동으로 인스턴스를 직접 생성해서 사용하는 방법입니다.  <br>
+![image](https://github.com/clean17/first-blog3/assets/118657689/19891b0a-5b85-4fba-be37-d1151c59aa22)<br>
+
+<br>
+
+> ## 기타 메모
+
+단위테스트에서 세션이 필요한 경우는 `MockHttpSession` 을 직접 생성합니다. <br>
+`@Autowired`를 해봤자 컨텍스트에 없기 때문에 가져오지 못합니다. <br>
+![image](https://github.com/clean17/first-blog3/assets/118657689/b7df0079-d82c-4f40-a05a-2408cefb0e2c) <br>

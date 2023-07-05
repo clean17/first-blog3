@@ -1,7 +1,5 @@
 package shop.mtcoding.blog2.dto.user;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 

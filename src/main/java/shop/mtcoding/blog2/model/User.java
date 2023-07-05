@@ -4,9 +4,7 @@ import java.sql.Timestamp;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.Value;
 import shop.mtcoding.blog2.Util.DateUtil;
 
 @Builder
